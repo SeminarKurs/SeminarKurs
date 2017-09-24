@@ -40,10 +40,6 @@ public class WorldM extends ApplicationAdapter {
 	@Override
 	public void create () {
 
-
-
-
-		System.out.println();
 		for(int x = 0; x < tiles.length ; x++)
 			for (int y = 0; y < tiles[0].length; y++)
 				tiles[x][y] = new Tile();
@@ -68,6 +64,8 @@ public class WorldM extends ApplicationAdapter {
 		pController.UpdPosition();
 		Gdx.input.setInputProcessor(pController);
 
+		tiles[1][0].type = 1;
+		tiles[1][0].collision = 2;
 
 	}
 
@@ -100,10 +98,10 @@ public class WorldM extends ApplicationAdapter {
 				if(tiles[x][y].type == 0)
 				{
 					//System.out.println(x +" "+y);
-					batch.draw(tex, x, y, 1f, 1f);
+					batch.draw(tex, x-0.5f, y-0.5f, 1f, 1f);
 				}
 			}
-		batch.draw(pController.getPlayerTex(), pController.getPosition().x, pController.getPosition().y, 1f,1f);
+		batch.draw(pController.getPlayerTex(), pController.getPosition().x -PlayerController.PlSIZEHX, pController.getPosition().y-PlayerController.PlSIZEHY, PlayerController.PlSIZEHX*2,PlayerController.PlSIZEHY*2);
 		batch.end();
 	}
 
@@ -120,6 +118,9 @@ public class WorldM extends ApplicationAdapter {
 	static public Vector3 getCamPosition(){return worldM.cam.position;}
 	static public float getViewportWidth(){ return worldM.cam.viewportWidth* worldM.cam.zoom;}
 	static public float getViewportHeight(){return worldM.cam.viewportHeight* worldM.cam.zoom;}
+	static public int getTileCollision(int x, int y){
+		if(x < 0 || x > worldM.tiles.length || y < 0 ||y > worldM.tiles[0].length )return 0;return worldM.tiles[x][y].collision;
+		}
 
 	@Override
 	public void dispose () {

@@ -6,10 +6,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.mygdx.game.Types.FMath;
 import com.mygdx.game.Types.IVector2;
 
 import static com.mygdx.game.WorldM.worldM;
@@ -28,18 +27,16 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     public final static float VP_HEIGHT = 720 * INV_SCALE;
     public final static float MAXZOOM = 5;
     public final static float MINZOOM = 1;
-    public final static float HIGHTH = 1;
-    public final static float WIDTHH = 0.5f;
+    public final static float PlSIZEHX = .5f;
+    public final static float PlSIZEHY = .5f;
 
 
 
 
     private Texture playerTex;
-    private Vector2 position = new Vector2();
+    private Vector2 pos = new Vector2();
 
     private OrthographicCamera camera;
-    private ExtendViewport viewport;
-    private ShapeRenderer shapes;
     private float mWScale = 1;
     // speed that the cam player moves (units per second)
     private float speed = 2f;
@@ -58,8 +55,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     public void tick(float dt)
     {
-        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY))
-        {
+        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
             Vector2 movement = new Vector2();
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 movement.y += 1;
@@ -76,47 +72,96 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
             movement.nor(); // nor vector for same speed every dircetion
             movement.scl(speed * dt); // make it (speed*dt) times longer
+
+            IVector2 posI = new IVector2();
+
+            if (movement.x != 0) {
+
+                checkCollision(true, movement, new IVector2(1, 0));
+
+            } else if (movement.y != 0) {
+                checkCollision(false, movement, new IVector2(1, 0));
+            }
+
+
+            if(!checkCollision(true, movement, new IVector2(1,0)))//posI.addNew(1,0));
+            {
+
+                checkCollision(false, movement, new IVector2(1,0));//posI.addNew(1, 0));
+            }
+
             WorldM.worldM.playerCollides(movement);
             camera.translate(movement.x, movement.y);
+
+            camera.position.x = Math.round(camera.position.x * 1000f) / 1000f;
+            camera.position.y = Math.round(camera.position.y * 1000f) / 1000f;
+
             UpdPosition();
-
-            checkCollision();
-
         }
     }
 
-    private void checkCollision()
+    private boolean checkCollisionNew(Vector2 movement)
     {
-        Vector2 plSizeH = new Vector2(0.1f,0.1f);
-        Vector2 plPos = new Vector2(10.5f, 10.5f);
-        Vector2 movement = new Vector2(1f,0.5f);
+        return true;
+    }
+
+    private boolean checkCollision(boolean x, Vector2 movement, IVector2 tile)
+    {
+        if(WorldM.getTileCollision(tile.x, tile.y) != 2)
+        {
+            return false;
+        }
+        float plSizeHX = PlSIZEHX;
+        float plSizeHY = PlSIZEHY;
+        IVector2 tileLO = new IVector2(tile);
+        Vector2 posLO = new Vector2(pos);
+        if(!x)
+        {
+            movement.set(movement.y, movement.x);
+            plSizeHX = PlSIZEHY;
+            plSizeHY = PlSIZEHX;
+            posLO.set(posLO.y, posLO.x);
+            tileLO.set(tileLO.y, tileLO.x);
+        }
+        //System.out.println("p: " + pos + "; tile: x: " + tile.x + " y: " +tile.y);
         boolean isCollision = true;
+        float tileHSize = 0.5f;
 
-        IVector2 tilePo = new IVector2((int) plPos.x, (int) plPos.y);
-        IVector2 checkTile = new IVector2(tilePo.x, tilePo.y);
-
-        checkTile.x += 1;
-
-        collides(plPos, movement, plSizeH, checkTile);
-        checkTile.x -= 2;
-        System.out.println(":");
-    }
-
-    void collides(Vector2 plPos, Vector2 movement, Vector2 plSizeH, IVector2 checkTile)
-    {
-        float gap;
-        gap = Math.abs(plPos.x - checkTile.x) - plSizeH.x;
-        if(makePos(movement.x) > gap)
+        // The distance to the next colliding tile
+        //float distanceX = tile.x - pos.x + ((tile.x - pos.x) >= 0 ? -(tileHSize + plSizeHX) : (tileHSize + plSizeHX));
+        System.out.println(": "+ (tileLO.x - posLO.x));
+        if(Math.abs(tileLO.x - posLO.x) < 1)
         {
-            System.out.println("collides");
+            if(!x){movement.set(movement.y, movement.x);}// reset the movment that it wont get returned bad
+            return false;
         }
-        gap = Math.abs(plPos.y - checkTile.y) - plSizeH.y;
-        if(makePos(movement.y) > gap)
-        {
-            System.out.println("collides");
-        }
-        System.out.println("");
 
+        float distanceX = tileLO.x - posLO.x + ((tileLO.x - posLO.x) >= 0 ? -(tileHSize + plSizeHX) : (tileHSize + plSizeHX));
+        //System.out.println(distanceX);
+        // The y positon when the player collides
+        if(tileLO.x - posLO.x >= 0 ? distanceX < movement.x : distanceX > movement.x)
+        {
+            float posY = (movement.y * (distanceX / movement.x)) + posLO.y;
+
+            if (posY + plSizeHY > tileLO.y - tileHSize && posY - plSizeHY < tileLO.y + tileHSize)// collides in y too?
+            {
+                System.out.println("coilliding d: "+ distanceX+ " m.y: "+ movement.y);
+                movement.set(distanceX, movement.y);//distanceX, movement.y * distanceX / movement.x);
+                if(!x)
+                {
+
+                    movement.set(movement.y, movement.x);
+
+                }
+                return true;
+            }
+        }
+
+        if(!x)
+        {
+            movement.set(movement.y, movement.x);
+        }
+        return false;
     }
 
     float makePos(float f)
@@ -141,7 +186,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         camera.unproject(tp.set(screenX, screenY, 0));
         if(tp.x < 0){ tp.x -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
         if(tp.y < 0){ tp.y -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
-        IVector2 position = new IVector2((int)(tp.x), (int)(tp.y));
+        IVector2 position = FMath.getTile(tp);
 
         worldM.tileClicked(position);
         dragging = true;
@@ -166,13 +211,13 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     @Override public void resize (int width, int height)
     {
         // viewport must be updated for it to work properly
-        viewport.update(width, height, true);
+
     }
 
     @Override public void dispose ()
     {
         // disposable stuff must be disposed
-        shapes.dispose();
+
     }
 
     @Override public boolean scrolled (int amount)
@@ -185,9 +230,9 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     @Override public boolean keyDown (int keycode){ return false;}
 
-    public void UpdPosition(){position = new Vector2(camera.position.x - 0.5f, camera.position.y - 0.5f);}
+    public void UpdPosition(){ pos = new Vector2(camera.position.x - 0.5f, camera.position.y - 0.5f);}
     public Texture getPlayerTex() { return playerTex;}
-    public Vector2 getPosition() { return position;}
+    public Vector2 getPosition() { return pos;}
 
     @Override public boolean keyUp (int keycode) {
         return false;

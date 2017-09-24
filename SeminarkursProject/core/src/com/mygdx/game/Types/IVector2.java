@@ -12,5 +12,13 @@ public class IVector2 {
     public IVector2(){}
     // constructor sets the value of x and y
     public IVector2(int x, int y){ this.x = x; this.y = y; }
+    public IVector2(IVector2 cop){ this.set(cop);}
+
+    public void set(IVector2 cop){ this.x = cop.x; this.y = cop.y;}
+    public void set(int x, int y){this.x = x; this.y = y;}
+    public IVector2 setNew(IVector2 cop){ return new IVector2(cop);}
+    public IVector2 setNew(int x, int y){return new IVector2(x,y);}
+
+    public IVector2 addNew(int x, int y){return new IVector2(this.x+x, this.y+y);}
 
 }
