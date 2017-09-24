@@ -38,8 +38,8 @@
       <file leaf-file-name="WorldM.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/WorldM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="111" column="9" selection-start-line="111" selection-start-column="9" selection-end-line="111" selection-end-column="9" />
+            <state relative-caret-position="547">
+              <caret line="121" column="60" selection-start-line="121" selection-start-column="60" selection-end-line="121" selection-end-column="60" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -62,13 +62,11 @@
       <file leaf-file-name="PlayerController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/PlayerController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="75" column="33" selection-start-line="75" selection-start-column="32" selection-end-line="75" selection-end-column="40" />
+            <state relative-caret-position="510">
+              <caret line="30" column="43" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-                <element signature="e#3181#3182#0" expanded="true" />
-                <element signature="e#3208#3209#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -3942,13 +3940,13 @@
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32925472" sideWeight="0.4466951" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.4466951" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14818764" sideWeight="0.5264901" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32925472" sideWeight="0.5533049" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.5772921" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32814237" sideWeight="0.49573562" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.42430705" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32925472" sideWeight="0.4227079" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -3999,8 +3997,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4048,8 +4044,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4097,8 +4091,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4136,8 +4128,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4175,8 +4165,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4198,8 +4186,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4221,8 +4207,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4244,8 +4228,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4267,8 +4249,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4290,8 +4270,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4313,8 +4291,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4336,8 +4312,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4359,8 +4333,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4390,8 +4362,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4413,8 +4383,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4436,8 +4404,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4470,29 +4436,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Types/IVector2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Tile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/WorldM.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="111" column="9" selection-start-line="111" selection-start-column="9" selection-end-line="111" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4506,15 +4454,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Types/IVector2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/WorldM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="547">
+          <caret line="121" column="60" selection-start-line="121" selection-start-column="60" selection-end-line="121" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/PlayerController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="75" column="33" selection-start-line="75" selection-start-column="32" selection-end-line="75" selection-end-column="40" />
+        <state relative-caret-position="510">
+          <caret line="30" column="43" selection-start-line="30" selection-start-column="43" selection-end-line="30" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#render#0;class#PlayerController#0" expanded="false" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3208#3209#0" expanded="true" />
           </folding>
         </state>
       </provider>

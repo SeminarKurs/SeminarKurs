@@ -27,8 +27,8 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     public final static float VP_HEIGHT = 720 * INV_SCALE;
     public final static float MAXZOOM = 5;
     public final static float MINZOOM = 1;
-    public final static float PlSIZEHX = .5f;
-    public final static float PlSIZEHY = .5f;
+    public final static float PlSIZEHX = .4f;
+    public final static float PlSIZEHY = .4f;
 
 
 
@@ -74,20 +74,38 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             movement.scl(speed * dt); // make it (speed*dt) times longer
 
             IVector2 posI = new IVector2();
-
+            posI.set(FMath.getTile(pos));
             if (movement.x != 0) {
+                if(movement.x > 0) {
+                    checkCollision(true, movement, posI.addNew(1, 0));
+                    checkCollision(true, movement, posI.addNew(1, 1));
+                    checkCollision(true, movement, posI.addNew(1, -1));
+                }else{
+                    checkCollision(true, movement, posI.addNew(-1, 0));
+                    checkCollision(true, movement, posI.addNew(-1, 1));
+                    checkCollision(true, movement, posI.addNew(-1, -1));
+                }
 
-                checkCollision(true, movement, new IVector2(1, 0));
-
-            } else if (movement.y != 0) {
-                checkCollision(false, movement, new IVector2(1, 0));
             }
+            if (movement.y != 0) {
+                if(movement.y > 0) {
+                    System.out.println("pos: " + posI.addNew(0, 1).x+ " "+posI.addNew(0, 1).y);
 
+                    checkCollision(false, movement, posI.addNew(0, 1));
+                    checkCollision(false, movement, posI.addNew(1, 1));
+                    checkCollision(false, movement, posI.addNew(-1, 1));
+                }else{
 
-            if(!checkCollision(true, movement, new IVector2(1,0)))//posI.addNew(1,0));
+                    checkCollision(false, movement, posI.addNew(0, -1));
+                    checkCollision(false, movement, posI.addNew(1, -1));
+                    checkCollision(false, movement, posI.addNew(-1, -1));
+                }
+            }
+            //*/
+            //if(!checkCollision(true, movement, new IVector2(1,0)))//posI.addNew(1,0));
             {
 
-                checkCollision(false, movement, new IVector2(1,0));//posI.addNew(1, 0));
+                //scheckCollision(false, movement, new IVector2(1,0));//posI.addNew(1, 0));
             }
 
             WorldM.worldM.playerCollides(movement);
@@ -98,11 +116,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
             UpdPosition();
         }
-    }
-
-    private boolean checkCollisionNew(Vector2 movement)
-    {
-        return true;
     }
 
     private boolean checkCollision(boolean x, Vector2 movement, IVector2 tile)
@@ -129,23 +142,27 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
         // The distance to the next colliding tile
         //float distanceX = tile.x - pos.x + ((tile.x - pos.x) >= 0 ? -(tileHSize + plSizeHX) : (tileHSize + plSizeHX));
-        System.out.println(": "+ (tileLO.x - posLO.x));
-        if(Math.abs(tileLO.x - posLO.x) < 1)
+
+        if(Math.abs(tileLO.x - posLO.x) < plSizeHX)
         {
             if(!x){movement.set(movement.y, movement.x);}// reset the movment that it wont get returned bad
             return false;
         }
 
         float distanceX = tileLO.x - posLO.x + ((tileLO.x - posLO.x) >= 0 ? -(tileHSize + plSizeHX) : (tileHSize + plSizeHX));
+        System.out.println(distanceX);
+
         //System.out.println(distanceX);
         // The y positon when the player collides
         if(tileLO.x - posLO.x >= 0 ? distanceX < movement.x : distanceX > movement.x)
         {
+            System.out.println("1.");
             float posY = (movement.y * (distanceX / movement.x)) + posLO.y;
 
             if (posY + plSizeHY > tileLO.y - tileHSize && posY - plSizeHY < tileLO.y + tileHSize)// collides in y too?
             {
-                System.out.println("coilliding d: "+ distanceX+ " m.y: "+ movement.y);
+                System.out.println("2.");
+                //  System.out.println("coilliding d: "+ distanceX+ " m.y: "+ movement.y);
                 movement.set(distanceX, movement.y);//distanceX, movement.y * distanceX / movement.x);
                 if(!x)
                 {

@@ -119,7 +119,7 @@ public class WorldM extends ApplicationAdapter {
 	static public float getViewportWidth(){ return worldM.cam.viewportWidth* worldM.cam.zoom;}
 	static public float getViewportHeight(){return worldM.cam.viewportHeight* worldM.cam.zoom;}
 	static public int getTileCollision(int x, int y){
-		if(x < 0 || x > worldM.tiles.length || y < 0 ||y > worldM.tiles[0].length )return 0;return worldM.tiles[x][y].collision;
+		if(x < 0 || x >= worldM.tiles.length || y < 0 ||y >= worldM.tiles[0].length )return 0;return worldM.tiles[x][y].collision;
 		}
 
 	@Override
