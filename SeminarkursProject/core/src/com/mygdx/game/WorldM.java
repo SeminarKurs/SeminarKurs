@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Actor.Actor;
+import com.mygdx.game.Actor.TestActor;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.GUI.GUI;
 import com.mygdx.game.Types.IVector2;
@@ -23,12 +25,12 @@ public class WorldM extends ApplicationAdapter {
 
 	private static Tile[][] tiles = new Tile[worldSize.x][worldSize.y];
 
+	private static Array<Actor> updateActors = new Array<Actor>();
+
 	private GUI gui;
 	private PlayerController pController;
 
 	SpriteBatch batch;
-
-
 
 	Texture tex;
 
@@ -36,14 +38,15 @@ public class WorldM extends ApplicationAdapter {
 
 	protected OrthographicCamera cam;
 
-
 	@Override
 	public void create () {
 
+		new TestActor();
 		for(int x = 0; x < tiles.length ; x++)
 			for (int y = 0; y < tiles[0].length; y++)
 				tiles[x][y] = new Tile();
 
+		addActor(new Actor(), new IVector2(0,0), false);
 		worldM = this;
 		rotationSpeed = 0.5f;
 		gui = new GUI();
@@ -66,22 +69,17 @@ public class WorldM extends ApplicationAdapter {
 
 		tiles[1][0].type = 1;
 		tiles[1][0].collision = 2;
-
 	}
-
-	public boolean playerCollides(Vector2 move)
-	{
-		//move.x
-		return true;
-	}
-
-
 
 	@Override
 	public void render () {
-
 		//update
-		pController.tick(Gdx.graphics.getDeltaTime());
+		float dt = Gdx.graphics.getDeltaTime();
+		pController.tick(dt);
+		for(int i=0; i < updateActors.size; i++)
+		{
+			updateActors.get(i).update(dt);
+		}
 
 		cam.update();
 
@@ -115,12 +113,31 @@ public class WorldM extends ApplicationAdapter {
 		}
 	}
 
+	public static Actor addActor(Actor actor, IVector2 pos, boolean bUpdate)
+	{
+		if(actor == null) {
+
+			if (addTileActor(actor, pos)) {
+				if (bUpdate) {
+					updateActors.add(actor);
+				}
+				return actor;
+			}
+
+		}
+		return null;
+	}
+
 	static public Vector3 getCamPosition(){return worldM.cam.position;}
 	static public float getViewportWidth(){ return worldM.cam.viewportWidth* worldM.cam.zoom;}
 	static public float getViewportHeight(){return worldM.cam.viewportHeight* worldM.cam.zoom;}
-	static public int getTileCollision(int x, int y){
-		if(x < 0 || x >= worldM.tiles.length || y < 0 ||y >= worldM.tiles[0].length )return 0;return worldM.tiles[x][y].collision;
-		}
+	static public int getTileCollision(int x, int y){ if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length )return 0;return tiles[x][y].collision; }
+	// see if a tile is valid
+	static public boolean validTile(int x, int y){if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length ) return false;return true;}
+	static public boolean validTile(IVector2 pos){if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 ||pos.y >= tiles[0].length ) return false;return true;}
+
+	// add a actor to tile
+	static private boolean addTileActor(Actor actor, IVector2 pos){ if(validTile(pos)){tiles[pos.x][pos.y].actors.add(actor);return true;} return false;}
 
 	@Override
 	public void dispose () {

@@ -89,7 +89,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             }
             if (movement.y != 0) {
                 if(movement.y > 0) {
-                    System.out.println("pos: " + posI.addNew(0, 1).x+ " "+posI.addNew(0, 1).y);
 
                     checkCollision(false, movement, posI.addNew(0, 1));
                     checkCollision(false, movement, posI.addNew(1, 1));
@@ -101,14 +100,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
                     checkCollision(false, movement, posI.addNew(-1, -1));
                 }
             }
-            //*/
-            //if(!checkCollision(true, movement, new IVector2(1,0)))//posI.addNew(1,0));
-            {
 
-                //scheckCollision(false, movement, new IVector2(1,0));//posI.addNew(1, 0));
-            }
-
-            WorldM.worldM.playerCollides(movement);
             camera.translate(movement.x, movement.y);
 
             camera.position.x = Math.round(camera.position.x * 1000f) / 1000f;
@@ -136,7 +128,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             posLO.set(posLO.y, posLO.x);
             tileLO.set(tileLO.y, tileLO.x);
         }
-        //System.out.println("p: " + pos + "; tile: x: " + tile.x + " y: " +tile.y);
+
         boolean isCollision = true;
         float tileHSize = 0.5f;
 
@@ -150,19 +142,17 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         }
 
         float distanceX = tileLO.x - posLO.x + ((tileLO.x - posLO.x) >= 0 ? -(tileHSize + plSizeHX) : (tileHSize + plSizeHX));
-        System.out.println(distanceX);
 
-        //System.out.println(distanceX);
+
+
         // The y positon when the player collides
         if(tileLO.x - posLO.x >= 0 ? distanceX < movement.x : distanceX > movement.x)
         {
-            System.out.println("1.");
             float posY = (movement.y * (distanceX / movement.x)) + posLO.y;
 
             if (posY + plSizeHY > tileLO.y - tileHSize && posY - plSizeHY < tileLO.y + tileHSize)// collides in y too?
             {
-                System.out.println("2.");
-                //  System.out.println("coilliding d: "+ distanceX+ " m.y: "+ movement.y);
+
                 movement.set(distanceX, movement.y);//distanceX, movement.y * distanceX / movement.x);
                 if(!x)
                 {
