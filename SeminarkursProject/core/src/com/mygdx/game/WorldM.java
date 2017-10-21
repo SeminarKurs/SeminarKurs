@@ -9,10 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
-import com.mygdx.game.Actor.TestActor;
 import com.mygdx.game.Actor.Tile;
-import com.mygdx.game.GUI.GUI;
+import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Types.IVector2;
+
 
 public class WorldM extends ApplicationAdapter {
 
@@ -21,43 +21,35 @@ public class WorldM extends ApplicationAdapter {
 	public static final String TITLE = "title";
 	public static final IVector2 worldSize = new IVector2(10, 10);
 
-	public static WorldM worldM;
-
 	private static Tile[][] tiles = new Tile[worldSize.x][worldSize.y];
 
 	private static Array<Actor> updateActors = new Array<Actor>();
 
-	private GUI gui;
+	protected static Array<Texture> textures = new Array<Texture>();
+
+	protected static OrthographicCamera cam;
+
 	private PlayerController pController;
 
 	SpriteBatch batch;
 
-	Texture tex;
-
-	private float rotationSpeed = 0.5f;
-
-	protected OrthographicCamera cam;
 
 	@Override
 	public void create () {
 
-		new TestActor();
+		// make new tiles
 		for(int x = 0; x < tiles.length ; x++)
 			for (int y = 0; y < tiles[0].length; y++)
 				tiles[x][y] = new Tile();
 
-		addActor(new Actor(), new IVector2(0,0), false);
-		worldM = this;
-		rotationSpeed = 0.5f;
-		gui = new GUI();
+		addActor(new Actor(), new IVector2(1,2), false);
 
-		tex = new Texture("badlogic.jpg");
+		// add all textures
+		textures.add(new Texture("badlogic.jpg"));
+		textures.add(new Texture("ImgTest.png"));
 
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
 		// make a cam that isn't chrunched
-		cam = new OrthographicCamera(3, 3 * (h / w));
-
+		cam = new OrthographicCamera(3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
 		cam.update();
 
@@ -67,7 +59,7 @@ public class WorldM extends ApplicationAdapter {
 		pController.UpdPosition();
 		Gdx.input.setInputProcessor(pController);
 
-		tiles[1][0].type = 1;
+		tiles[1][0].image = 1;
 		tiles[1][0].collision = 2;
 	}
 
@@ -93,13 +85,16 @@ public class WorldM extends ApplicationAdapter {
 		for(int x = 0; x < tiles.length ; x++)
 			for(int y = 0; y < tiles[0].length; y++)
 			{
-				if(tiles[x][y].type == 0)
+				if(getTexture(tiles[x][y].image) != null)
+					batch.draw(textures.get(tiles[x][y].image), x-0.5f, y-0.5f, 1f, 1f);
+				if(tiles[x][y].actor != null)
 				{
-					//System.out.println(x +" "+y);
-					batch.draw(tex, x-0.5f, y-0.5f, 1f, 1f);
+					tiles[x][y].actor.draw(batch, x,y);
 				}
 			}
-		batch.draw(pController.getPlayerTex(), pController.getPosition().x -PlayerController.PlSIZEHX, pController.getPosition().y-PlayerController.PlSIZEHY, PlayerController.PlSIZEHX*2,PlayerController.PlSIZEHY*2);
+
+
+		batch.draw(pController.getPlayerTex(), pController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, pController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
 	}
 
@@ -108,40 +103,61 @@ public class WorldM extends ApplicationAdapter {
 		System.out.println(postion.x +" "+ postion.y);
 		if(postion.x < tiles.length && postion.y < tiles[0].length && postion.x >= 0 && postion.y >= 0)
 		{
-			tiles[postion.x][postion.y].type = 1;
+			tiles[postion.x][postion.y].image = 1;
 			tiles[postion.x][postion.y].collision = 2;
 		}
 	}
 
 	public static Actor addActor(Actor actor, IVector2 pos, boolean bUpdate)
 	{
-		if(actor == null) {
+		if(actor != null) {
 
 			if (addTileActor(actor, pos)) {
 				if (bUpdate) {
 					updateActors.add(actor);
 				}
+				if(actor.coll() != 0)// if the actor wouldn't collied then we don't need to change anything
+				{
+					if(getTileCollision(pos) != 2)// if the actor is 2 we don't need to change anything
+					{
+						tiles[pos.x][pos.y].collision = actor.coll();
+					}
+				}
 				return actor;
 			}
-
 		}
 		return null;
 	}
 
-	static public Vector3 getCamPosition(){return worldM.cam.position;}
-	static public float getViewportWidth(){ return worldM.cam.viewportWidth* worldM.cam.zoom;}
-	static public float getViewportHeight(){return worldM.cam.viewportHeight* worldM.cam.zoom;}
+	// add a actor to tile
+	static private boolean addTileActor(Actor actor, IVector2 pos)
+	{
+		if(validTile(pos))
+		{
+			System.out.println("Cos: " + actor.coll());
+			if(tiles[pos.x][pos.y].actor == null)
+				tiles[pos.x][pos.y].actor = actor;
+
+			return true;
+		}
+		return false;
+	}
+
+	static public Vector3 getCamPosition(){return cam.position;}
+	static public float getViewportWidth(){ return cam.viewportWidth* cam.zoom;}
+	static public float getViewportHeight(){return cam.viewportHeight* cam.zoom;}
 	static public int getTileCollision(int x, int y){ if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length )return 0;return tiles[x][y].collision; }
+	static public int getTileCollision(IVector2 pos){ if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 || pos.y >= tiles[0].length )return 0;return tiles[pos.x][pos.y].collision; }
 	// see if a tile is valid
 	static public boolean validTile(int x, int y){if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length ) return false;return true;}
 	static public boolean validTile(IVector2 pos){if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 ||pos.y >= tiles[0].length ) return false;return true;}
-
-	// add a actor to tile
-	static private boolean addTileActor(Actor actor, IVector2 pos){ if(validTile(pos)){tiles[pos.x][pos.y].actors.add(actor);return true;} return false;}
+	// gets the texture by num
+	static public Texture getTexture(int num){if(num < textures.size)return textures.get(num); return null;}
 
 	@Override
 	public void dispose () {
 		batch.dispose();
-		tex.dispose();
+		for(int i=0; i < textures.size; i++)
+			textures.get(i).dispose();
 	}
 }

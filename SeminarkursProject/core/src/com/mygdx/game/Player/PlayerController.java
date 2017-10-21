@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Player;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -10,11 +10,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Types.FMath;
 import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.WorldM;
 
-import static com.mygdx.game.WorldM.worldM;
 
 /**
- * Created by 745379 on 28.08.2017.
+ * Created by Tobias on 28.08.2017.
  */
 
 public class PlayerController extends ApplicationAdapter implements InputProcessor {
@@ -29,8 +29,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     public final static float MINZOOM = 1;
     public final static float PlSIZEHX = .4f;
     public final static float PlSIZEHY = .4f;
-
-
 
 
     private Texture playerTex;
@@ -195,7 +193,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         if(tp.y < 0){ tp.y -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
         IVector2 position = FMath.getTile(tp);
 
-        worldM.tileClicked(position);
+        WorldM.tileClicked(position);
         dragging = true;
         return true;
     }
