@@ -12,5 +12,6 @@ public class Tile {
     // 0 non 1 overllapp 2 block
     public int collision;
     public Actor actor;
+    public Resource resource;
 
 }

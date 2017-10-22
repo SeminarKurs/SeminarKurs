@@ -7,7 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
  */
 
 public class Actor {
+
     public Actor(){}
+
+    // needs to be updated, false don't update
+    boolean needUpdate = false;
 
     public void update(float dt)
     {
@@ -17,10 +21,11 @@ public class Actor {
     // return collison
     public int coll(){return 0;}
     // returns the number of the image
-    public int image(){return 1;}
+    public int image(){return 0;}
 
+    public boolean GetNeedUpdate(){ return needUpdate;}
     public void draw(Batch batch, int x, int y)
     {
-        DrawH.draw(batch, x,y, image());
+        DrawH.drawActor(batch, x,y, image());
     }
 }

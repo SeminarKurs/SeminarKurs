@@ -30,7 +30,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     public final static float PlSIZEHX = .4f;
     public final static float PlSIZEHY = .4f;
 
-
     private Texture playerTex;
     private Vector2 pos = new Vector2();
 
@@ -38,6 +37,9 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     private float mWScale = 1;
     // speed that the cam player moves (units per second)
     private float speed = 2f;
+    // the speed mining is done.
+    private int mineSpeed = 1;
+
 
     public PlayerController(OrthographicCamera camera)
     {
@@ -175,55 +177,21 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         return f;
     }
 
-
-
     Vector3 tp = new Vector3();
-    boolean dragging;
-    @Override public boolean mouseMoved (int screenX, int screenY)
-    {
-        return false;
-    }
+
 
     @Override public boolean touchDown (int screenX, int screenY, int pointer, int button)
     {
         // ignore if its not left mouse button or first touch pointer
-        if (button != Input.Buttons.LEFT || pointer > 0) return false;
+        if (button != Input.Buttons.LEFT) return false;
         camera.unproject(tp.set(screenX, screenY, 0));
         if(tp.x < 0){ tp.x -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
         if(tp.y < 0){ tp.y -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
         IVector2 position = FMath.getTile(tp);
-
         WorldM.tileClicked(position);
-        dragging = true;
         return true;
     }
 
-    @Override public boolean touchDragged (int screenX, int screenY, int pointer)
-    {
-        if (!dragging) return false;
-        camera.unproject(tp.set(screenX, screenY, 0));
-        return true;
-    }
-
-    @Override public boolean touchUp (int screenX, int screenY, int pointer, int button)
-    {
-        if (button != Input.Buttons.LEFT || pointer > 0) return false;
-        camera.unproject(tp.set(screenX, screenY, 0));
-        dragging = false;
-        return true;
-    }
-
-    @Override public void resize (int width, int height)
-    {
-        // viewport must be updated for it to work properly
-
-    }
-
-    @Override public void dispose ()
-    {
-        // disposable stuff must be disposed
-
-    }
 
     @Override public boolean scrolled (int amount)
     {
@@ -233,20 +201,21 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         return true;
     }
 
-    @Override public boolean keyDown (int keycode){ return false;}
-
     public void UpdPosition(){ pos = new Vector2(camera.position.x - 0.5f, camera.position.y - 0.5f);}
     public Texture getPlayerTex() { return playerTex;}
     public Vector2 getPosition() { return pos;}
+    public int getMineSpeed() { return mineSpeed; }
 
+    @Override public boolean keyDown (int keycode){ return false;}
+    @Override public boolean mouseMoved (int screenX, int screenY){ return true; }
+    @Override public boolean touchDragged (int screenX, int screenY, int pointer){ return true; }
+    @Override public boolean touchUp (int screenX, int screenY, int pointer, int button){ return true; }
+    @Override public void resize (int width, int height){}
+    @Override public void dispose (){}
     @Override public boolean keyUp (int keycode) {
         return false;
     }
-
     @Override public boolean keyTyped (char character) {
         return false;
     }
-
-
-
 }

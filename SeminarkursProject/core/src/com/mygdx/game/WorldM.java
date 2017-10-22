@@ -4,15 +4,17 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
+import com.mygdx.game.Actor.Resource;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Player.PlayerController;
+import com.mygdx.game.Textures.TexturesClass;
 import com.mygdx.game.Types.IVector2;
 
+import java.util.Random;
 
 public class WorldM extends ApplicationAdapter {
 
@@ -21,32 +23,38 @@ public class WorldM extends ApplicationAdapter {
 	public static final String TITLE = "title";
 	public static final IVector2 worldSize = new IVector2(10, 10);
 
+	// the tiles that represent the world
 	private static Tile[][] tiles = new Tile[worldSize.x][worldSize.y];
 
+	// all actors that need to be updated
 	private static Array<Actor> updateActors = new Array<Actor>();
-
-	protected static Array<Texture> textures = new Array<Texture>();
-
+	// represents the player
+	private static PlayerController pController;
+	// the cam (what the player sees)
 	protected static OrthographicCamera cam;
 
-	private PlayerController pController;
+
 
 	SpriteBatch batch;
-
+	// used for random things
+	Random rand = new Random();
+	TexturesClass textureClass;
 
 	@Override
 	public void create () {
 
-		// make new tiles
+		textureClass = new TexturesClass();		// make new tiles
 		for(int x = 0; x < tiles.length ; x++)
-			for (int y = 0; y < tiles[0].length; y++)
+			for (int y = 0; y < tiles[0].length; y++) {
 				tiles[x][y] = new Tile();
+				if(rand.nextFloat() <= 0.1f)
+				{
 
-		addActor(new Actor(), new IVector2(1,2), false);
+				}
+			}
 
-		// add all textures
-		textures.add(new Texture("badlogic.jpg"));
-		textures.add(new Texture("ImgTest.png"));
+		tiles[1][1].resource = new Resource(0);
+		addActor(new Actor(), new IVector2(1,2));
 
 		// make a cam that isn't chrunched
 		cam = new OrthographicCamera(3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
@@ -85,8 +93,12 @@ public class WorldM extends ApplicationAdapter {
 		for(int x = 0; x < tiles.length ; x++)
 			for(int y = 0; y < tiles[0].length; y++)
 			{
-				if(getTexture(tiles[x][y].image) != null)
-					batch.draw(textures.get(tiles[x][y].image), x-0.5f, y-0.5f, 1f, 1f);
+				if(TexturesClass.getTextureGround(tiles[x][y].image) != null)
+					batch.draw(TexturesClass.getTextureGround (tiles[x][y].image), x-0.5f, y-0.5f, 1f, 1f);
+				if(tiles[x][y].resource != null)
+				{
+					tiles[x][y].resource.draw(batch, x,y);
+				}
 				if(tiles[x][y].actor != null)
 				{
 					tiles[x][y].actor.draw(batch, x,y);
@@ -100,20 +112,28 @@ public class WorldM extends ApplicationAdapter {
 
 	static public void tileClicked(IVector2 postion)
 	{
-		System.out.println(postion.x +" "+ postion.y);
 		if(postion.x < tiles.length && postion.y < tiles[0].length && postion.x >= 0 && postion.y >= 0)
 		{
-			tiles[postion.x][postion.y].image = 1;
-			tiles[postion.x][postion.y].collision = 2;
+			if(tiles[postion.x][postion.y].resource != null)
+			{
+				if(tiles[postion.x][postion.y].resource.amount - pController.getMineSpeed() <= 0)
+				{
+					tiles[postion.x][postion.y].resource = null;
+				}else {
+					tiles[postion.x][postion.y].resource.amount -= pController.getMineSpeed();
+					System.out.println("Resourcetype: " + tiles[postion.x][postion.y].resource.getType() + " Amount:"+ (tiles[postion.x][postion.y].resource.amount - pController.getMineSpeed()));
+				}
+			}
 		}
 	}
 
-	public static Actor addActor(Actor actor, IVector2 pos, boolean bUpdate)
+
+
+	public static Actor addActor(Actor actor, IVector2 pos)
 	{
 		if(actor != null) {
-
 			if (addTileActor(actor, pos)) {
-				if (bUpdate) {
+				if (actor.GetNeedUpdate()) {
 					updateActors.add(actor);
 				}
 				if(actor.coll() != 0)// if the actor wouldn't collied then we don't need to change anything
@@ -152,12 +172,11 @@ public class WorldM extends ApplicationAdapter {
 	static public boolean validTile(int x, int y){if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length ) return false;return true;}
 	static public boolean validTile(IVector2 pos){if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 ||pos.y >= tiles[0].length ) return false;return true;}
 	// gets the texture by num
-	static public Texture getTexture(int num){if(num < textures.size)return textures.get(num); return null;}
+
 
 	@Override
 	public void dispose () {
 		batch.dispose();
-		for(int i=0; i < textures.size; i++)
-			textures.get(i).dispose();
+		textureClass.dispose();
 	}
 }
