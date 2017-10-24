@@ -3,7 +3,7 @@ package com.mygdx.game.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 /**
- * Created by 745379 on 22.10.2017.
+ * Created by Tobias on 22.10.2017.
  */
 
 public class Resource{

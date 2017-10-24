@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * Created by 745379 on 22.10.2017.
+ * Created by Tobias on 22.10.2017.
  */
 
 public class TexturesClass {
@@ -15,6 +15,8 @@ public class TexturesClass {
     protected static Array<Texture> texturesGround = new Array<Texture>();
     //texture from the actors
     protected static Array<Texture> texturesResource = new Array<Texture>();
+    //texture from the item that can be place in the world
+    protected static Array<Texture> texturesItemActor = new Array<Texture>();
 
     public TexturesClass() {
         // add all textures
@@ -33,6 +35,7 @@ public class TexturesClass {
     static public Texture getTextureActor(int num){if(num < texturesActor.size)return texturesActor.get(num); return null;}
     static public Texture getTextureGround(int num){if(num < texturesGround.size)return texturesGround.get(num); return null;}
     static public Texture getTextureResource(int num){if(num < texturesResource.size)return texturesResource.get(num); return null;}
+    static public Texture getTextureItemActor(int num){if(num < texturesItemActor.size)return texturesItemActor.get(num); return null;}
 
     public void dispose() {
         for(int i=0; i < texturesGround.size; i++)
@@ -41,5 +44,7 @@ public class TexturesClass {
             texturesActor.get(i).dispose();
         for(int i=0; i < texturesResource.size; i++)
             texturesResource.get(i).dispose();
+        for(int i=0; i < texturesItemActor.size; i++)
+            texturesItemActor.get(i).dispose();
     }
 }

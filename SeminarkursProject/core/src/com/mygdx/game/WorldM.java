@@ -16,6 +16,11 @@ import com.mygdx.game.Types.IVector2;
 
 import java.util.Random;
 
+/**
+ * Created by Tobias on round about 20.08.2017.
+ */
+
+
 public class WorldM extends ApplicationAdapter {
 
 	public static final int WIDTH = 480;
@@ -33,16 +38,14 @@ public class WorldM extends ApplicationAdapter {
 	// the cam (what the player sees)
 	protected static OrthographicCamera cam;
 
-
-
 	SpriteBatch batch;
 	// used for random things
 	Random rand = new Random();
 	TexturesClass textureClass;
 
 	@Override
-	public void create () {
-
+	public void create ()
+	{
 		textureClass = new TexturesClass();		// make new tiles
 		for(int x = 0; x < tiles.length ; x++)
 			for (int y = 0; y < tiles[0].length; y++) {

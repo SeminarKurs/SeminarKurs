@@ -16,7 +16,6 @@ public class DrawH {
         }else{
             System.out.println("Error: invalid image num! actor");
         }
-
     }
     public static void drawResource(Batch batch, int x, int y, int imageNum)
     {
@@ -25,6 +24,21 @@ public class DrawH {
         }else{
             System.out.println("Error: invalid image num! resource");
         }
-
+    }
+    public static void drawItemActor(Batch batch, int x, int y, int imageNum)
+    {
+        if(TexturesClass.getTextureItemActor(imageNum) != null) {
+            batch.draw(TexturesClass.getTextureItemActor(imageNum), x - 0.5f, y - 0.5f, 1f, 1f);
+        }else{
+            System.out.println("Error: invalid image num! resource");
+        }
+    }
+    public static void drawItemActor(Batch batch, float x, float y, int imageNum)
+    {
+        if(TexturesClass.getTextureItemActor(imageNum) != null) {
+            batch.draw(TexturesClass.getTextureItemActor(imageNum), x - 0.5f, y - 0.5f, 1f, 1f);
+        }else{
+            System.out.println("Error: invalid image num! itemActor");
+        }
     }
 }
