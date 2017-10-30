@@ -20,4 +20,9 @@ public class ItemToolMaster extends ItemMaster{
         this. efficiency = efficiency;
         this.id = id;
     }
+    public float getEfficiency()
+    {
+        return efficiency;
+    }
+
 }

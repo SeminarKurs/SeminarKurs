@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.Actor.Resource;
+import com.mygdx.game.Item.ItemToolMaster;
 import com.mygdx.game.Types.FMath;
 import com.mygdx.game.Types.IVector2;
 import com.mygdx.game.WorldM;
@@ -34,12 +36,16 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     private Vector2 pos = new Vector2();
 
     private OrthographicCamera camera;
-    private float mWScale = 1;
-    // speed that the cam player moves (units per second)
-    private float speed = 2f;
-    // the speed mining is done.
-    private int mineSpeed = 1;
+    private float mouseWheelScale = 1;
+    // moveSpeed that the cam player moves (units per second)
+    private float moveSpeed = 2f;
+    // the moveSpeed mining is done.
+    private float mineSpeed = 1f;
+    private float mineProgress;
+    private boolean mineing;
+    IVector2 mineTile = new IVector2();
 
+    private ItemToolMaster tool;
 
     public PlayerController(OrthographicCamera camera)
     {
@@ -55,6 +61,26 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     public void tick(float dt)
     {
+        if(mineing)
+        {
+            Resource r = WorldM.getResource(mineTile);
+            mineProgress += dt * mineSpeed / r.hardness();
+            if(mineProgress >= 1)
+            {
+                System.out.println("hi");
+                if(r.amount < (int)mineProgress )
+                {
+                    r.amount = 0;
+                    mineing = false;
+                    WorldM.UpdateResource(mineTile);
+                }
+                else
+                {
+                    r.amount -= (int)mineProgress;
+                }
+            }
+        }
+
         if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
             Vector2 movement = new Vector2();
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -70,8 +96,8 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
                 movement.x -= 1;
             }
 
-            movement.nor(); // nor vector for same speed every dircetion
-            movement.scl(speed * dt); // make it (speed*dt) times longer
+            movement.nor(); // nor vector for same moveSpeed every dircetion
+            movement.scl(moveSpeed * dt); // make it (moveSpeed*dt) times longer
 
             IVector2 posI = new IVector2();
             posI.set(FMath.getTile(pos));
@@ -110,6 +136,12 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         }
     }
 
+    void SetEquipment(ItemToolMaster tool)
+    {
+        this.tool = tool;
+        mineSpeed = tool.getEfficiency();
+    }
+
     private boolean checkCollision(boolean x, Vector2 movement, IVector2 tile)
     {
         if(WorldM.getTileCollision(tile.x, tile.y) != 2)
@@ -143,8 +175,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
         float distanceX = tileLO.x - posLO.x + ((tileLO.x - posLO.x) >= 0 ? -(tileHSize + plSizeHX) : (tileHSize + plSizeHX));
 
-
-
         // The y positon when the player collides
         if(tileLO.x - posLO.x >= 0 ? distanceX < movement.x : distanceX > movement.x)
         {
@@ -171,31 +201,30 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         return false;
     }
 
-    float makePos(float f)
-    {
-        if(f < 0)return -f;
-        return f;
-    }
-
-    Vector3 tp = new Vector3();
-
-
     @Override public boolean touchDown (int screenX, int screenY, int pointer, int button)
     {
+        Vector3 tp = new Vector3();
         // ignore if its not left mouse button or first touch pointer
         if (button != Input.Buttons.LEFT) return false;
         camera.unproject(tp.set(screenX, screenY, 0));
         if(tp.x < 0){ tp.x -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
         if(tp.y < 0){ tp.y -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
-        IVector2 position = FMath.getTile(tp);
-        WorldM.tileClicked(position);
+        mineTile = FMath.getTile(tp);
+        if(WorldM.validTile(mineTile))
+            mineing = true;
         return true;
     }
 
+    @Override public boolean touchUp (int screenX, int screenY, int pointer, int button)
+    {
+        if (button != Input.Buttons.LEFT) return false;
+        mineing = false;
+        return true;
+    }
 
     @Override public boolean scrolled (int amount)
     {
-        camera.zoom += amount * mWScale;
+        camera.zoom += amount * mouseWheelScale;
                 if(camera.zoom < MINZOOM){ camera.zoom = MINZOOM; }
         if(camera.zoom > MAXZOOM){ camera.zoom = MAXZOOM; }
         return true;
@@ -204,12 +233,11 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     public void UpdPosition(){ pos = new Vector2(camera.position.x - 0.5f, camera.position.y - 0.5f);}
     public Texture getPlayerTex() { return playerTex;}
     public Vector2 getPosition() { return pos;}
-    public int getMineSpeed() { return mineSpeed; }
+    public float getMineSpeed() { return mineSpeed; }
 
     @Override public boolean keyDown (int keycode){ return false;}
     @Override public boolean mouseMoved (int screenX, int screenY){ return true; }
     @Override public boolean touchDragged (int screenX, int screenY, int pointer){ return true; }
-    @Override public boolean touchUp (int screenX, int screenY, int pointer, int button){ return true; }
     @Override public void resize (int width, int height){}
     @Override public void dispose (){}
     @Override public boolean keyUp (int keycode) {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
 import com.mygdx.game.Actor.Resource;
+import com.mygdx.game.Actor.TestActor;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Textures.TexturesClass;
@@ -42,6 +43,7 @@ public class WorldM extends ApplicationAdapter {
 	// used for random things
 	Random rand = new Random();
 	TexturesClass textureClass;
+	float dt;
 
 	@Override
 	public void create ()
@@ -58,7 +60,7 @@ public class WorldM extends ApplicationAdapter {
 
 		tiles[1][1].resource = new Resource(0);
 		addActor(new Actor(), new IVector2(1,2));
-
+		Actor a = (Actor)new TestActor();
 		// make a cam that isn't chrunched
 		cam = new OrthographicCamera(3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
@@ -77,7 +79,7 @@ public class WorldM extends ApplicationAdapter {
 	@Override
 	public void render () {
 		//update
-		float dt = Gdx.graphics.getDeltaTime();
+		dt = Gdx.graphics.getDeltaTime();
 		pController.tick(dt);
 		for(int i=0; i < updateActors.size; i++)
 		{
@@ -112,11 +114,17 @@ public class WorldM extends ApplicationAdapter {
 		batch.draw(pController.getPlayerTex(), pController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, pController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
 	}
+	static public Resource getResource(IVector2 posi)
+    {
+        return tiles[posi.x][posi.y].resource;
+    }
 
 	static public void tileClicked(IVector2 postion)
 	{
+		// valid tile
 		if(postion.x < tiles.length && postion.y < tiles[0].length && postion.x >= 0 && postion.y >= 0)
 		{
+			// has resource
 			if(tiles[postion.x][postion.y].resource != null)
 			{
 				if(tiles[postion.x][postion.y].resource.amount - pController.getMineSpeed() <= 0)
@@ -174,6 +182,7 @@ public class WorldM extends ApplicationAdapter {
 	// see if a tile is valid
 	static public boolean validTile(int x, int y){if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length ) return false;return true;}
 	static public boolean validTile(IVector2 pos){if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 ||pos.y >= tiles[0].length ) return false;return true;}
+	static public void UpdateResource(IVector2 pos){if(tiles[pos.x][pos.y].resource.amount <= 0)tiles[pos.x][pos.y].resource = null;}
 	// gets the texture by num
 
 

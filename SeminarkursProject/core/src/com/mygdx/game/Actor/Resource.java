@@ -13,6 +13,7 @@ public class Resource{
     // the amount that can be gained
     public int amount = 10;
 
+
     public Resource(int type)
     {
         this.type = type;
@@ -22,6 +23,6 @@ public class Resource{
     {
         DrawH.drawResource(batch, x,y, type);
     }
-
+    public int hardness(){return 1;}
     public int getType() { return type; }
 }
