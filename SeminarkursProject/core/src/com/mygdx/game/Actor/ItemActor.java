@@ -1,7 +1,8 @@
 package com.mygdx.game.Actor;
 
+
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.mygdx.game.ItemMaster;
+import com.mygdx.game.Item.ItemMaster;
 
 /**
  * Created by Tobias on 23.10.2017.
