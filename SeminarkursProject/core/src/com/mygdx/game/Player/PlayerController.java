@@ -61,7 +61,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     public void tick(float dt)
     {
-        if(mineing)
+        if(mineing && WorldM.hasResource(mineTile))
         {
             Resource r = WorldM.getResource(mineTile);
             mineProgress += dt * mineSpeed / r.hardness();
@@ -72,7 +72,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
                 {
                     r.amount = 0;
                     mineing = false;
-                    WorldM.UpdateResource(mineTile);
+                    WorldM.updateResource(mineTile);
                 }
                 else
                 {

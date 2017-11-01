@@ -13,8 +13,7 @@ public class Actor {
     // needs to be updated, false don't update
     boolean needUpdate = false;
 
-    public void update(float dt)
-    {
+    public void update(float dt) {
 
     }
 

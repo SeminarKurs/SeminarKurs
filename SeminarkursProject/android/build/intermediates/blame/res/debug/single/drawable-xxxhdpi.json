@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\SeminarKurs\\SeminarKurs-master\\SeminarkursProject\\android\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi\\ic_launcher.png",
+        "source": "D:\\SeminarKurs\\SeminarKurs-master\\SeminarkursProject\\android\\res\\drawable-xxxhdpi\\ic_launcher.png"
+    },
+    {
         "merged": "D:\\GitHub\\SeminarKurs\\SeminarkursProject\\android\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi\\ic_launcher.png",
         "source": "D:\\GitHub\\SeminarKurs\\SeminarkursProject\\android\\res\\drawable-xxxhdpi\\ic_launcher.png"
     },

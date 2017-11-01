@@ -14,4 +14,6 @@ public class Tile {
     public Actor actor;
     public Resource resource;
 
+    public ItemActor item;
+
 }

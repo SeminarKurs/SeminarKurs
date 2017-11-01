@@ -13,7 +13,7 @@ public class ItemActor {
     ItemMaster item;
 
     // returns the number of the image
-    public int image(){return 1;}
+    public int image(){return 0;}
 
     public void draw(Batch batch, int x, int y)
     {
@@ -23,5 +23,9 @@ public class ItemActor {
     public void draw(Batch batch, float x, float y)
     {
         DrawH.drawItemActor(batch, x,y, image());
+    }
+
+    public ItemMaster getItem(){
+        return item;
     }
 }

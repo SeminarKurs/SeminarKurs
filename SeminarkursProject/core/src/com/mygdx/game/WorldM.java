@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
+import com.mygdx.game.Actor.DrawH;
+import com.mygdx.game.Actor.Foerderband;
+import com.mygdx.game.Actor.ItemActor;
 import com.mygdx.game.Actor.Resource;
 import com.mygdx.game.Actor.TestActor;
 import com.mygdx.game.Actor.Tile;
@@ -58,9 +61,9 @@ public class WorldM extends ApplicationAdapter {
 				}
 			}
 
-		tiles[1][1].resource = new Resource(0);
+		//tiles[1][1].resource = new Resource(0);
 		addActor(new Actor(), new IVector2(1,2));
-		Actor a = (Actor)new TestActor();
+		//Actor a = (Actor)new TestActor();
 		// make a cam that isn't chrunched
 		cam = new OrthographicCamera(3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 		cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0);
@@ -74,6 +77,10 @@ public class WorldM extends ApplicationAdapter {
 
 		tiles[1][0].image = 1;
 		tiles[1][0].collision = 2;
+
+        Foerderband f = new Foerderband(1, new ItemActor(), new IVector2(1,3));
+		tiles [0][0].item = new ItemActor();
+        addActor(f, f.getPos());
 	}
 
 	@Override
@@ -107,6 +114,10 @@ public class WorldM extends ApplicationAdapter {
 				if(tiles[x][y].actor != null)
 				{
 					tiles[x][y].actor.draw(batch, x,y);
+				}
+				if(tiles[x][y].item != null)
+				{
+					DrawH.drawItemActor(batch, x, y, tiles[x][y].item.image());
 				}
 			}
 
@@ -160,6 +171,12 @@ public class WorldM extends ApplicationAdapter {
 		return null;
 	}
 
+	static public boolean setItemActor (IVector2 pos, ItemActor item){
+		if(!validTile(pos) || tiles [pos.x][pos.y].item != null) return false;
+		tiles [pos.x][pos.y].item = item;
+		return true;
+	}
+
 	// add a actor to tile
 	static private boolean addTileActor(Actor actor, IVector2 pos)
 	{
@@ -181,9 +198,9 @@ public class WorldM extends ApplicationAdapter {
 	static public int getTileCollision(IVector2 pos){ if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 || pos.y >= tiles[0].length )return 0;return tiles[pos.x][pos.y].collision; }
 	// see if a tile is valid
 	static public boolean validTile(int x, int y){if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length ) return false;return true;}
-	static public boolean validTile(IVector2 pos){if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 ||pos.y >= tiles[0].length ) return false;return true;}
-	static public void UpdateResource(IVector2 pos){if(tiles[pos.x][pos.y].resource.amount <= 0)tiles[pos.x][pos.y].resource = null;}
-	// gets the texture by num
+	static public boolean validTile(IVector2 pos){if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 ||pos.y >= tiles[0].length ) return false; return true;}
+	static public void updateResource(IVector2 pos){if(tiles[pos.x][pos.y].resource.amount <= 0)tiles[pos.x][pos.y].resource = null;}
+	static public boolean hasResource (IVector2 pos){ return (validTile(pos) && tiles[pos.x][pos.y].item != null); }
 
 
 	@Override
@@ -191,4 +208,6 @@ public class WorldM extends ApplicationAdapter {
 		batch.dispose();
 		textureClass.dispose();
 	}
+
+
 }

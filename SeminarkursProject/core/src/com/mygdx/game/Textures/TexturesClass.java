@@ -26,6 +26,7 @@ public class TexturesClass {
         texturesActor.add(new Texture("ImgTest.png"));
         // resource textures
         texturesResource.add(new Texture("Cole.png"));
+        texturesItemActor.add(new Texture("Cole.png"));
 
     }
 

@@ -2,6 +2,7 @@ package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.WorldM;
 
 /**
  * Created by Christopher Schleppe on 22.10.2017.
@@ -29,6 +30,12 @@ public class Foerderband extends Actor {
         return pos;
     }
 
+    public void transfer (){
+        if(WorldM.setItemActor(, item)){
+            item = null;
+        }
+    }
+
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
     public Foerderband(int richtung, ItemActor item, IVector2 pos) {
         needUpdate = true;
@@ -43,6 +50,7 @@ public class Foerderband extends Actor {
         progress += dt /10 ;
         if (progress >= 0.5f ) {
             progress = 0.5f;
+            transfer();
 
         }
 
@@ -54,20 +62,21 @@ public class Foerderband extends Actor {
 
     public void draw(Batch batch, int x, int y) {
        // DrawH.drawItemActor(batch, x,y, 0);
-        switch (richtung) {
-            case 1: // links
-                DrawH.drawItemActor(batch, x - progress,y , 0);
-                break;
-            case 2: // rechts
-                DrawH.drawItemActor(batch, x + progress, y ,0 );
-                break;
+        if(item != null)
+            switch (richtung) {
+                case 1: // links
+                    DrawH.drawItemActor(batch, x - progress,y , 0);
+                    break;
+                case 2: // rechts
+                     DrawH.drawItemActor(batch, x + progress, y ,0 );
+                    break;
 
-            case 3: // oben
-                DrawH.drawItemActor(batch, x, y + progress,0 );
-                break;
-            case 4: // unten
-                DrawH.drawItemActor(batch, x, y - progress,0 );
-                break;
+                case 3: // oben
+                    DrawH.drawItemActor(batch, x, y + progress,0 );
+                     break;
+                case 4: // unten
+                    DrawH.drawItemActor(batch, x, y - progress,0 );
+                    break;
         }
     }
 
