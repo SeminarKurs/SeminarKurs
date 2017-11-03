@@ -1,6 +1,7 @@
 package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.utils.Array;
 
 /**
  * Created by Tobias on 24.08.2017.
@@ -13,9 +14,7 @@ public class Actor {
     // needs to be updated, false don't update
     boolean needUpdate = false;
 
-    public void update(float dt) {
-
-    }
+    public void update(float dt) {}
 
     // return collison
     public int coll(){return 0;}
@@ -23,8 +22,7 @@ public class Actor {
     public int image(){return 0;}
 
     public boolean GetNeedUpdate(){ return needUpdate;}
-    public void draw(Batch batch, int x, int y)
-    {
-        DrawH.drawActor(batch, x,y, image());
-    }
+    // FLayer is the topmost layer to be drawn (but the player is further in the front)
+    public void draw(Batch batch, int x, int y, Array<FLayer> fLayers){ DrawH.drawActor(batch, x,y, image()); fLayers.add(new FLayer(x,y,0)); }
+
 }

@@ -9,10 +9,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
 import com.mygdx.game.Actor.DrawH;
-import com.mygdx.game.Actor.Foerderband;
+import com.mygdx.game.Actor.FLayer;
 import com.mygdx.game.Actor.ItemActor;
 import com.mygdx.game.Actor.Resource;
-import com.mygdx.game.Actor.TestActor;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Textures.TexturesClass;
@@ -61,7 +60,8 @@ public class WorldM extends ApplicationAdapter {
 				}
 			}
 
-		//tiles[1][1].resource = new Resource(0);
+
+
 		addActor(new Actor(), new IVector2(1,2));
 		//Actor a = (Actor)new TestActor();
 		// make a cam that isn't chrunched
@@ -75,12 +75,9 @@ public class WorldM extends ApplicationAdapter {
 		pController.UpdPosition();
 		Gdx.input.setInputProcessor(pController);
 
-		tiles[1][0].image = 1;
-		tiles[1][0].collision = 2;
-
-        Foerderband f = new Foerderband(1, new ItemActor(), new IVector2(1,3));
-		tiles [0][0].item = new ItemActor();
-        addActor(f, f.getPos());
+        //Foerderband f = new Foerderband(1, new ItemActor(), new IVector2(1,3));
+		//tiles [0][0].item = new ItemActor();
+        //addActor(f, f.getPos());
 	}
 
 	@Override
@@ -101,7 +98,7 @@ public class WorldM extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
-
+		Array<FLayer> fLayers = new Array<FLayer>();
 		for(int x = 0; x < tiles.length ; x++)
 			for(int y = 0; y < tiles[0].length; y++)
 			{
@@ -113,7 +110,7 @@ public class WorldM extends ApplicationAdapter {
 				}
 				if(tiles[x][y].actor != null)
 				{
-					tiles[x][y].actor.draw(batch, x,y);
+					tiles[x][y].actor.draw(batch, x,y, fLayers);
 				}
 				if(tiles[x][y].item != null)
 				{
@@ -121,7 +118,10 @@ public class WorldM extends ApplicationAdapter {
 				}
 			}
 
-
+		for(int i = 0; i < fLayers.size; i++)
+		{
+			DrawH.drawItemActor(batch,fLayers.get(i).x, fLayers.get(i).y, fLayers.get(i).image);
+		}
 		batch.draw(pController.getPlayerTex(), pController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, pController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
 	}
@@ -200,7 +200,7 @@ public class WorldM extends ApplicationAdapter {
 	static public boolean validTile(int x, int y){if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length ) return false;return true;}
 	static public boolean validTile(IVector2 pos){if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 ||pos.y >= tiles[0].length ) return false; return true;}
 	static public void updateResource(IVector2 pos){if(tiles[pos.x][pos.y].resource.amount <= 0)tiles[pos.x][pos.y].resource = null;}
-	static public boolean hasResource (IVector2 pos){ return (validTile(pos) && tiles[pos.x][pos.y].item != null); }
+	static public boolean hasResource (IVector2 pos){ return (validTile(pos) && tiles[pos.x][pos.y].resource != null); }
 
 
 	@Override

@@ -2,7 +2,6 @@ package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.Types.IVector2;
-import com.mygdx.game.WorldM;
 
 /**
  * Created by Christopher Schleppe on 22.10.2017.
@@ -31,9 +30,9 @@ public class Foerderband extends Actor {
     }
 
     public void transfer (){
-        if(WorldM.setItemActor(, item)){
+        //if(WorldM.setItemActor(, item)){
             item = null;
-        }
+        //}
     }
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
@@ -55,10 +54,10 @@ public class Foerderband extends Actor {
         }
 
     }
+
     public ItemActor getActor(){
         return item;
     }
-
 
     public void draw(Batch batch, int x, int y) {
        // DrawH.drawItemActor(batch, x,y, 0);
