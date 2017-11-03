@@ -28,7 +28,9 @@ public class Ofen extends Actor{
                     kohle.addStackSize(item.getItem().getStackSize());
                 }
             }else{
-                this.item = item.getItem();
+                if(this.item.getID() == item.getItem().getID()){
+                    this.item.addStackSize(item.getItem().getStackSize());
+                }
             }
 
         }
@@ -67,6 +69,12 @@ public class Ofen extends Actor{
                 melt();
             }
         }
+
+        @Override
+        public int coll() {
+        return 0;
+    }
+        public int image(){return 0;}
 
 
 }
