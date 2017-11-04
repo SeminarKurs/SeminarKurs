@@ -23,6 +23,6 @@ public class Actor {
 
     public boolean GetNeedUpdate(){ return needUpdate;}
     // FLayer is the topmost layer to be drawn (but the player is further in the front)
-    public void draw(Batch batch, int x, int y, Array<FLayer> fLayers){ DrawH.drawActor(batch, x,y, image()); fLayers.add(new FLayer(x,y,0)); }
+    public void draw(Batch batch, int x, int y, Array<FLayer> fLayers){ DrawH.drawActor(batch, x,y, image());}
 
 }

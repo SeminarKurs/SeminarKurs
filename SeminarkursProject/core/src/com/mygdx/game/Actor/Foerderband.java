@@ -1,7 +1,9 @@
 package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.WorldM;
 
 /**
  * Created by Christopher Schleppe on 22.10.2017.
@@ -16,23 +18,29 @@ public class Foerderband extends Actor {
     private IVector2 pos;
     private float progress = -0.5f;
 
-
-    public int getRichtung() {
-        return richtung;
-    }
-
-    public ItemActor getItem() {
-        return item;
-    }
-
-    public IVector2 getPos() {
-        return pos;
-    }
-
     public void transfer (){
-        //if(WorldM.setItemActor(, item)){
-            item = null;
-        //}
+        switch (richtung) {
+            case 1:
+                if (WorldM.setItemActor(new IVector2(pos.x + 1, pos.y), item)) {
+                    item = null;
+                }
+                break;
+            case 2:
+                if (WorldM.setItemActor(new IVector2(pos.x - 1, pos.y), item)) {
+                    item = null;
+                }
+                break;
+            case 3:
+                if (WorldM.setItemActor(new IVector2(pos.x, pos.y + 1), item)) {
+                    item = null;
+                }
+                break;
+            case 4:
+                if (WorldM.setItemActor(new IVector2(pos.x, pos.y - 1), item)) {
+                    item = null;
+                }
+                break;
+        }
     }
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
@@ -54,29 +62,27 @@ public class Foerderband extends Actor {
         }
 
     }
-
     public ItemActor getActor(){
         return item;
     }
 
-    public void draw(Batch batch, int x, int y) {
-       // DrawH.drawItemActor(batch, x,y, 0);
+    @Override
+    public void draw(Batch batch, int x, int y, Array<FLayer> fLayers) {
         if(item != null)
             switch (richtung) {
                 case 1: // links
-                    DrawH.drawItemActor(batch, x - progress,y , 0);
+                    fLayers.add(new FLayer(x - progress,y, item.image()));
                     break;
                 case 2: // rechts
-                     DrawH.drawItemActor(batch, x + progress, y ,0 );
+                    fLayers.add(new FLayer(x + progress,y, item.image()));
                     break;
-
                 case 3: // oben
-                    DrawH.drawItemActor(batch, x, y + progress,0 );
-                     break;
-                case 4: // unten
-                    DrawH.drawItemActor(batch, x, y - progress,0 );
+                    fLayers.add(new FLayer(x,y + progress, item.image()));
                     break;
-        }
+                case 4: // unten
+                    fLayers.add(new FLayer(x ,y - progress, item.image()));
+                    break;
+            }
     }
 
     @Override

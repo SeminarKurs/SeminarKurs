@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
 import com.mygdx.game.Actor.DrawH;
 import com.mygdx.game.Actor.FLayer;
+import com.mygdx.game.Actor.Foerderband;
 import com.mygdx.game.Actor.ItemActor;
 import com.mygdx.game.Actor.Resource;
 import com.mygdx.game.Actor.Tile;
@@ -75,9 +76,9 @@ public class WorldM extends ApplicationAdapter {
 		pController.UpdPosition();
 		Gdx.input.setInputProcessor(pController);
 
-        //Foerderband f = new Foerderband(1, new ItemActor(), new IVector2(1,3));
+        Foerderband f = new Foerderband(1, new ItemActor(), new IVector2(1,3));
 		//tiles [0][0].item = new ItemActor();
-        //addActor(f, f.getPos());
+        addActor(f, new IVector2(1,3));
 	}
 
 	@Override
