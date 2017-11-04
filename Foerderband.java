@@ -18,18 +18,6 @@ public class Foerderband extends Actor {
     private float progress = -0.5f;
 
 
-    public int getRichtung() {
-        return richtung;
-    }
-
-    public ItemActor getItem() {
-        return item;
-    }
-
-    public IVector2 getPos() {
-        return pos;
-    }
-
     public void transfer (){
         switch (richtung) {
             case 1:
@@ -80,7 +68,6 @@ public class Foerderband extends Actor {
 
 
     public void draw(Batch batch, int x, int y) {
-       // DrawH.drawItemActor(batch, x,y, 0);
         if(item != null)
             switch (richtung) {
                 case 1: // links
