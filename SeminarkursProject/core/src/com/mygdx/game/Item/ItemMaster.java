@@ -11,11 +11,11 @@ public class ItemMaster {
     protected String name;
     protected String desc;
     protected Texture tex;
-    protected int stackSizeMax;
     protected int stackSize;
+    protected int stackSizeMax;
     protected int id;
 
-    public ItemMaster(String name, String desc, Texture tex, int stackSizeMax, int id){
+    public ItemMaster(String name, String desc, Texture tex, int stackSize, int stackSizeMax, int id){
         this.name = name;
         this.desc = desc;
         this.tex = tex;
@@ -39,17 +39,5 @@ public class ItemMaster {
 
     public int getStackSizeMax(){
         return stackSizeMax;
-    }
-
-    public int getID(){
-        return id;
-    }
-
-    public int getStackSize (){
-        return stackSize;
-    }
-
-    public void addStackSize(int s){
-        stackSize += s;
     }
 }

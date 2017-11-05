@@ -18,7 +18,8 @@ public class ItemWeaponMaster extends ItemMaster{
         this.id = id;
         this.damage = damage;
         this.speed = speed;
-        stackSizeMax = 1;
+        this.stackSize =1;
+        this.stackSizeMax = 1;
     }
 
     public int getDamage(){

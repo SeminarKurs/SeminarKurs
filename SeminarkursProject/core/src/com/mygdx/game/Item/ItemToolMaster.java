@@ -15,14 +15,10 @@ public class ItemToolMaster extends ItemMaster{
         this.name = name;
         this.desc = desc;
         this.tex = tex;
+        this.stackSize = 1;
         this.stackSizeMax = 1;
         this.durability = durability;
-        this. efficiency = efficiency;
+        this.efficiency = efficiency;
         this.id = id;
     }
-    public float getEfficiency()
-    {
-        return efficiency;
-    }
-
 }

@@ -14,6 +14,7 @@ public class ItemBuildingMaster extends ItemMaster{
         this.name = name;
         this.desc = desc;
         this.tex = tex;
+        this.stackSize = 1;
         this.stackSizeMax = 1;
         this.size = size;
         this.id = id;
