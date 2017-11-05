@@ -59,7 +59,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     }
 
-    public void tick(float dt)
+    public void update(float dt)
     {
         if(mineing && WorldM.hasResource(mineTile))
         {

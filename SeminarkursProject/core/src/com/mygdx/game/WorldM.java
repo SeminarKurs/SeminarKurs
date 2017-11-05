@@ -85,7 +85,7 @@ public class WorldM extends ApplicationAdapter {
 	public void render () {
 		//update
 		dt = Gdx.graphics.getDeltaTime();
-		pController.tick(dt);
+		pController.update(dt);
 		for(int i=0; i < updateActors.size; i++)
 		{
 			updateActors.get(i).update(dt);
