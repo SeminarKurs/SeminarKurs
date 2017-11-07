@@ -1,5 +1,7 @@
 package com.mygdx.game.Actor;
 
+import com.mygdx.game.Item.ItemMaster;
+
 /**
  * Created by Tobias on 02.09.2017.
  */
@@ -14,6 +16,6 @@ public class Tile {
     public Actor actor;
     public Resource resource;
 
-    public ItemActor item;
+    public ItemMaster item;
 
 }

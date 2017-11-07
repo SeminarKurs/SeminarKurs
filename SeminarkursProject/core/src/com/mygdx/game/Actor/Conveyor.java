@@ -2,6 +2,7 @@ package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Types.IVector2;
 import com.mygdx.game.WorldM;
 
@@ -10,23 +11,23 @@ import com.mygdx.game.WorldM;
  */
 // Wenn Position von item (3, 3) und laufband (4, 3) dann wird das Item auf (3.5, 3) verschoben
 
-public class Foerderband extends Actor {
+public class Conveyor extends Actor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
     private int richtung ;
-    private ItemActor item;
+    private ItemMaster item;
     private IVector2 pos;
     private float progress = -0.5f;
 
     public void transfer (){
         switch (richtung) {
             case 1:
-                if (WorldM.setItemActor(new IVector2(pos.x + 1, pos.y), item)) {
+                if (WorldM.setItemActor(new IVector2(pos.x - 1, pos.y), item)) {
                     item = null;
                 }
                 break;
             case 2:
-                if (WorldM.setItemActor(new IVector2(pos.x - 1, pos.y), item)) {
+                if (WorldM.setItemActor(new IVector2(pos.x + 1, pos.y), item)) {
                     item = null;
                 }
                 break;
@@ -44,13 +45,11 @@ public class Foerderband extends Actor {
     }
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
-    public Foerderband(int richtung, ItemActor item, IVector2 pos) {
+    public Conveyor(int richtung, ItemMaster item, IVector2 pos) {
         needUpdate = true;
         this.richtung = richtung;
         this.item = item;
         this.pos = pos;
-
-
     }
 
     public void update (float dt){
@@ -58,11 +57,10 @@ public class Foerderband extends Actor {
         if (progress >= 0.5f ) {
             progress = 0.5f;
             transfer();
-
         }
 
     }
-    public ItemActor getActor(){
+    public ItemMaster getActor(){
         return item;
     }
 
@@ -71,16 +69,16 @@ public class Foerderband extends Actor {
         if(item != null)
             switch (richtung) {
                 case 1: // links
-                    fLayers.add(new FLayer(x - progress,y, item.image()));
+                    fLayers.add(new FLayer(x - progress,y, item.getImage()));
                     break;
                 case 2: // rechts
-                    fLayers.add(new FLayer(x + progress,y, item.image()));
+                    fLayers.add(new FLayer(x + progress,y, item.getImage()));
                     break;
                 case 3: // oben
-                    fLayers.add(new FLayer(x,y + progress, item.image()));
+                    fLayers.add(new FLayer(x,y + progress, item.getImage()));
                     break;
                 case 4: // unten
-                    fLayers.add(new FLayer(x ,y - progress, item.image()));
+                    fLayers.add(new FLayer(x ,y - progress, item.getImage()));
                     break;
             }
     }

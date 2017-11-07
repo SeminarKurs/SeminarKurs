@@ -20,7 +20,7 @@ public class Inventory {
         addStarterItems();
     }
     private void addStarterItems(){
-        addItem(ItemList.axe_t1, 1);
+        addItem(ItemList.axe_t1(), 1);
     }
     private void addItemToSlot(int p, ItemMaster it, int q){
         slots[p].addNewItems(it, q);
@@ -129,7 +129,7 @@ public class Inventory {
         }
         public String getItemName(){
             if(it != null){
-                return it.getName();
+                return it.getId().toString();
             }
             return null;
         }

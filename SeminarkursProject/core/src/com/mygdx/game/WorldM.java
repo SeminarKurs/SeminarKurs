@@ -10,10 +10,10 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
 import com.mygdx.game.Actor.DrawH;
 import com.mygdx.game.Actor.FLayer;
-import com.mygdx.game.Actor.Foerderband;
-import com.mygdx.game.Actor.ItemActor;
+import com.mygdx.game.Actor.Conveyor;
 import com.mygdx.game.Actor.Resource;
 import com.mygdx.game.Actor.Tile;
+import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Textures.TexturesClass;
 import com.mygdx.game.Types.IVector2;
@@ -73,10 +73,10 @@ public class WorldM extends ApplicationAdapter {
 		batch = new SpriteBatch();
 
 		pController = new PlayerController(cam);
-		pController.UpdPosition();
+
 		Gdx.input.setInputProcessor(pController);
 
-        Foerderband f = new Foerderband(1, new ItemActor(), new IVector2(1,3));
+        Conveyor f = new Conveyor(2, new ItemMaster(), new IVector2(1,3));
 		//tiles [0][0].item = new ItemActor();
         addActor(f, new IVector2(1,3));
 	}
@@ -115,7 +115,7 @@ public class WorldM extends ApplicationAdapter {
 				}
 				if(tiles[x][y].item != null)
 				{
-					DrawH.drawItemActor(batch, x, y, tiles[x][y].item.image());
+					DrawH.drawItemActor(batch, x, y, tiles[x][y].item.getImage());
 				}
 			}
 
@@ -172,7 +172,7 @@ public class WorldM extends ApplicationAdapter {
 		return null;
 	}
 
-	static public boolean setItemActor (IVector2 pos, ItemActor item){
+	static public boolean setItemActor (IVector2 pos, ItemMaster item){
 		if(!validTile(pos) || tiles [pos.x][pos.y].item != null) return false;
 		tiles [pos.x][pos.y].item = item;
 		return true;

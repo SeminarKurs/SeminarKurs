@@ -14,7 +14,6 @@ import com.mygdx.game.Types.FMath;
 import com.mygdx.game.Types.IVector2;
 import com.mygdx.game.WorldM;
 
-
 /**
  * Created by Tobias on 28.08.2017.
  */
@@ -51,6 +50,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     {
         this.camera = camera;
         playerTex = new Texture("ImgTest.png");
+        UpdPosition();
     }
 
     @Override public void create () { Gdx.input.setInputProcessor(this);}
@@ -164,9 +164,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         boolean isCollision = true;
         float tileHSize = 0.5f;
 
-        // The distance to the next colliding tile
-        //float distanceX = tile.x - pos.x + ((tile.x - pos.x) >= 0 ? -(tileHSize + plSizeHX) : (tileHSize + plSizeHX));
-
         if(Math.abs(tileLO.x - posLO.x) < plSizeHX)
         {
             if(!x){movement.set(movement.y, movement.x);}// reset the movment that it wont get returned bad
@@ -230,7 +227,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         return true;
     }
 
-    public void UpdPosition(){ pos = new Vector2(camera.position.x - 0.5f, camera.position.y - 0.5f);}
+    private void UpdPosition(){ pos = new Vector2(camera.position.x - 0.5f, camera.position.y - 0.5f);}
     public Texture getPlayerTex() { return playerTex;}
     public Vector2 getPosition() { return pos;}
     public float getMineSpeed() { return mineSpeed; }
