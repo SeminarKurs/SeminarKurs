@@ -111,7 +111,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
                     checkCollision(true, movement, posI.addNew(-1, 1));
                     checkCollision(true, movement, posI.addNew(-1, -1));
                 }
-
             }
             if (movement.y != 0) {
                 if(movement.y > 0) {
@@ -183,9 +182,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
                 movement.set(distanceX, movement.y);//distanceX, movement.y * distanceX / movement.x);
                 if(!x)
                 {
-
                     movement.set(movement.y, movement.x);
-
                 }
                 return true;
             }
@@ -201,9 +198,18 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     @Override public boolean touchDown (int screenX, int screenY, int pointer, int button)
     {
         Vector3 tp = new Vector3();
-        // ignore if its not left mouse button or first touch pointer
-        if (button != Input.Buttons.LEFT) return false;
+        // get mouse courser position
         camera.unproject(tp.set(screenX, screenY, 0));
+        // if it's tight mouse button make colliosn test
+        if(button != Input.Buttons.LEFT)
+        {
+            IVector2 pos = FMath.getTile(tp);
+            if(WorldM.validTile(pos))            
+                WorldM.setCollision(pos);
+            System.out.println(pos.x + ":" + pos.y);
+            return true;
+        }
+
         if(tp.x < 0){ tp.x -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
         if(tp.y < 0){ tp.y -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
         mineTile = FMath.getTile(tp);

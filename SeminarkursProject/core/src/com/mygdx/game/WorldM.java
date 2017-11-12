@@ -55,10 +55,6 @@ public class WorldM extends ApplicationAdapter {
 		for(int x = 0; x < tiles.length ; x++)
 			for (int y = 0; y < tiles[0].length; y++) {
 				tiles[x][y] = new Tile();
-				if(rand.nextFloat() <= 0.1f)
-				{
-
-				}
 			}
 
 
@@ -79,6 +75,8 @@ public class WorldM extends ApplicationAdapter {
         Conveyor f = new Conveyor(2, new ItemMaster(), new IVector2(1,3));
 		//tiles [0][0].item = new ItemActor();
         addActor(f, new IVector2(1,3));
+         
+        
 	}
 
 	@Override
@@ -178,6 +176,12 @@ public class WorldM extends ApplicationAdapter {
 		return true;
 	}
 
+	static public void setCollision(IVector2 pos)
+	{
+		tiles[pos.x][pos.y].collision = 2;
+		tiles[pos.x][pos.y].image = 1;
+	}
+
 	// add a actor to tile
 	static private boolean addTileActor(Actor actor, IVector2 pos)
 	{
@@ -209,6 +213,4 @@ public class WorldM extends ApplicationAdapter {
 		batch.dispose();
 		textureClass.dispose();
 	}
-
-
 }

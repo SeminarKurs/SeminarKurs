@@ -64,7 +64,7 @@ public class Oven extends Actor{
 
         @Override
         public int coll() {
-        return 0;
+        return 2;
     }
         public int image(){return 0;}
 
