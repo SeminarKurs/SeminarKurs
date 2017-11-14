@@ -8,7 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.Actor.Resource;
+import com.mygdx.game.Actor.Collision;
+import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Item.ItemToolMaster;
 import com.mygdx.game.Types.FMath;
 import com.mygdx.game.Types.IVector2;
@@ -39,7 +40,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     // moveSpeed that the cam player moves (units per second)
     private float moveSpeed = 2f;
     // the moveSpeed mining is done.
-    private float mineSpeed = 1f;
+    private float mineSpeed = 10f;
     private float mineProgress;
     private boolean mineing;
     IVector2 mineTile = new IVector2();
@@ -49,7 +50,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     public PlayerController(OrthographicCamera camera)
     {
         this.camera = camera;
-        playerTex = new Texture("ImgTest.png");
+        playerTex = new Texture("Player.png");
         UpdPosition();
     }
 
@@ -63,22 +64,27 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     {
         if(mineing && WorldM.hasResource(mineTile))
         {
-            Resource r = WorldM.getResource(mineTile);
-            mineProgress += dt * mineSpeed / r.hardness();
-            if(mineProgress >= 1)
-            {
-                System.out.println("hi");
-                if(r.amount < (int)mineProgress )
-                {
-                    r.amount = 0;
-                    mineing = false;
-                    WorldM.updateResource(mineTile);
-                }
-                else
-                {
-                    r.amount -= (int)mineProgress;
+            Tile t = WorldM.getResource(mineTile);
+            if(t.hasRes()) {
+                mineProgress += dt * mineSpeed / t.resHardness();
+                if (mineProgress >= 1) {
+                    if (t.resAmount() < (int) mineProgress) {
+                        t.resSetAmount(0);
+                        mineing = false;
+                        WorldM.updateResource(mineTile);
+                    } else {
+                        t.resSetAmount(t.resAmount() - (int) mineProgress);
+                    }
+                    mineProgress %= 1;
+
                 }
             }
+            else
+            {
+                mineing = false;
+            }
+
+
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
@@ -143,7 +149,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     private boolean checkCollision(boolean x, Vector2 movement, IVector2 tile)
     {
-        if(WorldM.getTileCollision(tile.x, tile.y) != 2)
+        if(WorldM.getTileCollision(tile.x, tile.y) == Collision.none)
         {
             return false;
         }

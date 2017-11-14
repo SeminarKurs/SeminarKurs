@@ -84,8 +84,8 @@ public class Conveyor extends Actor {
     }
 
     @Override
-    public int coll() {
-        return 0;
+    public Collision coll() {
+        return Collision.none;
     }
     public int image(){return 0;}
 

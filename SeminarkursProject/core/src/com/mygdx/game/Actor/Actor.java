@@ -17,7 +17,7 @@ public class Actor {
     public void update(float dt) {}
 
     // return collison
-    public int coll(){return 0;}
+    public Collision coll(){return Collision.none;}
     // returns the number of the image
     public int image(){return 0;}
 

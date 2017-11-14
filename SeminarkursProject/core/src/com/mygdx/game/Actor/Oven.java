@@ -63,8 +63,8 @@ public class Oven extends Actor{
         }
 
         @Override
-        public int coll() {
-        return 2;
+        public Collision coll() {
+        return Collision.collides;
     }
         public int image(){return 0;}
 

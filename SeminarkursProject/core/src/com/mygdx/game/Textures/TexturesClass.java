@@ -16,27 +16,33 @@ public class TexturesClass {
     //texture from the actors
     protected static Array<Texture> texturesResource = new Array<Texture>();
     //texture from the item that can be place in the world
-    protected static Array<Texture> texturesItemActor = new Array<Texture>();
+    protected static Array<Texture> texturesItem = new Array<Texture>();
 
     public TexturesClass() {
         // add all textures
         // ground texture
         texturesGround.add(new Texture("badlogic.jpg"));
+        //texturesGround.add(new Texture("Black.png"));
+        texturesGround.add(new Texture("Blue.png"));
+        texturesGround.add(new Texture("Red.png"));
         // actor Textures
-        texturesActor.add(new Texture("ImgTest.png"));
+        texturesActor.add(new Texture("Green.png"));
         // resource textures
         texturesResource.add(new Texture("Cole.png"));
-        texturesItemActor.add(new Texture("Cole.png"));
+        texturesResource.add(new Texture("Tree.png"));
+
+        // item textures
+        texturesItem.add(new Texture("Cole.png"));
 
     }
-
-
 
     // gets the texture by num
     static public Texture getTextureActor(int num){if(num < texturesActor.size)return texturesActor.get(num); return null;}
     static public Texture getTextureGround(int num){if(num < texturesGround.size)return texturesGround.get(num); return null;}
     static public Texture getTextureResource(int num){if(num < texturesResource.size)return texturesResource.get(num); return null;}
-    static public Texture getTextureItemActor(int num){if(num < texturesItemActor.size)return texturesItemActor.get(num); return null;}
+    static public Texture getTextureItem(int num){if(num < texturesItem.size)return texturesItem.get(num); return null;}
+    static public int getTexturesGroundLenght(){return texturesGround.size;}
+    static public int getTexturesResourceLenght(){return texturesResource.size;}
 
     public void dispose() {
         for(int i=0; i < texturesGround.size; i++)
@@ -45,7 +51,7 @@ public class TexturesClass {
             texturesActor.get(i).dispose();
         for(int i=0; i < texturesResource.size; i++)
             texturesResource.get(i).dispose();
-        for(int i=0; i < texturesItemActor.size; i++)
-            texturesItemActor.get(i).dispose();
+        for(int i = 0; i < texturesItem.size; i++)
+            texturesItem.get(i).dispose();
     }
 }

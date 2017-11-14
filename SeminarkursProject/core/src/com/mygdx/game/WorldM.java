@@ -8,10 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
+import com.mygdx.game.Actor.Collision;
+import com.mygdx.game.Actor.Conveyor;
 import com.mygdx.game.Actor.DrawH;
 import com.mygdx.game.Actor.FLayer;
-import com.mygdx.game.Actor.Conveyor;
-import com.mygdx.game.Actor.Resource;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Player.PlayerController;
@@ -30,7 +30,7 @@ public class WorldM extends ApplicationAdapter {
 	public static final int WIDTH = 480;
 	public static final int HEIGHT = 800;
 	public static final String TITLE = "title";
-	public static final IVector2 worldSize = new IVector2(10, 10);
+	public static final IVector2 worldSize = new IVector2(50, 50);
 
 	// the tiles that represent the world
 	private static Tile[][] tiles = new Tile[worldSize.x][worldSize.y];
@@ -42,21 +42,24 @@ public class WorldM extends ApplicationAdapter {
 	// the cam (what the player sees)
 	protected static OrthographicCamera cam;
 
-	SpriteBatch batch;
+	private SpriteBatch batch;
 	// used for random things
-	Random rand = new Random();
-	TexturesClass textureClass;
-	float dt;
+	private Random rand = new Random();
+	private TexturesClass textureClass;
+	private float dt;
+	private int seed;
 
 	@Override
 	public void create ()
 	{
+		seed = new Random().nextInt(10000000);
 		textureClass = new TexturesClass();		// make new tiles
 		for(int x = 0; x < tiles.length ; x++)
 			for (int y = 0; y < tiles[0].length; y++) {
 				tiles[x][y] = new Tile();
-			}
 
+			}
+		generate();
 
 
 		addActor(new Actor(), new IVector2(1,2));
@@ -75,8 +78,27 @@ public class WorldM extends ApplicationAdapter {
         Conveyor f = new Conveyor(2, new ItemMaster(), new IVector2(1,3));
 		//tiles [0][0].item = new ItemActor();
         addActor(f, new IVector2(1,3));
-         
+        //tiles[1][1].resource = new Resource(1);
         
+	}
+
+	private void generate() {
+		Random rd = new Random();
+
+		for (int x = 0; x < tiles.length; x++)
+			for (int y = 0; y < tiles[0].length; y++) {
+				rd.setSeed(x * 123450 + y *23292367 + seed);
+				int i = rd.nextInt(TexturesClass.getTexturesGroundLenght() * 2);
+				if(i < TexturesClass.getTexturesGroundLenght())
+					tiles[x][y].image = i;
+				rd.setSeed(x * 908234 + y *234578 + seed);
+				i = rd.nextInt(TexturesClass.getTexturesResourceLenght() * 10);
+				if(i < TexturesClass.getTexturesResourceLenght())
+				{
+					tiles[x][y].setRes(i);
+				}
+
+			}
 	}
 
 	@Override
@@ -103,9 +125,9 @@ public class WorldM extends ApplicationAdapter {
 			{
 				if(TexturesClass.getTextureGround(tiles[x][y].image) != null)
 					batch.draw(TexturesClass.getTextureGround (tiles[x][y].image), x-0.5f, y-0.5f, 1f, 1f);
-				if(tiles[x][y].resource != null)
+				if(tiles[x][y].hasRes())
 				{
-					tiles[x][y].resource.draw(batch, x,y);
+					tiles[x][y].resDraw(batch, x,y);
 				}
 				if(tiles[x][y].actor != null)
 				{
@@ -124,45 +146,23 @@ public class WorldM extends ApplicationAdapter {
 		batch.draw(pController.getPlayerTex(), pController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, pController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
 	}
-	static public Resource getResource(IVector2 posi)
+	static public Tile getResource(IVector2 posi)
     {
-        return tiles[posi.x][posi.y].resource;
+        return tiles[posi.x][posi.y];
     }
-
-	static public void tileClicked(IVector2 postion)
-	{
-		// valid tile
-		if(postion.x < tiles.length && postion.y < tiles[0].length && postion.x >= 0 && postion.y >= 0)
-		{
-			// has resource
-			if(tiles[postion.x][postion.y].resource != null)
-			{
-				if(tiles[postion.x][postion.y].resource.amount - pController.getMineSpeed() <= 0)
-				{
-					tiles[postion.x][postion.y].resource = null;
-				}else {
-					tiles[postion.x][postion.y].resource.amount -= pController.getMineSpeed();
-					System.out.println("Resourcetype: " + tiles[postion.x][postion.y].resource.getType() + " Amount:"+ (tiles[postion.x][postion.y].resource.amount - pController.getMineSpeed()));
-				}
-			}
-		}
-	}
-
-
 
 	public static Actor addActor(Actor actor, IVector2 pos)
 	{
+		// valid actor?
 		if(actor != null) {
+
 			if (addTileActor(actor, pos)) {
 				if (actor.GetNeedUpdate()) {
 					updateActors.add(actor);
 				}
-				if(actor.coll() != 0)// if the actor wouldn't collied then we don't need to change anything
+				if(actor.coll() == Collision.collides)// if the actor wouldn't collied then we don't need to change anything
 				{
-					if(getTileCollision(pos) != 2)// if the actor is 2 we don't need to change anything
-					{
-						tiles[pos.x][pos.y].collision = actor.coll();
-					}
+					tiles[pos.x][pos.y].collision = actor.coll();
 				}
 				return actor;
 			}
@@ -178,8 +178,8 @@ public class WorldM extends ApplicationAdapter {
 
 	static public void setCollision(IVector2 pos)
 	{
-		tiles[pos.x][pos.y].collision = 2;
-		tiles[pos.x][pos.y].image = 1;
+		tiles[pos.x][pos.y].collision = Collision.collides;
+		tiles[pos.x][pos.y].image = 10000;
 	}
 
 	// add a actor to tile
@@ -187,11 +187,12 @@ public class WorldM extends ApplicationAdapter {
 	{
 		if(validTile(pos))
 		{
-			System.out.println("Cos: " + actor.coll());
 			if(tiles[pos.x][pos.y].actor == null)
+			{
 				tiles[pos.x][pos.y].actor = actor;
+				return true;
+			}
 
-			return true;
 		}
 		return false;
 	}
@@ -199,13 +200,13 @@ public class WorldM extends ApplicationAdapter {
 	static public Vector3 getCamPosition(){return cam.position;}
 	static public float getViewportWidth(){ return cam.viewportWidth* cam.zoom;}
 	static public float getViewportHeight(){return cam.viewportHeight* cam.zoom;}
-	static public int getTileCollision(int x, int y){ if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length )return 0;return tiles[x][y].collision; }
-	static public int getTileCollision(IVector2 pos){ if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 || pos.y >= tiles[0].length )return 0;return tiles[pos.x][pos.y].collision; }
+	static public Collision getTileCollision(int x, int y){ if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length )return Collision.none;return tiles[x][y].collision; }
+	static public Collision getTileCollision(IVector2 pos){ if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 || pos.y >= tiles[0].length )return Collision.none;return tiles[pos.x][pos.y].collision; }
 	// see if a tile is valid
 	static public boolean validTile(int x, int y){if(x < 0 || x >= tiles.length || y < 0 ||y >= tiles[0].length ) return false;return true;}
 	static public boolean validTile(IVector2 pos){if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 ||pos.y >= tiles[0].length ) return false; return true;}
-	static public void updateResource(IVector2 pos){if(tiles[pos.x][pos.y].resource.amount <= 0)tiles[pos.x][pos.y].resource = null;}
-	static public boolean hasResource (IVector2 pos){ return (validTile(pos) && tiles[pos.x][pos.y].resource != null); }
+	static public void updateResource(IVector2 pos){tiles[pos.x][pos.y].refresh();}
+	static public boolean hasResource (IVector2 pos){ return (validTile(pos) && tiles[pos.x][pos.y].hasRes()); }
 
 
 	@Override

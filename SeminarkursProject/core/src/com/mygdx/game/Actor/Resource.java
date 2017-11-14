@@ -13,7 +13,6 @@ public class Resource{
     // the amount that can be gained
     public int amount = 10;
 
-
     public Resource(int type)
     {
         this.type = type;
