@@ -5,13 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
 import com.mygdx.game.Actor.Collision;
+import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Conveyor;
 import com.mygdx.game.Actor.DrawH;
 import com.mygdx.game.Actor.FLayer;
+import com.mygdx.game.Actor.Storage;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Player.PlayerController;
@@ -27,6 +30,7 @@ import java.util.Random;
 
 public class WorldM extends ApplicationAdapter {
 
+	Random rd = new Random();
 	public static final int WIDTH = 480;
 	public static final int HEIGHT = 800;
 	public static final String TITLE = "title";
@@ -38,7 +42,7 @@ public class WorldM extends ApplicationAdapter {
 	// all actors that need to be updated
 	private static Array<Actor> updateActors = new Array<Actor>();
 	// represents the player
-	private static PlayerController pController;
+	private static PlayerController playerController;
 	// the cam (what the player sees)
 	protected static OrthographicCamera cam;
 
@@ -53,6 +57,7 @@ public class WorldM extends ApplicationAdapter {
 	public void create ()
 	{
 		seed = new Random().nextInt(10000000);
+		seed = 121345;
 		textureClass = new TexturesClass();		// make new tiles
 		for(int x = 0; x < tiles.length ; x++)
 			for (int y = 0; y < tiles[0].length; y++) {
@@ -60,7 +65,6 @@ public class WorldM extends ApplicationAdapter {
 
 			}
 		generate();
-
 
 		addActor(new Actor(), new IVector2(1,2));
 		//Actor a = (Actor)new TestActor();
@@ -71,41 +75,51 @@ public class WorldM extends ApplicationAdapter {
 
 		batch = new SpriteBatch();
 
-		pController = new PlayerController(cam);
+		playerController = new PlayerController(cam);
 
-		Gdx.input.setInputProcessor(pController);
+		Gdx.input.setInputProcessor(playerController);
 
-        Conveyor f = new Conveyor(2, new ItemMaster(), new IVector2(1,3));
+        Conveyor f = new Conveyor(4, new ItemMaster(), new IVector2(1,3));
+		tiles[1][1].setRes(0);
+		Miner m = new Miner(new IVector2(1,1));
+		addActor(m, new IVector2(1,1));
 		//tiles [0][0].item = new ItemActor();
         addActor(f, new IVector2(1,3));
         //tiles[1][1].resource = new Resource(1);
-        
+        new Storage();
 	}
 
 	private void generate() {
+
 		Random rd = new Random();
 
 		for (int x = 0; x < tiles.length; x++)
 			for (int y = 0; y < tiles[0].length; y++) {
 				rd.setSeed(x * 123450 + y *23292367 + seed);
-				int i = rd.nextInt(TexturesClass.getTexturesGroundLenght() * 2);
-				if(i < TexturesClass.getTexturesGroundLenght())
-					tiles[x][y].image = i;
+				float alpha = rd.nextFloat();
+				//System.out.println(alpha);sa
+				tiles[x][y].image = alpha;
+
 				rd.setSeed(x * 908234 + y *234578 + seed);
-				i = rd.nextInt(TexturesClass.getTexturesResourceLenght() * 10);
-				if(i < TexturesClass.getTexturesResourceLenght())
+				int res = rd.nextInt(TexturesClass.getTexturesResourceLenght() * 10);
+				if(res < TexturesClass.getTexturesResourceLenght())
 				{
-					tiles[x][y].setRes(i);
+					tiles[x][y].setRes(res);
 				}
 
 			}
+	}
+	public float getNum(int x, int y)// get the random float to the position
+	{
+		rd.setSeed(x * 123450 + y *23292367 + seed);
+		return rd.nextFloat();
 	}
 
 	@Override
 	public void render () {
 		//update
 		dt = Gdx.graphics.getDeltaTime();
-		pController.update(dt);
+		playerController.update(dt);
 		for(int i=0; i < updateActors.size; i++)
 		{
 			updateActors.get(i).update(dt);
@@ -123,16 +137,33 @@ public class WorldM extends ApplicationAdapter {
 		for(int x = 0; x < tiles.length ; x++)
 			for(int y = 0; y < tiles[0].length; y++)
 			{
-				if(TexturesClass.getTextureGround(tiles[x][y].image) != null)
-					batch.draw(TexturesClass.getTextureGround (tiles[x][y].image), x-0.5f, y-0.5f, 1f, 1f);
+				// draw ground
+				Color color = batch.getColor();
+
+				color.a = 1;
+				batch.setColor(color);
+				batch.draw(TexturesClass.getTextureGround(0), x - 0.5f, y - 0.5f, 1f, 1f);
+				color.a = tiles[x][y].image;
+
+				batch.setColor(color);
+				batch.draw(TexturesClass.getTextureGround(1), x - 0.5f, y - 0.5f, 1f, 1f);
+
+
+				// reset alpha
+
+				color.a = 1;
+				batch.setColor(color);
+				//draw Resources
 				if(tiles[x][y].hasRes())
 				{
 					tiles[x][y].resDraw(batch, x,y);
 				}
+				// draw Actor
 				if(tiles[x][y].actor != null)
 				{
 					tiles[x][y].actor.draw(batch, x,y, fLayers);
 				}
+				// draw Item
 				if(tiles[x][y].item != null)
 				{
 					DrawH.drawItemActor(batch, x, y, tiles[x][y].item.getImage());
@@ -143,7 +174,7 @@ public class WorldM extends ApplicationAdapter {
 		{
 			DrawH.drawItemActor(batch,fLayers.get(i).x, fLayers.get(i).y, fLayers.get(i).image);
 		}
-		batch.draw(pController.getPlayerTex(), pController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, pController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
+		batch.draw(playerController.getPlayerTex(), playerController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, playerController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
 	}
 	static public Tile getResource(IVector2 posi)
@@ -192,9 +223,15 @@ public class WorldM extends ApplicationAdapter {
 				tiles[pos.x][pos.y].actor = actor;
 				return true;
 			}
-
 		}
 		return false;
+	}
+	@Override
+	public void resize(int width, int height) {
+
+		cam.setToOrtho(false, 3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
+		playerController.updCamPos();
+		super.resize(width, height);
 	}
 
 	static public Vector3 getCamPosition(){return cam.position;}

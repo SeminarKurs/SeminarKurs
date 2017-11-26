@@ -51,7 +51,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     {
         this.camera = camera;
         playerTex = new Texture("Player.png");
-        UpdPosition();
+        updCamPos();
     }
 
     @Override public void create () { Gdx.input.setInputProcessor(this);}
@@ -132,12 +132,11 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
                 }
             }
 
-            camera.translate(movement.x, movement.y);
+            // too tiny numbers make errors
+            pos.x = Math.round((movement.x+pos.x)  * 1000f) / 1000f;
+            pos.y = Math.round((movement.y+pos.y)* 1000f) / 1000f;
 
-            camera.position.x = Math.round(camera.position.x * 1000f) / 1000f;
-            camera.position.y = Math.round(camera.position.y * 1000f) / 1000f;
-
-            UpdPosition();
+            updCamPos();
         }
     }
 
@@ -239,7 +238,9 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         return true;
     }
 
-    private void UpdPosition(){ pos = new Vector2(camera.position.x - 0.5f, camera.position.y - 0.5f);}
+    public void updCamPos(){
+        camera.position.set(pos.x, pos.y, 0);
+    }
     public Texture getPlayerTex() { return playerTex;}
     public Vector2 getPosition() { return pos;}
     public float getMineSpeed() { return mineSpeed; }

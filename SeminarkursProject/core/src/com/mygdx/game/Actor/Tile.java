@@ -11,7 +11,7 @@ import com.mygdx.game.Item.ItemMaster;
 
 
 public class Tile {
-    public int image = 0;
+    public float image = 0;
     // 0 non 1 overllapp 2 block
     public Collision collision = Collision.none;
     public Actor actor;
@@ -36,8 +36,5 @@ public class Tile {
     public int resAmount(){return resource.amount;}
     public void resSetAmount(int amount){ resource.amount = amount; }
     public int resHardness(){ return resource.hardness();}
-
-
-
 
 }

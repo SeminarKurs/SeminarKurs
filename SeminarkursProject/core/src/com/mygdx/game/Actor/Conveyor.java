@@ -14,10 +14,18 @@ import com.mygdx.game.WorldM;
 public class Conveyor extends Actor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
-    private int richtung ;
+    private int richtung;
     private ItemMaster item;
     private IVector2 pos;
     private float progress = -0.5f;
+
+    //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
+    public Conveyor(int richtung, ItemMaster item, IVector2 pos) {
+        needUpdate = true;
+        this.richtung = richtung;
+        this.item = item;
+        this.pos = pos;
+    }
 
     public void transfer (){
         switch (richtung) {
@@ -44,14 +52,6 @@ public class Conveyor extends Actor {
         }
     }
 
-    //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
-    public Conveyor(int richtung, ItemMaster item, IVector2 pos) {
-        needUpdate = true;
-        this.richtung = richtung;
-        this.item = item;
-        this.pos = pos;
-    }
-
     public void update (float dt){
         progress += dt /10 ;
         if (progress >= 0.5f ) {
@@ -66,6 +66,7 @@ public class Conveyor extends Actor {
 
     @Override
     public void draw(Batch batch, int x, int y, Array<FLayer> fLayers) {
+        DrawH.drawActorRot(batch, x,y, richtung, image());
         if(item != null)
             switch (richtung) {
                 case 1: // links
@@ -87,6 +88,6 @@ public class Conveyor extends Actor {
     public Collision coll() {
         return Collision.none;
     }
-    public int image(){return 0;}
+    public int image(){return 1;}
 
 }
