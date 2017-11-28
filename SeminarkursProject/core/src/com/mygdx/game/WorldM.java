@@ -45,6 +45,8 @@ public class WorldM extends ApplicationAdapter {
 	private static PlayerController playerController;
 	// the cam (what the player sees)
 	protected static OrthographicCamera cam;
+	// UI for inventory
+	private InventoryGUI invgui;
 
 	private SpriteBatch batch;
 	// used for random things
@@ -65,6 +67,9 @@ public class WorldM extends ApplicationAdapter {
 
 			}
 		generate();
+		
+		Inventory.playerInventory.addStarterItems();
+		Inventory.playerInventory.addItem(ItemList.mat_stone(2),2);
 
 		addActor(new Actor(), new IVector2(1,2));
 		//Actor a = (Actor)new TestActor();
@@ -176,6 +181,9 @@ public class WorldM extends ApplicationAdapter {
 		}
 		batch.draw(playerController.getPlayerTex(), playerController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, playerController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
+		
+		invgui = new InventoryGUI(cam, batch);
+		invgui.render();
 	}
 	static public Tile getResource(IVector2 posi)
     {
@@ -250,5 +258,6 @@ public class WorldM extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		textureClass.dispose();
+		invgui.dispose();
 	}
 }
