@@ -24,8 +24,8 @@ public class TexturesClass {
         //texturesGround.add(new Texture("badlogic.jpg"));
         //texturesGround.add(new Texture("Black.png"));
         //texturesGround.add(new Texture("Blue.png"));
-        texturesGround.add(new Texture("Ground1.png"));
-        texturesGround.add(new Texture("Ground2.png"));
+        texturesGround.add(new Texture("Test.png"));
+        texturesGround.add(new Texture("Test.png"));
         //texturesGround.add(new Texture("Ground3.png"));
         //texturesGround.add(new Texture("Ground4.png"));
 

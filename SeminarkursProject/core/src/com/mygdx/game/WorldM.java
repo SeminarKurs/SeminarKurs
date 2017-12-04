@@ -62,7 +62,6 @@ public class WorldM extends ApplicationAdapter {
 		for(int x = 0; x < tiles.length ; x++)
 			for (int y = 0; y < tiles[0].length; y++) {
 				tiles[x][y] = new Tile();
-
 			}
 		generate();
 
@@ -95,9 +94,10 @@ public class WorldM extends ApplicationAdapter {
 
 		for (int x = 0; x < tiles.length; x++)
 			for (int y = 0; y < tiles[0].length; y++) {
-				rd.setSeed(x * 123450 + y *23292367 + seed);
-				float alpha = rd.nextFloat();
-				//System.out.println(alpha);sa
+				//rd.setSeed(x * 123450 + y *23292367 + seed);
+				float alpha = getSmoothNum(x,y); //rd.nextFloat();
+                System.out.println(alpha);
+                //System.out.println(alpha);sa
 				tiles[x][y].image = alpha;
 
 				rd.setSeed(x * 908234 + y *234578 + seed);
@@ -109,7 +109,12 @@ public class WorldM extends ApplicationAdapter {
 
 			}
 	}
-	public float getNum(int x, int y)// get the random float to the position
+	private float getSmoothNum(int x, int y)
+    {
+        return ((getNum(x+1,y+1) + getNum(x+1,y-1) + getNum(x-1,y+1) + getNum(x-1,y-1))/32f + (getNum(x+1,y) + getNum(x,y+1) + getNum(x-1,y) + getNum(x,y-1))/8f + getNum(x,y)/2f);
+    }
+
+	private float getNum(int x, int y)// get the random float to the position
 	{
 		rd.setSeed(x * 123450 + y *23292367 + seed);
 		return rd.nextFloat();
