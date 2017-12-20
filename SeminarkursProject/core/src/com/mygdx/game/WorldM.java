@@ -46,6 +46,8 @@ public class WorldM extends ApplicationAdapter {
 	private static PlayerController playerController;
 	// the cam (what the player sees)
 	protected static OrthographicCamera cam;
+	// UI for inventory
+	private InventoryGUI invgui;
 
 	// stores all Enemys
 	private Array<Enemy> enemies = new Array<Enemy>();
@@ -68,6 +70,9 @@ public class WorldM extends ApplicationAdapter {
 				tiles[x][y] = new Tile();
 			}
 		generate();
+		
+		Inventory.playerInventory.addStarterItems();
+		Inventory.playerInventory.addItem(ItemList.mat_stone(2),2);
 
 		//Actor a = (Actor)new TestActor();
 		// make a cam that isn't chrunched
@@ -185,6 +190,9 @@ public class WorldM extends ApplicationAdapter {
 			batch.draw(TexturesClass.getTextureEnemy(enemies.get(i).getImage()), enemies.get(i).getPosition().x - Enemy.ENEMYSIZEHX ,enemies.get(i).getPosition().y - Enemy.ENEMYSIZEHY, Enemy.ENEMYSIZEHX*2, Enemy.ENEMYSIZEHY*2);
 		batch.draw(playerController.getPlayerTex(), playerController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, playerController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
+		
+		invgui = new InventoryGUI(cam, batch);
+		invgui.render();
 	}
 	static public Tile getResource(IVector2 posi)
     {
@@ -259,5 +267,6 @@ public class WorldM extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		textureClass.dispose();
+		invgui.dispose();
 	}
 }
