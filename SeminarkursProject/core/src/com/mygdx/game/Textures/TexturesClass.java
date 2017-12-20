@@ -17,6 +17,8 @@ public class TexturesClass {
     protected static Array<Texture> texturesResource = new Array<Texture>();
     //texture from the item that can be place in the world
     protected static Array<Texture> texturesItem = new Array<Texture>();
+    //texture from the enemies
+    protected static Array<Texture> texturesEnemy = new Array<Texture>();
 
     public TexturesClass() {
         // add all textures
@@ -42,6 +44,8 @@ public class TexturesClass {
         // item textures
         texturesItem.add(new Texture("Cole.png"));
 
+        texturesEnemy.add(new Texture("Enemy_1.png"));
+
     }
 
     // gets the texture by num
@@ -49,6 +53,7 @@ public class TexturesClass {
     static public Texture getTextureGround(int num){if(num < texturesGround.size)return texturesGround.get(num); return null;}
     static public Texture getTextureResource(int num){if(num < texturesResource.size)return texturesResource.get(num); return null;}
     static public Texture getTextureItem(int num){if(num < texturesItem.size)return texturesItem.get(num); return null;}
+    static public Texture getTextureEnemy(int num){if(num < texturesEnemy.size)return texturesEnemy.get(num); return null;}
     static public int getTexturesGroundLenght(){return texturesGround.size;}
     static public int getTexturesResourceLenght(){return texturesResource.size;}
 

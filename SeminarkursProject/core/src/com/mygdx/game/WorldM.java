@@ -2,20 +2,21 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
 import com.mygdx.game.Actor.Collision;
-import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Conveyor;
 import com.mygdx.game.Actor.DrawH;
 import com.mygdx.game.Actor.FLayer;
-import com.mygdx.game.Actor.Storage;
+import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Tile;
+import com.mygdx.game.Enemy.Enemy;
+import com.mygdx.game.Enemy.PathFinding.PathFindingTest;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Textures.TexturesClass;
@@ -46,6 +47,9 @@ public class WorldM extends ApplicationAdapter {
 	// the cam (what the player sees)
 	protected static OrthographicCamera cam;
 
+	// stores all Enemys
+	private Array<Enemy> enemies = new Array<Enemy>();
+
 	private SpriteBatch batch;
 	// used for random things
 	private Random rand = new Random();
@@ -65,7 +69,6 @@ public class WorldM extends ApplicationAdapter {
 			}
 		generate();
 
-		addActor(new Actor(), new IVector2(1,2));
 		//Actor a = (Actor)new TestActor();
 		// make a cam that isn't chrunched
 		cam = new OrthographicCamera(3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
@@ -82,10 +85,11 @@ public class WorldM extends ApplicationAdapter {
 		tiles[1][1].setRes(0);
 		Miner m = new Miner(new IVector2(1,1));
 		addActor(m, new IVector2(1,1));
-		//tiles [0][0].item = new ItemActor();
+
         addActor(f, new IVector2(1,3));
-        //tiles[1][1].resource = new Resource(1);
-        new Storage();
+
+		new PathFindingTest();
+		enemies.add(new Enemy());
 	}
 
 	private void generate() {
@@ -96,8 +100,7 @@ public class WorldM extends ApplicationAdapter {
 			for (int y = 0; y < tiles[0].length; y++) {
 				//rd.setSeed(x * 123450 + y *23292367 + seed);
 				float alpha = getSmoothNum(x,y); //rd.nextFloat();
-                System.out.println(alpha);
-                //System.out.println(alpha);sa
+
 				tiles[x][y].image = alpha;
 
 				rd.setSeed(x * 908234 + y *234578 + seed);
@@ -106,7 +109,6 @@ public class WorldM extends ApplicationAdapter {
 				{
 					tiles[x][y].setRes(res);
 				}
-
 			}
 	}
 	private float getSmoothNum(int x, int y)
@@ -179,6 +181,8 @@ public class WorldM extends ApplicationAdapter {
 		{
 			DrawH.drawItemActor(batch,fLayers.get(i).x, fLayers.get(i).y, fLayers.get(i).image);
 		}
+		for(int i = 0; i < enemies.size; i++)
+			batch.draw(TexturesClass.getTextureEnemy(enemies.get(i).getImage()), enemies.get(i).getPosition().x - Enemy.ENEMYSIZEHX ,enemies.get(i).getPosition().y - Enemy.ENEMYSIZEHY, Enemy.ENEMYSIZEHX*2, Enemy.ENEMYSIZEHY*2);
 		batch.draw(playerController.getPlayerTex(), playerController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, playerController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
 	}
