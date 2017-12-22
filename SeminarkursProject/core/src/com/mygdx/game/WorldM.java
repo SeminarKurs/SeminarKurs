@@ -72,7 +72,7 @@ public class WorldM extends ApplicationAdapter {
 		generate();
 		
 		Inventory.playerInventory.addStarterItems();
-		Inventory.playerInventory.addItem(Item.ItemList.mat_stone(2),2);
+		Inventory.playerInventory.addItem(ItemList.mat_stone(2),2);
 
 		//Actor a = (Actor)new TestActor();
 		// make a cam that isn't chrunched
