@@ -10,6 +10,7 @@ import com.mygdx.game.Item.ItemMaster;
 public class Inventory {
 
     private Slot[] slots;
+    public static Inventory playerInventory;
 
     //create new Inventory containing 40 slots
     public Inventory(){
@@ -17,9 +18,8 @@ public class Inventory {
         for(int i = 0; i < 40; i++){
             slots[i] = new Slot(null, 0);
         }
-        addStarterItems();
     }
-    private void addStarterItems(){
+    public void addStarterItems(){
         addItem(ItemList.axe_t1(), 1);
     }
     private void addItemToSlot(int p, ItemMaster it, int q){
