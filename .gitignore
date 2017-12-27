@@ -1,1 +1,6 @@
 /SeminarkursProject/.nb-gradle/
+*.class
+*.class
+*.class
+SeminarkursProject/core/build/classes/main/com/mygdx/game/Item/ItemToolMaster.class
+*.class

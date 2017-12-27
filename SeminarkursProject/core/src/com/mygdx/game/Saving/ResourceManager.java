@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 public class ResourceManager {
 
-
+/*
     public static void save (Serializable data, String filename)throws Exception{
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(filename)))){
             oos.writeObject(data);
@@ -27,4 +27,5 @@ public class ResourceManager {
             return ois.readObject();
         }
     }
+    */
 }
