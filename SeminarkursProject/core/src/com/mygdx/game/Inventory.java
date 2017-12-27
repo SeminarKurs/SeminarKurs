@@ -53,6 +53,12 @@ public class Inventory {
     public Slot[] getSlots(){
         return slots;
     }
+    public String getName(int slot){
+        return slots[slot].getItemName();
+    }
+    public String getQuantityString(int slot){
+        return ""+slots[slot].getQuantity();
+    }
     public boolean checkAllIfFree(){
         int a = 0;
         for(int i = 0; i < slots.length; i++){
