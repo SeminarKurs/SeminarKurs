@@ -17,7 +17,6 @@ import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Enemy.Enemy;
 import com.mygdx.game.Enemy.PathFinding.PathFindingTest;
-import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Textures.TexturesClass;
@@ -72,8 +71,8 @@ public class WorldM extends ApplicationAdapter {
 			}
 		generate();
 		
-		Inventory.playerInventory.addStarterItems();
-		Inventory.playerInventory.addItem(ItemList.mat_stone(2),2);
+		//Inventory.playerInventory.addStarterItems();
+		//Inventory.playerInventory.addItem(ItemList.mat_stone(2),2);
 
 		//Actor a = (Actor)new TestActor();
 		// make a cam that isn't chrunched
@@ -192,8 +191,8 @@ public class WorldM extends ApplicationAdapter {
 		batch.draw(playerController.getPlayerTex(), playerController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, playerController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
 		
-		invgui = new InventoryGUI(cam, batch);
-		invgui.render();
+		//invgui = new InventoryGUI(cam, batch);
+		//invgui.render();
 	}
 	static public Tile getResource(IVector2 posi)
     {
@@ -268,6 +267,6 @@ public class WorldM extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		textureClass.dispose();
-		invgui.dispose();
+		//invgui.dispose();
 	}
 }

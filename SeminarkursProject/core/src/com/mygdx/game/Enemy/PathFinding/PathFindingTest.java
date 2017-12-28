@@ -17,7 +17,10 @@ public class PathFindingTest {
 
     ArrayList<Cost> unused = new ArrayList<Cost>();
     ArrayList<Cost> finished = new ArrayList<Cost>();
+    IVector2 start = new IVector2(11,112);
     IVector2 goal = new IVector2(10,10);
+    IVector2 relativeNull;
+    Cost[][] fields;
 
     public PathFindingTest()
     {
@@ -29,6 +32,9 @@ public class PathFindingTest {
 
     private void findPath()
     {
+        fields = new Cost[Math.abs(start.x-goal.x)][Math.abs(start.y-goal.y)];
+        relativeNull = new IVector2((start.x < goal.x) ? start.x:goal.x, (start.y < goal.y) ? start.y:goal.y);
+        
         Cost current = unused.get(0);
         /*do
         {
