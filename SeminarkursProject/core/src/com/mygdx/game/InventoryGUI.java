@@ -60,7 +60,6 @@ public class InventoryGUI extends Actor implements Disposable{
                 table.row();
             }
         }
-        System.out.println();
         stage.addActor(table);
     }
 

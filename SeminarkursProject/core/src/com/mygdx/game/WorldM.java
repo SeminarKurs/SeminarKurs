@@ -70,10 +70,6 @@ public class WorldM extends ApplicationAdapter {
 				tiles[x][y] = new Tile();
 			}
 		generate();
-		
-		//Inventory.playerInventory.addStarterItems();
-		//Inventory.playerInventory.addItem(ItemList.mat_stone(2),2);
-
 		//Actor a = (Actor)new TestActor();
 		// make a cam that isn't chrunched
 		cam = new OrthographicCamera(3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
@@ -86,18 +82,22 @@ public class WorldM extends ApplicationAdapter {
 
 		Gdx.input.setInputProcessor(playerController);
 
-        Conveyor f = new Conveyor(4, new ItemMaster(), new IVector2(1,3));
+		Conveyor f = new Conveyor(4, new ItemMaster(), new IVector2(1,3));
 		tiles[1][1].setRes(0);
 		Miner m = new Miner(new IVector2(1,1));
 		addActor(m, new IVector2(1,1));
 
-        addActor(f, new IVector2(1,3));
+		addActor(f, new IVector2(1,3));
 
 		new PathFindingTest();
 		enemies.add(new Enemy());
 	}
 
 	private void generate() {
+
+		//inventory
+		InventoryV2.playerInventory = new InventoryV2();
+		InventoryV2.playerInventory.addStarterItems();
 
 		Random rd = new Random();
 
@@ -117,9 +117,9 @@ public class WorldM extends ApplicationAdapter {
 			}
 	}
 	private float getSmoothNum(int x, int y)
-    {
-        return ((getNum(x+1,y+1) + getNum(x+1,y-1) + getNum(x-1,y+1) + getNum(x-1,y-1))/32f + (getNum(x+1,y) + getNum(x,y+1) + getNum(x-1,y) + getNum(x,y-1))/8f + getNum(x,y)/2f);
-    }
+	{
+		return ((getNum(x+1,y+1) + getNum(x+1,y-1) + getNum(x-1,y+1) + getNum(x-1,y-1))/32f + (getNum(x+1,y) + getNum(x,y+1) + getNum(x-1,y) + getNum(x,y-1))/8f + getNum(x,y)/2f);
+	}
 
 	private float getNum(int x, int y)// get the random float to the position
 	{
@@ -190,14 +190,14 @@ public class WorldM extends ApplicationAdapter {
 			batch.draw(TexturesClass.getTextureEnemy(enemies.get(i).getImage()), enemies.get(i).getPosition().x - Enemy.ENEMYSIZEHX ,enemies.get(i).getPosition().y - Enemy.ENEMYSIZEHY, Enemy.ENEMYSIZEHX*2, Enemy.ENEMYSIZEHY*2);
 		batch.draw(playerController.getPlayerTex(), playerController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, playerController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
-		
-		//invgui = new InventoryGUI(cam, batch);
-		//invgui.render();
+
+		invgui = new InventoryGUI(cam);
+		invgui.render();
 	}
 	static public Tile getResource(IVector2 posi)
-    {
-        return tiles[posi.x][posi.y];
-    }
+	{
+		return tiles[posi.x][posi.y];
+	}
 
 	public static Actor addActor(Actor actor, IVector2 pos)
 	{

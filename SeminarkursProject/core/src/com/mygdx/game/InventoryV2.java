@@ -23,9 +23,7 @@ public class InventoryV2 {
     public boolean addItem(ItemMaster item, int quantity){
         for(int i = 0; i < inventorySize; i++) {
             if (slots.get(i).isItemOfType(item) == true && slots.get(i).getQuantity() + quantity > slots.get(i).getItem().getStackSizeMax()) {
-                System.out.println("Item of type found");
                 if (i > inventorySize) {
-                    System.out.println("Checking for empty space in inventory");
                     for(int o = 0; o < inventorySize; o++) {
                         if (slots.get(o).isEmpty() == true) {
                             if (slots.get(o).getItem() == null) {
@@ -34,7 +32,6 @@ public class InventoryV2 {
                             }
                         }
                         if(o == inventorySize){
-                            System.out.println("Inventory is full");
                             return false;
                         }
                     }
@@ -43,12 +40,10 @@ public class InventoryV2 {
                     return true;
                 }
             } else if(slots.get(i).isEmpty()) {
-                System.out.println("Empty slot found, due to no preexisting items");
                 slots.get(i).addItem(item, quantity);
                 return true;
             }
         }
-        System.out.println("Inventory check failed, no items added, returning false");
         return false;
     }
     public boolean removeItem(ItemMaster item, int quantity){
