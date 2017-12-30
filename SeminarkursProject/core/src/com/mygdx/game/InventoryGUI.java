@@ -5,12 +5,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.Actor.Actor;
@@ -21,39 +25,42 @@ import com.mygdx.game.Actor.Actor;
 
 public class InventoryGUI extends Actor implements Disposable{
 
-    private SpriteBatch sb;
+    private final SpriteBatch sb = new SpriteBatch();
     private final OrthographicCamera camera;
-    private final TextureRegionDrawable background = new TextureRegionDrawable(new TextureRegion(new Texture("test.png")));
+    private final NinePatchDrawable background = new NinePatchDrawable(new NinePatch(new Texture("red.png")));
     private final Stage stage = new Stage();
+    private Skin skin = new Skin();
     private Label inventoryLabel;
     private Table table;
 
-    public InventoryGUI(OrthographicCamera camera, SpriteBatch sb){
+
+    public InventoryGUI(OrthographicCamera camera){
         this.camera = camera;
-        this.sb = sb;
         Label.LabelStyle ls = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
+
         inventoryLabel = new Label("Inventory", ls); table = new Table();
         table.setHeight(0.1f);
         table.bottom();
-        table.setFillParent(true);
-
-        //debug
-        //table.debugTable();
-        //table.debugCell();
+        table.setFillParent(false);
+        ls.background = background;
         table.debugAll();
-        //table.setBackground(background);
-
         table.pad(0.5f);
         table.defaults().expandX();
         table.setBounds(0,0, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        //table.background(background);
         table.add(inventoryLabel).colspan(2);
         table.row();
         for(int i = 0; i < 3; i++){
-            table.add(new Label(Inventory.playerInventory.getName(i), ls));
-            table.add(new Label(Inventory.playerInventory.getQuantityString(i), ls));
-            table.row();
+            if(InventoryV2.playerInventory.getSlot(i).isEmpty()){
+                table.add(new Label("No Item", ls));
+                table.add(new Label(0 + "", ls));
+                table.row();
+            } else if(InventoryV2.playerInventory.getSlot(i).isEmpty()==false) {
+                table.add(new Label(InventoryV2.playerInventory.getSlot(i).getItem().getDesc(),ls));
+                table.add(new Label(InventoryV2.playerInventory.getSlot(i).getQuantity()+"",ls));
+                table.row();
+            }
         }
+        System.out.println();
         stage.addActor(table);
     }
 
@@ -61,7 +68,7 @@ public class InventoryGUI extends Actor implements Disposable{
         Matrix4 hudMatrix = camera.combined.cpy();
         hudMatrix.setToOrtho2D(0,0,5,5);
         hudMatrix.scale(1,1,1);
-        sb.setProjectionMatrix(hudMatrix);
+        /*sb.setProjectionMatrix(hudMatrix);
         sb.begin();
         sb.draw(new Texture("test.png"),0,0,5,0.5f);
         sb.end();
