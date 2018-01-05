@@ -13,7 +13,7 @@ import com.mygdx.game.Item.ItemMaster;
 public class Tile {
     public float image = 0;
     // 0 non 1 overllapp 2 block
-    public Collision collision = Collision.none;
+    public com.mygdx.game.Types.Collision collision = com.mygdx.game.Types.Collision.none;
     public Actor actor;
     private Resource resource;
     public ItemMaster item;

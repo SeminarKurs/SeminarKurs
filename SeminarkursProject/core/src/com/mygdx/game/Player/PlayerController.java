@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.Actor.Collision;
+import com.mygdx.game.Types.Collision;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Item.ItemToolMaster;
 import com.mygdx.game.Types.FMath;

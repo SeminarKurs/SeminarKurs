@@ -3,7 +3,7 @@ package com.mygdx.game.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Item.ItemMaster;
-import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.Types.*;
 import com.mygdx.game.WorldM;
 
 /**
@@ -21,10 +21,14 @@ public class Conveyor extends Actor {
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
     public Conveyor(int richtung, ItemMaster item, IVector2 pos) {
-        needUpdate = true;
         this.richtung = richtung;
         this.item = item;
         this.pos = pos;
+    }
+
+    @Override
+    public boolean needUpdate() {
+        return true;
     }
 
     public void transfer (){
@@ -85,8 +89,8 @@ public class Conveyor extends Actor {
     }
 
     @Override
-    public Collision coll() {
-        return Collision.none;
+    public com.mygdx.game.Types.Collision coll() {
+        return com.mygdx.game.Types.Collision.none;
     }
     public int image(){return 1;}
 

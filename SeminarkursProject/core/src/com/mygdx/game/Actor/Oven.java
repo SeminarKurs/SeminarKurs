@@ -63,8 +63,8 @@ public class Oven extends Actor{
         }
 
         @Override
-        public Collision coll() {
-        return Collision.collides;
+        public com.mygdx.game.Types.Collision coll() {
+        return com.mygdx.game.Types.Collision.collides;
     }
         public int image(){return 0;}
 

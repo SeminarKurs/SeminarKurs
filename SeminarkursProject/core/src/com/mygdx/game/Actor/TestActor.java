@@ -10,8 +10,8 @@ public class TestActor extends Actor {
     public TestActor(){} // never use this constructor not the right
 
     @Override
-    public Collision coll() {
-        return Collision.collides;
+    public com.mygdx.game.Types.Collision coll() {
+        return com.mygdx.game.Types.Collision.collides;
     }
     public int image(){return 0;}
 }

@@ -1,4 +1,4 @@
-package com.mygdx.game.Actor;
+package com.mygdx.game.Types;
 
 /**
  * Created by Tobias on 12.11.2017.

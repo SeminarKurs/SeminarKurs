@@ -9,17 +9,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
-import com.mygdx.game.Actor.Collision;
 import com.mygdx.game.Actor.Conveyor;
 import com.mygdx.game.Actor.DrawH;
 import com.mygdx.game.Actor.FLayer;
 import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Enemy.Enemy;
-import com.mygdx.game.Enemy.PathFinding.PathFindingTest;
+import com.mygdx.game.Enemy.PathFinding.PathFinding;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Textures.TexturesClass;
+import com.mygdx.game.Types.Collision;
 import com.mygdx.game.Types.IVector2;
 
 import java.util.Random;
@@ -89,7 +89,7 @@ public class WorldM extends ApplicationAdapter {
 
 		addActor(f, new IVector2(1,3));
 
-		new PathFindingTest();
+		new PathFinding();
 		enemies.add(new Enemy());
 	}
 
@@ -205,7 +205,7 @@ public class WorldM extends ApplicationAdapter {
 		if(actor != null) {
 
 			if (addTileActor(actor, pos)) {
-				if (actor.GetNeedUpdate()) {
+				if (actor.needUpdate()) {
 					updateActors.add(actor);
 				}
 				if(actor.coll() == Collision.collides)// if the actor wouldn't collied then we don't need to change anything
@@ -249,6 +249,7 @@ public class WorldM extends ApplicationAdapter {
 		cam.setToOrtho(false, 3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 		playerController.updCamPos();
 		super.resize(width, height);
+
 	}
 
 	static public Vector3 getCamPosition(){return cam.position;}
