@@ -26,8 +26,6 @@ public class PathFinding {
 
     public PathFinding()
     {
-        //WorldM.getTileCollision(new IVector2(1,1));
-
         findPath();
     }
 

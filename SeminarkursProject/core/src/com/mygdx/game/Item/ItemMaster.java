@@ -39,4 +39,6 @@ public class ItemMaster {
     public int getStackSize(){return stackSize;}
 
     public boolean addStackSize(int size){if(stackSize + size > stackSizeMax) return false; stackSize += size; return true;}
+
+    public boolean removeStackSize(int size){if(stackSize - size < 0) return false; stackSize -= size; return true;}
 }
