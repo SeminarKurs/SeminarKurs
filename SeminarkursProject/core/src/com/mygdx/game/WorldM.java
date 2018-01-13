@@ -69,7 +69,13 @@ public class WorldM extends ApplicationAdapter {
 			for (int y = 0; y < tiles[0].length; y++) {
 				tiles[x][y] = new Tile();
 			}
+		//ganerate the world
 		generate();
+
+		//create the inventory
+		Inventory.playerInventory = new Inventory();
+		Inventory.playerInventory.addStarterItems();
+
 		//Actor a = (Actor)new TestActor();
 		// make a cam that isn't chrunched
 		cam = new OrthographicCamera(3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
@@ -94,10 +100,6 @@ public class WorldM extends ApplicationAdapter {
 	}
 
 	private void generate() {
-
-		//inventory
-		InventoryV2.playerInventory = new InventoryV2();
-		InventoryV2.playerInventory.addStarterItems();
 
 		Random rd = new Random();
 

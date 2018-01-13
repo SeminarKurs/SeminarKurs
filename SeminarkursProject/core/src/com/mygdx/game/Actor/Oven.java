@@ -33,7 +33,6 @@ public class Oven extends Actor{
                     this.item.addStackSize(item.getStackSize());
                 }
             }
-
         }
 
         public void melt (){
@@ -53,6 +52,7 @@ public class Oven extends Actor{
                 }
             }
         }
+
         @Override
         public void update (float dt){
             progress += dt;
