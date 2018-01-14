@@ -12,6 +12,10 @@
         "source": "C:\\Users\\745379\\Desktop\\Seminarkurs\\android\\res\\drawable-xxxhdpi\\ic_launcher.png"
     },
     {
+        "merged": "D:\\SeminarKurs\\SeminarKurs-master\\SeminarKurs\\SeminarkursProject\\android\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi\\ic_launcher.png",
+        "source": "D:\\SeminarKurs\\SeminarKurs-master\\SeminarKurs\\SeminarkursProject\\android\\res\\drawable-xxxhdpi\\ic_launcher.png"
+    },
+    {
         "merged": "C:\\Users\\745379\\Desktop\\SeminarKurs\\android\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi\\ic_launcher.png",
         "source": "C:\\Users\\745379\\Desktop\\SeminarKurs\\android\\res\\drawable-xxxhdpi\\ic_launcher.png"
     }
