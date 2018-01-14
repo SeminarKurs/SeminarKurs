@@ -88,7 +88,7 @@ public class WorldM extends ApplicationAdapter {
 
 		Gdx.input.setInputProcessor(playerController);
 
-		Conveyor f = new Conveyor(4, new ItemMaster(), new IVector2(1,3));
+		Conveyor f = new Conveyor(1, new ItemMaster(), new IVector2(1,3));
 		tiles[1][1].setRes(0);
 		Miner m = new Miner(new IVector2(1,1));
 		addActor(m, new IVector2(1,1));

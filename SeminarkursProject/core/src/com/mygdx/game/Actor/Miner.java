@@ -13,7 +13,7 @@ public class Miner extends StorageActor {
 
     int energy  = 100;
     float progress;
-    float speed = 1;
+    float speed = 0.5f;
     IVector2 pos;
     ItemMaster item;
 

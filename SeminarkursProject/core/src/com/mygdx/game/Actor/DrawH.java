@@ -21,17 +21,15 @@ public class DrawH {
     public static void drawActorRot(Batch batch, int x, int y, int rot, int imageNum)
     {
         if(TexturesClass.getTextureActor(imageNum) != null){
-
             if(rot < 3)
-                batch.draw(TexturesClass.getTextureActor(imageNum), x - 0.5f, y - 0.5f, 0,0, 1,1, 1,1, 0, 0,0, 200,200,rot == 1,false);
+                batch.draw(TexturesClass.getTextureActor(imageNum), x - 0.5f, y - 0.5f, 0,0, 1,1, 1,1, 0, 0,0, 32,32,rot == 1,false);
             else
             {
                 if(rot == 3)
-                    batch.draw(TexturesClass.getTextureActor(imageNum), x + 0.5f, y - 0.5f, 0,0, 1,1, 1,1, 90, 0,0, 200,200,false,false);
+                    batch.draw(TexturesClass.getTextureActor(imageNum), x + 0.5f, y - 0.5f, 0,0, 1,1, 1,1, 90, 0,0, 32,32,false,false);
                 if(rot == 4)
-                    batch.draw(TexturesClass.getTextureActor(imageNum), x + 0.5f, y - 0.5f, 0, 1, 1,1, 1,1, 270, 0,0, 200,200,false,false);
+                    batch.draw(TexturesClass.getTextureActor(imageNum), x + 0.5f, y - 0.5f, 0, 1, 1,1, 1,1, 270, 0,0, 32,32,false,false);
             }
-
         }else{
             System.out.println("Error: invalid image num! actor");
         }

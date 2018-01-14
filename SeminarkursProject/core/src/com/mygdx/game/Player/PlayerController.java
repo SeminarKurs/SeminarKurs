@@ -1,19 +1,21 @@
 package com.mygdx.game.Player;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.Types.Collision;
+import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Item.ItemToolMaster;
+import com.mygdx.game.Types.Collision;
 import com.mygdx.game.Types.FMath;
 import com.mygdx.game.Types.IVector2;
 import com.mygdx.game.WorldM;
+
+import static com.badlogic.gdx.Gdx.input;
 
 /**
  * Created by Tobias on 28.08.2017.
@@ -31,7 +33,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     public final static float MINZOOM = 1;
     public final static float PlSIZEHX = .4f;
     public final static float PlSIZEHY = .4f;
-    public final static int MINING_RANGE = 2;
+    public final static int ACTINGRANGE = 2;
 
     private Texture playerTex;
     private Vector2 pos = new Vector2();
@@ -41,10 +43,12 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     // moveSpeed that the cam player moves (units per second)
     private float moveSpeed = 2f;
     // the moveSpeed mining is done.
-    private float mineSpeed = 10f;
+    private float mineSpeed = 1f;
     private float mineProgress;
     private boolean mineing;
     IVector2 mineTile = new IVector2();
+    // the object that need's to build
+    private int objectToBuild;
 
     private ItemToolMaster tool;
 
@@ -55,28 +59,29 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         updCamPos();
     }
 
-    @Override public void create () { Gdx.input.setInputProcessor(this);}
+    @Override public void create () { input.setInputProcessor(this);}
 
-    @Override public void render (){
-    }
+    @Override public void render (){}
 
     public void update(float dt)
     {
         if (mineing && WorldM.hasResource(mineTile)) {
             Tile t = WorldM.getResource(mineTile);
-            if (t.hasRes() && pos.dst(mineTile.x,mineTile.y) <= MINING_RANGE)
+            if (t.hasRes() && pos.dst(mineTile.x,mineTile.y) <= ACTINGRANGE)
             {
                 mineProgress += dt * mineSpeed / t.resHardness();
                 if (mineProgress >= 1) {
-                    if (t.resAmount() < (int) mineProgress) {
+                    System.out.println("mine");
+                    if (t.resAmount() <= (int) mineProgress) {
                         t.resSetAmount(0);
                         mineing = false;
                         WorldM.updateResource(mineTile);
-                    } else {
+                    }
+                    else
+                    {
                         t.resSetAmount(t.resAmount() - (int) mineProgress);
                     }
-                    mineProgress %= 1;
-
+                    mineProgress -= 1;
                 }
             }
             else
@@ -85,19 +90,19 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             }
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
+        if(input.isKeyPressed(Input.Keys.ANY_KEY)) {
             // handle movement
             Vector2 movement = new Vector2();
-            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            if (input.isKeyPressed(Input.Keys.W)) {
                 movement.y += 1;
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            if (input.isKeyPressed(Input.Keys.S)) {
                 movement.y -= 1;
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            if (input.isKeyPressed(Input.Keys.D)) {
                 movement.x += 1;
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            if (input.isKeyPressed(Input.Keys.A)) {
                 movement.x -= 1;
             }
 
@@ -205,20 +210,27 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         // get mouse courser position
         camera.unproject(tp.set(screenX, screenY, 0));
         // if it's tight mouse button make colliosn test
-        if(button != Input.Buttons.LEFT)
+        if(button == Input.Buttons.LEFT)
+        {
+            if(tp.x < 0){ tp.x -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have two 0,0 positons
+            if(tp.y < 0){ tp.y -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have two 0,0 positons
+            mineTile = FMath.getTile(tp);
+            if(WorldM.validTile(mineTile))
+                mineing = true;
+        }
+        if(button == Input.Buttons.RIGHT)
         {
             IVector2 pos = FMath.getTile(tp);
-            if(WorldM.validTile(pos))            
-                WorldM.setCollision(pos);
+            if(WorldM.validTile(pos)&& this.pos.dst(tp.x, tp.y) <= ACTINGRANGE)
+            {
+                WorldM.addActor(new Miner(pos), pos);
+            }
+
             System.out.println(pos.x + ":" + pos.y);
             return true;
         }
 
-        if(tp.x < 0){ tp.x -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
-        if(tp.y < 0){ tp.y -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have tow 0,0 positons
-        mineTile = FMath.getTile(tp);
-        if(WorldM.validTile(mineTile))
-            mineing = true;
+
         return true;
     }
 

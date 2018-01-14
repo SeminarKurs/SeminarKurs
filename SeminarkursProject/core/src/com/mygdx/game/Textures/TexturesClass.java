@@ -26,7 +26,7 @@ public class TexturesClass {
         //texturesGround.add(new Texture("badlogic.jpg"));
         //texturesGround.add(new Texture("Black.png"));
         //texturesGround.add(new Texture("Blue.png"));
-        texturesGround.add(new Texture("Test.png"));
+        texturesGround.add(new Texture("Ground1.png"));
         texturesGround.add(new Texture("Test.png"));
         //texturesGround.add(new Texture("Ground3.png"));
         //texturesGround.add(new Texture("Ground4.png"));
@@ -38,11 +38,11 @@ public class TexturesClass {
         texturesActor.add(new Texture("Conveyor.png"));
         texturesActor.add(new Texture("Miner.png"));
         // resource textures
-        texturesResource.add(new Texture("Cole.png"));
+        texturesResource.add(new Texture("Coal.png"));
         texturesResource.add(new Texture("Tree.png"));
 
         // item textures
-        texturesItem.add(new Texture("Cole.png"));
+        texturesItem.add(new Texture("Coal.png"));
 
         texturesEnemy.add(new Texture("Enemy_1.png"));
 

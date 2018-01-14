@@ -11,7 +11,7 @@ public class Resource{
     // the type of the resource also the image num
     private int type;
     // the amount that can be gained
-    public int amount = 10;
+    public int amount = 500;
 
     public Resource(int type)
     {
