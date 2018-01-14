@@ -31,6 +31,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     public final static float MINZOOM = 1;
     public final static float PlSIZEHX = .4f;
     public final static float PlSIZEHY = .4f;
+    public final static int MINING_RANGE = 2;
 
     private Texture playerTex;
     private Vector2 pos = new Vector2();
@@ -57,15 +58,14 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     @Override public void create () { Gdx.input.setInputProcessor(this);}
 
     @Override public void render (){
-
     }
 
     public void update(float dt)
     {
-        if(mineing && WorldM.hasResource(mineTile))
-        {
+        if (mineing && WorldM.hasResource(mineTile)) {
             Tile t = WorldM.getResource(mineTile);
-            if(t.hasRes()) {
+            if (t.hasRes() && pos.dst(mineTile.x,mineTile.y) <= MINING_RANGE)
+            {
                 mineProgress += dt * mineSpeed / t.resHardness();
                 if (mineProgress >= 1) {
                     if (t.resAmount() < (int) mineProgress) {
@@ -83,11 +83,10 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             {
                 mineing = false;
             }
-
-
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
+            // handle movement
             Vector2 movement = new Vector2();
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 movement.y += 1;
@@ -225,8 +224,10 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     @Override public boolean touchUp (int screenX, int screenY, int pointer, int button)
     {
+        System.out.println("up");
         if (button != Input.Buttons.LEFT) return false;
         mineing = false;
+        mineTile = null;
         return true;
     }
 

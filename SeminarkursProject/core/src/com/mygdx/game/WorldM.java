@@ -251,7 +251,6 @@ public class WorldM extends ApplicationAdapter {
 		cam.setToOrtho(false, 3, 3.0f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth());
 		playerController.updCamPos();
 		super.resize(width, height);
-
 	}
 
 	static public Vector3 getCamPosition(){return cam.position;}
