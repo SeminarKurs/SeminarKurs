@@ -22,9 +22,13 @@ public class Inventory {
     }
     public boolean addItem(ItemMaster item, int quantity){
         for(int i = 0; i < inventorySize; i++) {
-            if (slots.get(i).isItemOfType(item) == true &&
-                slots.get(i).getQuantity() + quantity > slots.get(i).getItem().getStackSizeMax()) {
-                if (i > inventorySize) {
+
+            if ((!slots.get(i).isEmpty()) && slots.get(i).isItemOfType(item) == true)  //&&
+            //    slots.get(i).getQuantity() + quantity > slots.get(i).getItem().getStackSizeMax())
+            {
+                System.out.println("h1");
+                if (i > inventorySize){
+                    System.out.println("hi");
                     for(int o = 0; o < inventorySize; o++) {
                         if (slots.get(o).isEmpty() == true) {
                             if (slots.get(o).getItem() == null) {
@@ -86,9 +90,10 @@ public class Inventory {
             return item == null;
         }
         public boolean isItemOfType(ItemMaster item){
-            return this.item == item;
+            return this.item.getId() == item.getId();
         }
         public void addItem(ItemMaster item, int quantity){
+
             this.item = item;
             this.item.addStackSize(quantity);
         }

@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Tile;
+import com.mygdx.game.Inventory;
+import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Item.ItemToolMaster;
 import com.mygdx.game.Types.Collision;
 import com.mygdx.game.Types.FMath;
@@ -65,6 +67,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     public void update(float dt)
     {
+
         if (mineing && WorldM.hasResource(mineTile)) {
             Tile t = WorldM.getResource(mineTile);
             if (t.hasRes() && pos.dst(mineTile.x,mineTile.y) <= ACTINGRANGE)
@@ -73,16 +76,28 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
                 if (mineProgress >= 1) {
                     System.out.println("mine");
                     if (t.resAmount() <= (int) mineProgress) {
+                        ItemMaster addItem = t.getItemResource(t.resAmount());
+                        if(addItem != null) {
+                            Inventory.playerInventory.addItem(addItem, t.resAmount());
+
+                            System.out.println(Inventory.playerInventory.getSlot(1).getQuantity());
+                        }
                         t.resSetAmount(0);
                         mineing = false;
                         WorldM.updateResource(mineTile);
                     }
                     else
                     {
+                        ItemMaster addItem = t.getItemResource(t.resAmount());
+                        if(addItem != null) {
+                            Inventory.playerInventory.addItem(addItem, (int) mineProgress);
+                        }
                         t.resSetAmount(t.resAmount() - (int) mineProgress);
+                        System.out.println(Inventory.playerInventory.getSlot(1).getQuantity());
                     }
                     mineProgress -= 1;
                 }
+
             }
             else
             {
@@ -143,6 +158,8 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             updCamPos();
         }
     }
+
+
 
     void SetEquipment(ItemToolMaster tool)
     {
@@ -236,7 +253,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     @Override public boolean touchUp (int screenX, int screenY, int pointer, int button)
     {
-        System.out.println("up");
         if (button != Input.Buttons.LEFT) return false;
         mineing = false;
         mineTile = null;

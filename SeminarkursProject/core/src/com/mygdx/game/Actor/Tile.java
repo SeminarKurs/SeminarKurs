@@ -36,5 +36,7 @@ public class Tile {
     public int resAmount(){return resource.amount;}
     public void resSetAmount(int amount){ resource.amount = amount; }
     public int resHardness(){ return resource.hardness();}
+    public int getResourcesType(){return resource.getType();}
+    public ItemMaster getItemResource(int size){ return resource.getItem(size);}
 
 }
