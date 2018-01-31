@@ -38,5 +38,6 @@ public class Tile {
     public int resHardness(){ return resource.hardness();}
     public int getResourcesType(){return resource.getType();}
     public ItemMaster getItemResource(int size){ return resource.getItem(size);}
+    public Resource getResource (){return resource;}
 
 }

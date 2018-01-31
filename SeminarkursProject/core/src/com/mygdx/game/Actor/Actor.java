@@ -3,11 +3,13 @@ package com.mygdx.game.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 
+import java.io.Serializable;
+
 /**
  * Created by Tobias on 24.08.2017.
  */
 
-public class Actor {
+public class Actor implements Serializable{
 
     public Actor(){}
 
