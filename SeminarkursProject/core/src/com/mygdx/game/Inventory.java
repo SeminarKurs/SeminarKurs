@@ -22,17 +22,13 @@ public class Inventory {
     }
     public boolean addItem(ItemMaster item, int quantity){
         for(int i = 0; i < inventorySize; i++) {
-
-            if ((!slots.get(i).isEmpty()) && slots.get(i).isItemOfType(item) == true)  //&&
-            //    slots.get(i).getQuantity() + quantity > slots.get(i).getItem().getStackSizeMax())
+            if (!slots.get(i).isEmpty() && slots.get(i).isItemOfType(item) == true)
             {
-                System.out.println("h1");
-                if (i > inventorySize){
-                    System.out.println("hi");
+                if (i == inventorySize){
                     for(int o = 0; o < inventorySize; o++) {
                         if (slots.get(o).isEmpty() == true) {
                             if (slots.get(o).getItem() == null) {
-                                slots.get(o).addItem(item, quantity);
+                                slots.get(i).addItem(item, slots.get(i).getQuantity()+quantity);
                                 return true;
                             }
                         }
@@ -41,11 +37,11 @@ public class Inventory {
                         }
                     }
                 } else {
-                    slots.get(i).addItem(item, quantity);
+                    slots.get(i).addItem(item, slots.get(i).getQuantity()+quantity);
                     return true;
                 }
             } else if(slots.get(i).isEmpty()) {
-                slots.get(i).addItem(item, quantity);
+                slots.get(i).addItem(item, slots.get(i).getQuantity()+quantity);
                 return true;
             }
         }
@@ -93,9 +89,8 @@ public class Inventory {
             return this.item.getId() == item.getId();
         }
         public void addItem(ItemMaster item, int quantity){
-
             this.item = item;
-            this.item.addStackSize(quantity);
+            this.item.addStackSize(this.getItem().getStackSize() + quantity);
         }
         public boolean removeItem(int quantity){
             if(this.item.getStackSize()-quantity>=0){
