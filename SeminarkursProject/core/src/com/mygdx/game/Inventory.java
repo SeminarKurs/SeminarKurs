@@ -41,7 +41,7 @@ public class Inventory {
                     return true;
                 }
             } else if(slots.get(i).isEmpty()) {
-                slots.get(i).addItem(item, slots.get(i).getQuantity()+quantity);
+                slots.get(i).addItem(item, quantity);
                 return true;
             }
         }
