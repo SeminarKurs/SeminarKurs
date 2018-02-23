@@ -6,18 +6,25 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
+import com.mygdx.game.Actor.Clutch;
 import com.mygdx.game.Actor.Conveyor;
 import com.mygdx.game.Actor.DrawH;
 import com.mygdx.game.Actor.FLayer;
 import com.mygdx.game.Actor.Miner;
+import com.mygdx.game.Actor.Oven;
+import com.mygdx.game.Actor.Resource;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Enemy.Enemy;
 import com.mygdx.game.Enemy.PathFinding.PathFinding;
+import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Player.PlayerController;
+import com.mygdx.game.Saving.ResourceManager;
+import com.mygdx.game.Saving.SaveData;
 import com.mygdx.game.Textures.TexturesClass;
 import com.mygdx.game.Types.Collision;
 import com.mygdx.game.Types.IVector2;
@@ -49,6 +56,8 @@ public class WorldM extends ApplicationAdapter {
 	// UI for inventory
 	private InventoryGUI invgui;
 
+	// saveKlasse
+	private static SaveData saveData;
 	// stores all Enemys
 	private Array<Enemy> enemies = new Array<Enemy>();
 
@@ -63,7 +72,6 @@ public class WorldM extends ApplicationAdapter {
 	public void create ()
 	{
 		seed = new Random().nextInt(10000000);
-		seed = 121345;
 		textureClass = new TexturesClass();		// make new tiles
 		for(int x = 0; x < tiles.length ; x++)
 			for (int y = 0; y < tiles[0].length; y++) {
@@ -97,6 +105,7 @@ public class WorldM extends ApplicationAdapter {
 
 		new PathFinding();
 		enemies.add(new Enemy());
+		saveData = new SaveData();
 	}
 
 	private void generate() {
@@ -118,6 +127,61 @@ public class WorldM extends ApplicationAdapter {
 				}
 			}
 	}
+	// Chris
+	static public void load()
+	{
+		for (int y = 0; y < tiles[0].length; y++) {
+			for (int x = 0; x < tiles.length; x++) {
+				tiles[x][y].actor = null;
+				tiles[x][y].deleteResource();
+			}
+		}
+		saveData = (SaveData) ResourceManager.load("firstSave");
+		playerController.setPosition(new Vector2(saveData.playerX, saveData.playerY));
+
+		ItemId[][] actorId = saveData.actorId;
+		float [][]images = saveData.images;
+		Resource resource[][] = saveData.resources;
+		for (int y = 0; y < tiles[0].length; y++) {
+			for (int x = 0; x < tiles.length; x++) {
+
+				if(actorId[x][y] != null)
+				{
+					switch(actorId[x][y])
+					{
+						case MINER:
+							Miner m = new Miner(new IVector2(x,y));
+							addActor(m, new IVector2(x,y));
+							break;
+						case CLUTCH:
+							addActor(new Clutch(1,null, new IVector2(x,y)), new IVector2(x,y));
+							break;
+						case CONVEYOR:
+							addActor(new Conveyor(1, new ItemMaster(), new IVector2(x,y)), new IVector2(x,y));
+							break;
+						case OVEN:
+							addActor(new Oven(), new IVector2(x,y));
+							break;
+					}
+				}
+				if (resource[x][y] != null){
+					tiles[x][y].setResource(resource[x][y]);
+				}
+				tiles[x][y].updateColl();
+
+				tiles[x][y].image = images[x][y];
+			}
+		}
+	}
+    // Chris
+	static public void save()
+	{
+		saveData.setPlayer(playerController);
+		saveData.setTile(tiles);
+
+		ResourceManager.save(saveData, "firstSave" );
+	}
+
 	private float getSmoothNum(int x, int y)
 	{
 		return ((getNum(x+1,y+1) + getNum(x+1,y-1) + getNum(x-1,y+1) + getNum(x-1,y-1))/32f + (getNum(x+1,y) + getNum(x,y+1) + getNum(x-1,y) + getNum(x,y-1))/8f + getNum(x,y)/2f);

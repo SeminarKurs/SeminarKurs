@@ -188,6 +188,7 @@ public class PathFinding {
 
     private void print()
     {
+        /*
         for(int y =fields[0].length-1; y >=0; y--)
         {
             for(int x=0; x < fields.length; x++)
@@ -203,5 +204,6 @@ public class PathFinding {
             System.out.println();
         }
         System.out.println();
+        */
     }
 }

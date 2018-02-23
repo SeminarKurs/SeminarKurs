@@ -1,6 +1,7 @@
 package com.mygdx.game.Saving;
 
 import com.mygdx.game.Actor.Actor;
+import com.mygdx.game.Actor.Resource;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Player.PlayerController;
@@ -13,27 +14,53 @@ import java.io.Serializable;
 
 public class SaveData implements Serializable {
     //Player
-    private int playerX, playerY;
+    public float playerX, playerY;
 
-    //Tile
-    private float image;
 
     private int resourceType, resourceAmount;
 
-    public int itemMasterImage;
-    public int itemMasterStackSize;
-    public int itemMasterStackSizeMax;
-    public String itemMasterDesc;
-    public ItemId itemMasterId;
-    public Actor actor;
+    public int[][] itemMasterImage;
+    public int[][] itemMasterStackSize;
+    public int[][] itemMasterStackSizeMax;
+    public String[][] itemMasterDesc;
+    public ItemId[][] itemMasterId;
+    public float[][] images;
+
+    public ItemId[][] actorId;
+    public Resource[][] resources;
+
 
     public void setPlayer(PlayerController pc){
-        playerX = (int) pc.getPosition().x;
-        playerY = (int) pc.getPosition().y;
+        playerX =  pc.getPosition().x;
+        playerY =  pc.getPosition().y;
     }
 
-    public void setTile (Tile t){
-        resourceAmount = t.getResource().amount;
+    public void setTile (Tile[][] tiles){
+
+        if (tiles.length == 0){
+            System.out.println("saveData setTiles \\ no tiles");
+            return;
+        }
+        images = new float[tiles.length][tiles[0].length];
+        actorId = new ItemId[tiles.length][tiles[0].length];
+        resources = new Resource[tiles.length][tiles[0].length];
+        for (int y = 0; y < tiles[0].length; y++) {
+            for (int x = 0; x < tiles.length; x++) {
+                if(tiles[x][y].actor != null)
+                {
+                    actorId[x][y] = tiles[x][y].actor.getId();
+                }
+                if(resources != null)
+                {
+                    resources[x][y] = tiles[x][y].getResource();
+                }
+                images[x][y] = tiles[x][y].image;
+            }
+        }
+
+
+
+        /*resourceAmount = t.getResource().amount;
         resourceType = t.getResource().getType();
 
         image = (int) t.image;
@@ -43,7 +70,7 @@ public class SaveData implements Serializable {
         itemMasterStackSizeMax = t.item.getStackSizeMax();
         itemMasterDesc = t.item.getDesc();
         itemMasterId = t.item.getId();
-        actor = t.actor;
+        actor = t.actor;*/
 
     }
 }

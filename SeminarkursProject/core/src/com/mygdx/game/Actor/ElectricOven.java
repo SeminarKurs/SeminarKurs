@@ -80,4 +80,9 @@ public class ElectricOven extends StorageActor {
     public boolean setItem(ItemMaster Item) {
         return false;
     }
+
+    public ItemId getId() {
+        System.out.println("ElectricOven needs to be implemented");
+        return null;
+    }
 }

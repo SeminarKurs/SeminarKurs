@@ -1,10 +1,12 @@
 package com.mygdx.game.Item;
 
+import java.io.Serializable;
+
 /**
  * Created by Implodee on 22.10.2017.
  */
 
-public class ItemMaster {
+public class ItemMaster{
 
     protected String desc;
     protected int image;

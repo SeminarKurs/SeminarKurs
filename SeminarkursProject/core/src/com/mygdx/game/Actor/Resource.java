@@ -4,11 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
 
+import java.io.Serializable;
+
 /**
  * Created by Tobias on 22.10.2017.
  */
 
-public class Resource{
+public class Resource implements Serializable{
 
     // the type of the resource also the image num
     private int type;

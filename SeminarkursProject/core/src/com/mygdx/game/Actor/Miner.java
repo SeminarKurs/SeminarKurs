@@ -1,5 +1,6 @@
 package com.mygdx.game.Actor;
 
+import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Types.IVector2;
@@ -91,5 +92,8 @@ public class Miner extends StorageActor {
             }
             return false;
         }
+    }
+    public ItemId getId() {
+        return ItemId.MINER;
     }
 }

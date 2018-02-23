@@ -4,6 +4,7 @@ package com.mygdx.game.Actor;
  * Created by Neutral on 28.12.2017.
  */
 
+import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Types.IVector2;
 import com.mygdx.game.WorldM;
@@ -14,6 +15,8 @@ import com.mygdx.game.WorldM;
 
 public class Clutch extends StorageActor {
     private static final float SCHRITT_WEITE = (float) 0.5;
+
+
 
     private int richtung;
     private ItemMaster item;
@@ -78,6 +81,11 @@ public class Clutch extends StorageActor {
     @Override
     public boolean setItem(ItemMaster Item) {
         return false;
+    }
+
+    @Override
+    public ItemId getId() {
+        return ItemId.CLUTCH;
     }
 }
 

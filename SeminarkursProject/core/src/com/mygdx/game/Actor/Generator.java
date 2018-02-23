@@ -1,10 +1,11 @@
 package com.mygdx.game.Actor;
 
 import com.mygdx.game.Actor.Actor;
+import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Types.Collision;
 
-public class Generator extends StorageActor {
+public class Generator extends StorageActor{
     private ItemMaster[] brennstofftank;
     private int battery;
 
@@ -56,5 +57,10 @@ public class Generator extends StorageActor {
     @Override
     public boolean setItem(ItemMaster Item) {
         return false;
+    }
+
+    public ItemId getId() {
+        System.out.println("Generator needs to be implemented");
+        return null;
     }
 }

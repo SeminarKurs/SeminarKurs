@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.Actor.Actor;
+import com.mygdx.game.Item.ItemId;
 
 /**
  * Created by Implodee on 20.11.2017.
@@ -80,4 +81,8 @@ public class InventoryGUI extends Actor implements Disposable{
         //code to come
     }
 
+    public ItemId getId() {
+        System.out.println("InvewntoryGUI needs to be implemented");
+        return null;
+    }
 }

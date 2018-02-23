@@ -2,6 +2,7 @@ package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Types.*;
 import com.mygdx.game.WorldM;
@@ -94,4 +95,7 @@ public class Conveyor extends Actor {
     }
     public int image(){return 1;}
 
+    public ItemId getId() {
+        return ItemId.CONVEYOR;
+    }
 }

@@ -2,6 +2,7 @@ package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Item.ItemId;
 
 import java.io.Serializable;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
  * Created by Tobias on 24.08.2017.
  */
 
-public class Actor implements Serializable{
+public abstract  class Actor {
 
     public Actor(){}
 
@@ -24,5 +25,7 @@ public class Actor implements Serializable{
     public boolean needUpdate(){ return false;}
     // FLayer is the topmost layer to be drawn (but the player is further in the front)
     public void draw(Batch batch, int x, int y, Array<FLayer> fLayers){ DrawH.drawActor(batch, x,y, image());}
+
+    public abstract ItemId getId();
 
 }

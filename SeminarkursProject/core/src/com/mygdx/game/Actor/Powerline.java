@@ -2,6 +2,7 @@ package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Types.Collision;
@@ -33,5 +34,9 @@ public class Powerline extends Actor {
     public Collision coll() {return Collision.none;}
     public int image(){return 1;}
 
+    public ItemId getId() {
+        System.out.println("PowerLine needs to be implemented");
+        return null;
+    }
 
 }

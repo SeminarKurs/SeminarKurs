@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Tobias on 07.11.2017.
  */
 
-public enum ItemId implements Serializable{
+public enum ItemId{
 
     MAT_WOOD,
     MAT_IRON,
@@ -15,6 +15,8 @@ public enum ItemId implements Serializable{
     ORE_IRON,
     RIFLE,
     CONVEYOR,
+    CLUTCH,
+    OVEN,
+    MINER,
     AXE
-
 }

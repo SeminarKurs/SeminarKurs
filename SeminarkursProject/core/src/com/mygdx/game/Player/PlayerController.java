@@ -272,9 +272,22 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     }
     public Texture getPlayerTex() { return playerTex;}
     public Vector2 getPosition() { return pos;}
+    public void setPosition (Vector2 pos){ this.pos =pos;}
     public float getMineSpeed() { return mineSpeed; }
 
-    @Override public boolean keyDown (int keycode){ return false;}
+    @Override public boolean keyDown (int keycode){
+        if(keycode ==Input.Keys.F5) {
+            System.out.println("save");
+            WorldM.save();
+        }
+        if(keycode ==Input.Keys.F8) {
+            System.out.println("Load");
+            WorldM.load();
+        }
+
+
+        return false;
+    }
     @Override public boolean mouseMoved (int screenX, int screenY){ return true; }
     @Override public boolean touchDragged (int screenX, int screenY, int pointer){ return true; }
     @Override public void resize (int width, int height){}

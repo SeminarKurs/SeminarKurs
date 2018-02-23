@@ -1,5 +1,6 @@
 package com.mygdx.game.Actor;
 
+import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Types.Collision;
 
@@ -39,5 +40,10 @@ public class SolarPanel extends StorageActor {
     @Override
     public boolean setItem(ItemMaster Item) {
         return false;
+    }
+
+    public ItemId getId() {
+        System.out.println("SolarPanale needs to be implemented");
+        return null;
     }
 }

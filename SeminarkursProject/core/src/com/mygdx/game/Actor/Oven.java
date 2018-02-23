@@ -68,5 +68,7 @@ public class Oven extends Actor{
     }
         public int image(){return 0;}
 
-
+    public ItemId getId() {
+        return ItemId.OVEN;
+    }
 }
