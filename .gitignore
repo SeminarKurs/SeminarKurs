@@ -2,5 +2,7 @@
 *.class
 *.class
 *.class
+*.xml
+*.txt
 SeminarkursProject/core/build/classes/main/com/mygdx/game/Item/ItemToolMaster.class
 *.class
