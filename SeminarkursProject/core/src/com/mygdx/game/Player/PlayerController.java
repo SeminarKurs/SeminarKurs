@@ -74,13 +74,10 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             {
                 mineProgress += dt * mineSpeed / t.resHardness();
                 if (mineProgress >= 1) {
-                    System.out.println("mine");
                     if (t.resAmount() <= (int) mineProgress) {
                         ItemMaster addItem = t.getItemResource(t.resAmount());
                         if(addItem != null) {
                             Inventory.playerInventory.addItem(addItem, t.resAmount());
-
-                            System.out.println(Inventory.playerInventory.getSlot(1).getQuantity());
                         }
                         t.resSetAmount(0);
                         mineing = false;
@@ -93,7 +90,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
                             Inventory.playerInventory.addItem(addItem, (int) mineProgress);
                         }
                         t.resSetAmount(t.resAmount() - (int) mineProgress);
-                        System.out.println(Inventory.playerInventory.getSlot(1).getQuantity());
                     }
                     mineProgress -= 1;
                 }
@@ -242,8 +238,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             {
                 WorldM.addActor(new Miner(pos), pos);
             }
-
-            System.out.println(pos.x + ":" + pos.y);
             return true;
         }
 

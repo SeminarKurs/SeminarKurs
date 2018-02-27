@@ -6,7 +6,7 @@ import com.mygdx.game.Types.IVector2;
  * Created by Tobias on 17.12.2017.
  */
 
-class Cost {
+public class Cost {
 
     public float cost;
     public float moveCost;

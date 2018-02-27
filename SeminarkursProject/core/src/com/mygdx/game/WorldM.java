@@ -27,6 +27,7 @@ import com.mygdx.game.Saving.ResourceManager;
 import com.mygdx.game.Saving.SaveData;
 import com.mygdx.game.Textures.TexturesClass;
 import com.mygdx.game.Types.Collision;
+import com.mygdx.game.Types.FMath;
 import com.mygdx.game.Types.IVector2;
 
 import java.util.Random;
@@ -105,6 +106,7 @@ public class WorldM extends ApplicationAdapter {
 
 		new PathFinding();
 		enemies.add(new Enemy());
+		//enemies.get(0).findPath(new IVector2());
 		saveData = new SaveData();
 	}
 
@@ -198,6 +200,10 @@ public class WorldM extends ApplicationAdapter {
 		//update
 		dt = Gdx.graphics.getDeltaTime();
 		playerController.update(dt);
+		for(Enemy enemy: enemies)
+		{
+			enemy.move(dt, FMath.getTile(playerController.getPosition()));
+		}
 		for(int i=0; i < updateActors.size; i++)
 		{
 			updateActors.get(i).update(dt);
@@ -327,7 +333,6 @@ public class WorldM extends ApplicationAdapter {
 	static public boolean validTile(IVector2 pos){if(pos.x < 0 || pos.x >= tiles.length || pos.y < 0 ||pos.y >= tiles[0].length ) return false; return true;}
 	static public void updateResource(IVector2 pos){tiles[pos.x][pos.y].refresh();}
 	static public boolean hasResource (IVector2 pos){ return (validTile(pos) && tiles[pos.x][pos.y].hasRes()); }
-
 
 	@Override
 	public void dispose () {

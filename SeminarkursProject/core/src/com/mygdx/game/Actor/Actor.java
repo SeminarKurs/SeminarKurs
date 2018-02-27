@@ -4,13 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Item.ItemId;
 
-import java.io.Serializable;
-
 /**
  * Created by Tobias on 24.08.2017.
  */
 
-public abstract  class Actor {
+public abstract class Actor {
 
     public Actor(){}
 
