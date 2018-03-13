@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.Actor.Clutch;
 import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Inventory;
@@ -278,7 +279,10 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             System.out.println("Load");
             WorldM.load();
         }
-
+        if (keycode == Input.Keys.C){
+            IVector2 pos = new IVector2(5, 5);
+            WorldM.addActor(new Clutch(pos), pos);
+        }
 
         return false;
     }

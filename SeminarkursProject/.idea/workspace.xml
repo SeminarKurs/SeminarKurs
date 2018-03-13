@@ -45,44 +45,71 @@
       <file leaf-file-name="WorldM.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/WorldM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="204" column="22" selection-start-line="204" selection-start-column="18" selection-end-line="204" selection-end-column="22" />
+            <state relative-caret-position="136">
+              <caret line="99" column="74" selection-start-line="99" selection-start-column="74" selection-end-line="100" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Conveyor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Conveyor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="581">
+              <caret line="95" column="4" selection-start-line="95" selection-start-column="4" selection-end-line="95" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Clutch.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Clutch.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="538">
+              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#generate#0;class#WorldM#0" expanded="false" />
-                <element signature="method#load#0;class#WorldM#0" expanded="false" />
-                <element signature="method#save#0;class#WorldM#0" expanded="false" />
-                <element signature="method#getSmoothNum#0;class#WorldM#0" expanded="false" />
-                <element signature="method#getNum#0;class#WorldM#0" expanded="false" />
-                <element signature="method#resize#0;class#WorldM#0" expanded="false" />
+                <element signature="e#535#536#0" expanded="true" />
+                <element signature="e#565#566#0" expanded="true" />
+                <element signature="e#1979#1980#0" expanded="true" />
+                <element signature="e#2015#2016#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Enemy.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Enemy/Enemy.java">
+      <file leaf-file-name="StorageActor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/StorageActor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="56" column="45" selection-start-line="56" selection-start-column="45" selection-end-line="56" selection-end-column="45" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="221">
+              <caret line="14" column="51" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PathFinding.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Enemy/PathFinding/PathFinding.java">
+      <file leaf-file-name="Actor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Actor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+            <state relative-caret-position="136">
+              <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlayerController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Player/PlayerController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="276" column="9" selection-start-line="276" selection-start-column="9" selection-end-line="276" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="class#costComperator#0;class#PathFinding#0" expanded="false" />
-                <element signature="method#fromWorld#1;class#PathFinding#0" expanded="false" />
-                <element signature="method#toWorld#0;class#PathFinding#0" expanded="false" />
-                <element signature="method#toWorld#1;class#PathFinding#0" expanded="false" />
+                <element signature="method#update#0;class#PlayerController#0" expanded="false" />
+                <element signature="method#SetEquipment#0;class#PlayerController#0" expanded="false" />
+                <element signature="method#checkCollision#0;class#PlayerController#0" expanded="false" />
+                <element signature="method#touchDown#0;class#PlayerController#0" expanded="false" />
+                <element signature="method#touchUp#0;class#PlayerController#0" expanded="false" />
+                <element signature="method#scrolled#0;class#PlayerController#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -101,7 +128,7 @@
   <component name="GradleLocalSettings">
     <option name="myGradleHomes">
       <map>
-        <entry key="$PROJECT_DIR$" value="C:\Users\745379\.gradle\wrapper\dists\gradle-2.14.1-bin\2r579t5wehc7ew5kc8vfqezww\gradle-2.14.1" />
+        <entry key="$PROJECT_DIR$" value="C:\Users\Christopher Schleppe\.gradle\wrapper\dists\gradle-2.14.1-bin\2r579t5wehc7ew5kc8vfqezww\gradle-2.14.1" />
       </map>
     </option>
     <option name="myGradleVersions">
@@ -2435,7 +2462,7 @@
         <entry key="C:\Users\745379\Documents\GitHub\SeminarKurs\SeminarkursProject" value="10636841437686" />
         <entry key="D:\GitHub\SeminarKurs\SeminarkursProject" value="10611594396518" />
         <entry key="D:\SeminarKurs\SeminarKurs-master\SeminarKurs\SeminarkursProject" value="10611537511912" />
-        <entry key="D:\SeminarKurs\SeminarKurs-master\SeminarkursProject" value="10621873765993" />
+        <entry key="D:\SeminarKurs\SeminarKurs-master\SeminarkursProject" value="10646699902227" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -3417,7 +3444,6 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Enemy/PathFindingTest.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Types/Collision.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Enemy/PathFinding/PathFindingTest.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/StorageActor.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/InventoryV2.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/DrawH.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Textures/TexturesClass.java" />
@@ -3433,7 +3459,6 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/SolarPanel.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Powerline.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/ElectricOven.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Clutch.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Generator.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Item/ItemId.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Saving/SaveData.java" />
@@ -3441,10 +3466,12 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Enemy/PathFinding/Cost.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Actor.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Types/IVector2.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Player/PlayerController.java" />
-        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/WorldM.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Enemy/Enemy.java" />
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Enemy/PathFinding/PathFinding.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/StorageActor.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Player/PlayerController.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Clutch.java" />
+        <option value="$PROJECT_DIR$/core/src/com/mygdx/game/WorldM.java" />
       </list>
     </option>
   </component>
@@ -3480,7 +3507,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -3575,7 +3601,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Enemy" />
+              <option name="myItemId" value="Player" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -3601,18 +3627,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Enemy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PathFinding" />
+              <option name="myItemId" value="Actor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3977,22 +4000,22 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32842582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2880979" sideWeight="0.4445629" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28730512" sideWeight="0.4445629" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22845188" sideWeight="0.30011326" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2836485" sideWeight="0.59808105" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32814237" sideWeight="0.49573562" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2260579" sideWeight="0.30011326" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2269188" sideWeight="0.30011326" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925472" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19243604" sideWeight="0.5804904" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.114605546" sideWeight="0.69988674" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16311301" sideWeight="0.69988674" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24937238" sideWeight="0.4941957" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="false" weight="0.32995737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -4076,13 +4099,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/StorageActor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -4177,8 +4193,8 @@
         <state relative-caret-position="483">
           <caret line="96" column="27" selection-start-line="96" selection-start-column="27" selection-end-line="96" selection-end-column="27" />
           <folding>
-            <element signature="e#2321#2322#0" expanded="true" />
-            <element signature="e#2356#2357#0" expanded="true" />
+            <element signature="e#2321#2322#0" expanded="false" />
+            <element signature="e#2356#2357#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -4198,39 +4214,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/SolarPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/ElectricOven.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="415">
           <caret line="84" column="41" selection-start-line="84" selection-start-column="41" selection-end-line="84" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Conveyor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="98" column="30" selection-start-line="98" selection-start-column="30" selection-end-line="98" selection-end-column="30" />
-          <folding>
-            <element signature="e#2867#2868#0" expanded="false" />
-            <element signature="e#2905#2906#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Clutch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="88" column="5" selection-start-line="88" selection-start-column="5" selection-end-line="88" selection-end-column="5" />
-          <folding>
-            <element signature="e#1974#1975#0" expanded="true" />
-            <element signature="e#2010#2011#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4278,13 +4265,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Actor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Inventory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -4302,22 +4282,6 @@
           <folding>
             <element signature="e#1845#1846#0" expanded="true" />
             <element signature="e#1879#1880#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Player/PlayerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#update#0;class#PlayerController#0" expanded="false" />
-            <element signature="method#SetEquipment#0;class#PlayerController#0" expanded="false" />
-            <element signature="method#checkCollision#0;class#PlayerController#0" expanded="false" />
-            <element signature="method#touchDown#0;class#PlayerController#0" expanded="false" />
-            <element signature="method#touchUp#0;class#PlayerController#0" expanded="false" />
-            <element signature="method#scrolled#0;class#PlayerController#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -4345,37 +4309,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/WorldM.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="204" column="22" selection-start-line="204" selection-start-column="18" selection-end-line="204" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#generate#0;class#WorldM#0" expanded="false" />
-            <element signature="method#load#0;class#WorldM#0" expanded="false" />
-            <element signature="method#save#0;class#WorldM#0" expanded="false" />
-            <element signature="method#getSmoothNum#0;class#WorldM#0" expanded="false" />
-            <element signature="method#getNum#0;class#WorldM#0" expanded="false" />
-            <element signature="method#resize#0;class#WorldM#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/jre/jre/lib/rt.jar!/java/util/ArrayList.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="565">
           <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Enemy/Enemy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="56" column="45" selection-start-line="56" selection-start-column="45" selection-end-line="56" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="986">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -4389,14 +4334,77 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Enemy/PathFinding/PathFinding.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+        <state relative-caret-position="-1674">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/SolarPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/StorageActor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="14" column="51" selection-start-line="14" selection-start-column="51" selection-end-line="14" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Actor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/WorldM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="99" column="74" selection-start-line="99" selection-start-column="74" selection-end-line="100" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Conveyor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="95" column="4" selection-start-line="95" selection-start-column="4" selection-end-line="95" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Actor/Clutch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="538">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding>
+            <element signature="e#535#536#0" expanded="true" />
+            <element signature="e#565#566#0" expanded="true" />
+            <element signature="e#1979#1980#0" expanded="true" />
+            <element signature="e#2015#2016#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Player/PlayerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="276" column="9" selection-start-line="276" selection-start-column="9" selection-end-line="276" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="class#costComperator#0;class#PathFinding#0" expanded="false" />
-            <element signature="method#fromWorld#1;class#PathFinding#0" expanded="false" />
-            <element signature="method#toWorld#0;class#PathFinding#0" expanded="false" />
-            <element signature="method#toWorld#1;class#PathFinding#0" expanded="false" />
+            <element signature="method#update#0;class#PlayerController#0" expanded="false" />
+            <element signature="method#SetEquipment#0;class#PlayerController#0" expanded="false" />
+            <element signature="method#checkCollision#0;class#PlayerController#0" expanded="false" />
+            <element signature="method#touchDown#0;class#PlayerController#0" expanded="false" />
+            <element signature="method#touchUp#0;class#PlayerController#0" expanded="false" />
+            <element signature="method#scrolled#0;class#PlayerController#0" expanded="false" />
           </folding>
         </state>
       </provider>

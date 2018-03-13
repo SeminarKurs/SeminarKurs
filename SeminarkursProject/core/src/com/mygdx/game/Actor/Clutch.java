@@ -23,9 +23,7 @@ public class Clutch extends StorageActor {
     private IVector2 pos;
     private float progress = -0.5f;
 
-    public Clutch (int richtung, ItemMaster item, IVector2 pos){
-        this.richtung = richtung;
-        this.item = item;
+    public Clutch (IVector2 pos){
         this.pos = pos;
     }
 
@@ -79,13 +77,19 @@ public class Clutch extends StorageActor {
     }
 
     @Override
-    public boolean setItem(ItemMaster Item) {
+    public boolean setItem(ItemMaster item) {
+        this.item = item;
         return false;
     }
+    public void setRichtung (int richtung){this.richtung = richtung;}
 
     @Override
     public ItemId getId() {
         return ItemId.CLUTCH;
     }
+
+    public int image(){return 1;}
+
 }
+
 

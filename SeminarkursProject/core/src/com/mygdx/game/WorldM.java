@@ -130,8 +130,7 @@ public class WorldM extends ApplicationAdapter {
 			}
 	}
 	// Chris
-	static public void load()
-	{
+	static public void load() {
 		for (int y = 0; y < tiles[0].length; y++) {
 			for (int x = 0; x < tiles.length; x++) {
 				tiles[x][y].actor = null;
@@ -147,16 +146,14 @@ public class WorldM extends ApplicationAdapter {
 		for (int y = 0; y < tiles[0].length; y++) {
 			for (int x = 0; x < tiles.length; x++) {
 
-				if(actorId[x][y] != null)
-				{
-					switch(actorId[x][y])
-					{
+				if(actorId[x][y] != null) {
+					switch(actorId[x][y]) {
 						case MINER:
 							Miner m = new Miner(new IVector2(x,y));
 							addActor(m, new IVector2(x,y));
 							break;
 						case CLUTCH:
-							addActor(new Clutch(1,null, new IVector2(x,y)), new IVector2(x,y));
+							addActor(new Clutch(new IVector2(x,y)), new IVector2(x,y));
 							break;
 						case CONVEYOR:
 							addActor(new Conveyor(1, new ItemMaster(), new IVector2(x,y)), new IVector2(x,y));
@@ -176,8 +173,7 @@ public class WorldM extends ApplicationAdapter {
 		}
 	}
     // Chris
-	static public void save()
-	{
+	static public void save() {
 		saveData.setPlayer(playerController);
 		saveData.setTile(tiles);
 

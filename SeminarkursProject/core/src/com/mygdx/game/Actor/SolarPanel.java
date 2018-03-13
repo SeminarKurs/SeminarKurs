@@ -38,7 +38,7 @@ public class SolarPanel extends StorageActor {
     }
 
     @Override
-    public boolean setItem(ItemMaster Item) {
+    public boolean setItem(ItemMaster item) {
         return false;
     }
 

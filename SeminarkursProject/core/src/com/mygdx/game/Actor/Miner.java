@@ -77,17 +77,17 @@ public class Miner extends StorageActor {
     }
 
     @Override
-    public boolean setItem(ItemMaster Item) {
+    public boolean setItem(ItemMaster item) {
         if(storage.get(1) == null)
         {
-            storage.set(1, Item);
+            storage.set(1, item);
             return true;
         }
         else
         {
-            if (storage.get(1).getId() == Item.getId())
+            if (storage.get(1).getId() == item.getId())
             {
-                storage.get(1).addStackSize(Item.getStackSize());
+                storage.get(1).addStackSize(item.getStackSize());
                 return true;
             }
             return false;

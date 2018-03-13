@@ -12,7 +12,7 @@ public abstract class StorageActor extends Actor {
 
     public abstract ItemMaster getItem();
     public abstract ItemMaster takeItem();
-    public abstract boolean setItem(ItemMaster Item);
+    public abstract boolean setItem(ItemMaster item);
 
 
 
