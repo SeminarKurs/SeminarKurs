@@ -13,7 +13,7 @@ public class Cost {
 
     public IVector2 pos;
     public Cost parent;
-
+    public boolean read = false;
 
     public Cost(float valueCost, IVector2 pos, Cost parent)
     {

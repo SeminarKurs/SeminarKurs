@@ -78,13 +78,19 @@ public class PathFinding {
         {
             Cost now = fields[fStart.x][fStart.y];
             Array<IVector2> path = new Array<IVector2>();
-            while(now != null)
+            while(now != null && !now.read)
             {
                 path.add(toWorld(now.pos));
                 //System.out.println(toWorld(now.pos).x +","+ toWorld(now.pos).y);
+                now.read = true;
                 now = now.parent;
             }
-            //print();
+
+            if(now != null && now.read)
+            {
+                System.out.println("read ");
+            }
+
             return path;
         }
         return null;
