@@ -1,6 +1,6 @@
 package com.mygdx.game.Enemy.PathFinding;
 
-import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.Tools.IVector2;
 
 /**
  * Created by Tobias on 17.12.2017.

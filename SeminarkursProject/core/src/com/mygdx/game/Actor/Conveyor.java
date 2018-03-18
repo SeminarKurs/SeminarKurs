@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
-import com.mygdx.game.Types.*;
 import com.mygdx.game.WorldM;
 
 /**
@@ -17,11 +16,11 @@ public class Conveyor extends Actor {
 
     private int richtung;
     private ItemMaster item;
-    private IVector2 pos;
+    private com.mygdx.game.Tools.IVector2 pos;
     private float progress = -0.5f;
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
-    public Conveyor(int richtung, ItemMaster item, IVector2 pos) {
+    public Conveyor(int richtung, ItemMaster item, com.mygdx.game.Tools.IVector2 pos) {
         this.richtung = richtung;
         this.item = item;
         this.pos = pos;
@@ -35,22 +34,22 @@ public class Conveyor extends Actor {
     public void transfer (){
         switch (richtung) {
             case 1:
-                if (WorldM.setItemActor(new IVector2(pos.x - 1, pos.y), item)) {
+                if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x - 1, pos.y), item)) {
                     item = null;
                 }
                 break;
             case 2:
-                if (WorldM.setItemActor(new IVector2(pos.x + 1, pos.y), item)) {
+                if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x + 1, pos.y), item)) {
                     item = null;
                 }
                 break;
             case 3:
-                if (WorldM.setItemActor(new IVector2(pos.x, pos.y + 1), item)) {
+                if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x, pos.y + 1), item)) {
                     item = null;
                 }
                 break;
             case 4:
-                if (WorldM.setItemActor(new IVector2(pos.x, pos.y - 1), item)) {
+                if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x, pos.y - 1), item)) {
                     item = null;
                 }
                 break;
@@ -90,8 +89,8 @@ public class Conveyor extends Actor {
     }
 
     @Override
-    public com.mygdx.game.Types.Collision coll() {
-        return com.mygdx.game.Types.Collision.none;
+    public com.mygdx.game.Tools.Collision coll() {
+        return com.mygdx.game.Tools.Collision.none;
     }
     public int image(){return 1;}
 

@@ -1,8 +1,8 @@
 package com.mygdx.game.Enemy.PathFinding;
 
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Types.Collision;
-import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.Tools.Collision;
+import com.mygdx.game.Tools.IVector2;
 import com.mygdx.game.WorldM;
 
 import java.util.ArrayList;
@@ -46,22 +46,19 @@ public class PathFinding {
         fStart = fromWorld(start);
 
         // start the search from the goal so that we cant get the way backwords => it will be forward in the cost
-        System.out.println("FGoal: "+fGoal.x+ " : " +fGoal.y);
         fields[fGoal.x][fGoal.y] = new Cost(0, new IVector2(fGoal),null);
         unused.add(fields[fGoal.x][fGoal.y]);
         Cost current;
 
         costComperator cC =new costComperator();
         boolean foundGoal = false;
-        System.out.println("Currentpos: " + unused.get(0).pos.x + " : "+ unused.get(0).pos.y);
-        print();
 
         do
         {
             current = unused.get(0);
             unused.remove(0);
             finished.add(current);
-            System.out.println("Currentpos: " + current.pos.x + " : "+ current.pos.y);
+
             if(calculateAllAround(current))
             {
                 foundGoal = true;
@@ -69,11 +66,11 @@ public class PathFinding {
 
             Collections.sort(unused, cC);
 
-            print();
+            //print();
 
         }while(unused.size() > 0 && !foundGoal);
 
-        //print the path backwards
+        // return the path backwards
         if(foundGoal)
         {
             Cost now = fields[fStart.x][fStart.y];
@@ -81,16 +78,10 @@ public class PathFinding {
             while(now != null && !now.read)
             {
                 path.add(toWorld(now.pos));
-                //System.out.println(toWorld(now.pos).x +","+ toWorld(now.pos).y);
+
                 now.read = true;
                 now = now.parent;
             }
-
-            if(now != null && now.read)
-            {
-                System.out.println("read ");
-            }
-
             return path;
         }
         return null;
@@ -147,21 +138,12 @@ public class PathFinding {
                 unused.add(fields[cX][cY]);
             } else {
                 if ((!finished.contains(fields[cX][cY])) || calculateCost(current.moveCost + cost, cX, cY) < fields[cX][cY].cost) {
-                    //System.out.println("better");
+
                     fields[cX][cY].cost = calculateCost(current.moveCost + cost, cX, cY);
                     fields[cX][cY].moveCost = current.moveCost + cost;
                     fields[cX][cY].parent = current;
                 }
             }
-        } else if(cX >= 0 && cY >= 0 && cX < fields.length && cY < fields[0].length && WorldM.getTileCollision(toWorld(cX, cY)) == Collision.collides)
-        {
-            //fields[cX][cY] = new Cost(-1, new IVector2(cX, cY), current);
-        }
-        else
-        {
-            /*if(!(cX >= 0 && cY >= 0 && cX < fields.length && cY < fields[0].length))
-                System.out.println("out of fields");
-            System.out.println("null");*/
         }
 
         return cX == fStart.x && cY == fStart.y;

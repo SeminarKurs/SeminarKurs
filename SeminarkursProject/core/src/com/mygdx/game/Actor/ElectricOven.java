@@ -3,7 +3,7 @@ package com.mygdx.game.Actor;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
-import com.mygdx.game.Types.Collision;
+import com.mygdx.game.Tools.Collision;
 
 /**
  * Created by Christopher Schleppe on 04.01.2018.

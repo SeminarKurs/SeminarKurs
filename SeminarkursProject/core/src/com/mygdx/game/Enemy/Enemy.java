@@ -3,9 +3,9 @@ package com.mygdx.game.Enemy;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Enemy.PathFinding.PathFinding;
-import com.mygdx.game.Types.Collision;
-import com.mygdx.game.Types.FMath;
-import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.Tools.Collision;
+import com.mygdx.game.Tools.FMath;
+import com.mygdx.game.Tools.IVector2;
 import com.mygdx.game.WorldM;
 
 /**
@@ -42,19 +42,14 @@ public class Enemy {
                 }
                 else
                 {
-                    System.out.println("Enemy can't move to here!");
                     findPath(playerPosition);
                 }
 
                 path.removeIndex(1);
-                System.out.println(path.size);
-
-
             }
         }
         else
         {
-            System.out.println("Start finding");
             findPath(playerPosition);
         }
     }

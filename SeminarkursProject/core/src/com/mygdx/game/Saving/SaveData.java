@@ -1,6 +1,5 @@
 package com.mygdx.game.Saving;
 
-import com.mygdx.game.Actor.Actor;
 import com.mygdx.game.Actor.Resource;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Item.ItemId;
@@ -15,20 +14,13 @@ import java.io.Serializable;
 public class SaveData implements Serializable {
     //Player
     public float playerX, playerY;
-
-
-    private int resourceType, resourceAmount;
-
-    public int[][] itemMasterImage;
+    // Items
     public int[][] itemMasterStackSize;
-    public int[][] itemMasterStackSizeMax;
-    public String[][] itemMasterDesc;
     public ItemId[][] itemMasterId;
     public float[][] images;
-
+    // actoren
     public ItemId[][] actorId;
     public Resource[][] resources;
-
 
     public void setPlayer(PlayerController pc){
         playerX =  pc.getPosition().x;

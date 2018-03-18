@@ -26,9 +26,9 @@ import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Saving.ResourceManager;
 import com.mygdx.game.Saving.SaveData;
 import com.mygdx.game.Textures.TexturesClass;
-import com.mygdx.game.Types.Collision;
-import com.mygdx.game.Types.FMath;
-import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.Tools.Collision;
+import com.mygdx.game.Tools.FMath;
+import com.mygdx.game.Tools.IVector2;
 
 import java.util.Random;
 
@@ -63,8 +63,6 @@ public class WorldM extends ApplicationAdapter {
 	private Array<Enemy> enemies = new Array<Enemy>();
 
 	private SpriteBatch batch;
-	// used for random things
-	private Random rand = new Random();
 	private TexturesClass textureClass;
 	private float dt;
 	private int seed;
@@ -108,6 +106,7 @@ public class WorldM extends ApplicationAdapter {
 		enemies.add(new Enemy());
 		//enemies.get(0).findPath(new IVector2());
 		saveData = new SaveData();
+		invgui = new InventoryGUI(cam);
 	}
 
 	private void generate() {
@@ -205,13 +204,12 @@ public class WorldM extends ApplicationAdapter {
 			updateActors.get(i).update(dt);
 		}
 
+		// camera updaten
 		cam.update();
-
-		// render
 		batch.setProjectionMatrix(cam.combined);
-
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		// render
 		batch.begin();
 		Array<FLayer> fLayers = new Array<FLayer>();
 		for(int x = 0; x < tiles.length ; x++)
@@ -259,9 +257,9 @@ public class WorldM extends ApplicationAdapter {
 		batch.draw(playerController.getPlayerTex(), playerController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, playerController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
 
-		invgui = new InventoryGUI(cam);
 		invgui.render();
 	}
+
 	static public Tile getResource(IVector2 posi)
 	{
 		return tiles[posi.x][posi.y];

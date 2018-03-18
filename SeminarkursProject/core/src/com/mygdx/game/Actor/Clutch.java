@@ -6,7 +6,7 @@ package com.mygdx.game.Actor;
 
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
-import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.Tools.IVector2;
 import com.mygdx.game.WorldM;
 
 /**

@@ -13,9 +13,9 @@ import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Inventory;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Item.ItemToolMaster;
-import com.mygdx.game.Types.Collision;
-import com.mygdx.game.Types.FMath;
-import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.Tools.Collision;
+import com.mygdx.game.Tools.FMath;
+import com.mygdx.game.Tools.IVector2;
 import com.mygdx.game.WorldM;
 
 import static com.badlogic.gdx.Gdx.input;
@@ -156,8 +156,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         }
     }
 
-
-
     void SetEquipment(ItemToolMaster tool)
     {
         this.tool = tool;
@@ -241,8 +239,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             }
             return true;
         }
-
-
         return true;
     }
 

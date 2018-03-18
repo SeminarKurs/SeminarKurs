@@ -2,9 +2,7 @@ package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.Item.ItemMaster;
-import com.mygdx.game.Types.Collision;
-
-import java.io.Serializable;
+import com.mygdx.game.Tools.Collision;
 
 /**
  * Created by Tobias on 02.09.2017.

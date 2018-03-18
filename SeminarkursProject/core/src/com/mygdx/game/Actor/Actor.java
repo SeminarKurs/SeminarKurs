@@ -3,6 +3,7 @@ package com.mygdx.game.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Item.ItemId;
+import com.mygdx.game.Tools.Collision;
 
 /**
  * Created by Tobias on 24.08.2017.
@@ -15,7 +16,7 @@ public abstract class Actor {
     public void update(float dt) {}
 
     // return collison
-    public com.mygdx.game.Types.Collision coll(){return com.mygdx.game.Types.Collision.none;}
+    public Collision coll(){return Collision.none;}
     // returns the number of the image
     public int image(){return 0;}
 

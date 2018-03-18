@@ -1,9 +1,8 @@
 package com.mygdx.game.Actor;
 
-import com.mygdx.game.Actor.Actor;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
-import com.mygdx.game.Types.Collision;
+import com.mygdx.game.Tools.Collision;
 
 public class Generator extends StorageActor{
     private ItemMaster[] brennstofftank;

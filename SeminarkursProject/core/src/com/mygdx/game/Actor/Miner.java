@@ -3,7 +3,8 @@ package com.mygdx.game.Actor;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
-import com.mygdx.game.Types.IVector2;
+import com.mygdx.game.Tools.Collision;
+import com.mygdx.game.Tools.IVector2;
 import com.mygdx.game.WorldM;
 
 /**
@@ -51,8 +52,8 @@ public class Miner extends StorageActor {
     }
 
     @Override
-    public com.mygdx.game.Types.Collision coll() {
-        return com.mygdx.game.Types.Collision.collides;
+    public Collision coll() {
+        return Collision.collides;
     }
 
     @Override

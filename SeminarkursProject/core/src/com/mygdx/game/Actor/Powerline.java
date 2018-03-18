@@ -3,11 +3,8 @@ package com.mygdx.game.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Item.ItemId;
-import com.mygdx.game.Item.ItemList;
-import com.mygdx.game.Item.ItemMaster;
-import com.mygdx.game.Types.Collision;
-import com.mygdx.game.Types.IVector2;
-import com.mygdx.game.WorldM;
+import com.mygdx.game.Tools.Collision;
+import com.mygdx.game.Tools.IVector2;
 
 /**
  * Created by Christopher Schleppe on 05.01.2018.
