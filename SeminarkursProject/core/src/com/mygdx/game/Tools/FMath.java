@@ -9,8 +9,11 @@ import com.badlogic.gdx.math.Vector3;
 
 public class FMath {
 
-    public static IVector2 getTile(Vector2 pos){return new IVector2((int)(pos.x +0.5),(int)(pos.y+0.5));}
-    public static IVector2 getTile(Vector3 pos){return new IVector2((int)(pos.x +0.5),(int)(pos.y+0.5));}
-    public static IVector2 getTile(float x, float y){return new IVector2((int)(x +0.5),(int)(y+0.5));}
-
+    public static IVector2 getTile(Vector2 pos){ return getTile(pos.x, pos.y); }
+    public static IVector2 getTile(Vector3 pos){return getTile(pos.x, pos.y);}
+    public static IVector2 getTile(float x, float y){
+        if(x < 0){ x --; } // -0.01 to -0.99 it will be raunded to 0 so whe have two 0,0 positons
+        if(y < 0){ y --; } // -0.01 to -0.99 it will be raunded to 0 so whe have two 0,0 positons
+        return new IVector2((int)(x +0.5),(int)(y+0.5));
+    }
 }

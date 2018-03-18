@@ -218,14 +218,13 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     @Override public boolean touchDown (int screenX, int screenY, int pointer, int button)
     {
+
         Vector3 tp = new Vector3();
         // get mouse courser position
         camera.unproject(tp.set(screenX, screenY, 0));
         // if it's tight mouse button make colliosn test
         if(button == Input.Buttons.LEFT)
         {
-            if(tp.x < 0){ tp.x -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have two 0,0 positons
-            if(tp.y < 0){ tp.y -= 1; } // -0.01 to -0.99 it will be raunded to 0 so whe have two 0,0 positons
             mineTile = FMath.getTile(tp);
             if(WorldM.validTile(mineTile))
                 mineing = true;
@@ -276,7 +275,10 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             WorldM.load();
         }
         if (keycode == Input.Keys.C){
-            IVector2 pos = new IVector2(5, 5);
+            Vector3 tp = new Vector3();
+            // get mouse courser position
+            camera.unproject(tp.set(input.getX(), input.getY(), 0));
+            IVector2 pos = FMath.getTile(tp);
             WorldM.addActor(new Clutch(pos), pos);
         }
 
