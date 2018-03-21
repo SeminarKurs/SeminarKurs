@@ -67,7 +67,7 @@ public class Oven extends Actor{
         public Collision coll() {
         return Collision.collides;
     }
-        public int image(){return 0;}
+        public int image(){return 3;}
 
     public ItemId getId() {
         return ItemId.OVEN;

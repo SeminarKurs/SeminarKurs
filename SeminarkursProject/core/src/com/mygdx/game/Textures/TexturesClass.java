@@ -37,6 +37,8 @@ public class TexturesClass {
         texturesActor.add(new Texture("Green.png"));
         texturesActor.add(new Texture("Conveyor.png"));
         texturesActor.add(new Texture("Miner.png"));
+        texturesActor.add(new Texture("Oven.png"));
+        texturesActor.add(new Texture("Clutch.png"));
         // resource textures
         texturesResource.add(new Texture("Coal.png"));
         texturesResource.add(new Texture("Tree.png"));

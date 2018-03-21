@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Actor.Clutch;
+import com.mygdx.game.Actor.Conveyor;
 import com.mygdx.game.Actor.Miner;
+import com.mygdx.game.Actor.Oven;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Inventory;
 import com.mygdx.game.Item.ItemMaster;
@@ -274,7 +276,21 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             System.out.println("Load");
             WorldM.load();
         }
-        if (keycode == Input.Keys.C){
+        if (keycode == Input.Keys.NUM_1){
+            Vector3 tp = new Vector3();
+            // get mouse courser position
+            camera.unproject(tp.set(input.getX(), input.getY(), 0));
+            IVector2 pos = FMath.getTile(tp);
+            WorldM.addActor(new Oven(), pos);
+        }
+        if (keycode == Input.Keys.NUM_2){
+            Vector3 tp = new Vector3();
+            // get mouse courser position
+            camera.unproject(tp.set(input.getX(), input.getY(), 0));
+            IVector2 pos = FMath.getTile(tp);
+            WorldM.addActor(new Conveyor(0, null, pos), pos);
+        }
+        if (keycode == Input.Keys.NUM_3){
             Vector3 tp = new Vector3();
             // get mouse courser position
             camera.unproject(tp.set(input.getX(), input.getY(), 0));

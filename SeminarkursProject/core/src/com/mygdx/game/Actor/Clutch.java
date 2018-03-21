@@ -88,7 +88,7 @@ public class Clutch extends StorageActor {
         return ItemId.CLUTCH;
     }
 
-    public int image(){return 1;}
+    public int image(){return 4;}
 
 }
 
