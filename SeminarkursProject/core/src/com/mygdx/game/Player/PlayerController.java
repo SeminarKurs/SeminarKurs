@@ -54,6 +54,8 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     IVector2 mineTile = new IVector2();
     // the object that need's to build
     private int objectToBuild;
+    public boolean build = false;
+    public int buildRichtung = 0;
 
     private ItemToolMaster tool;
 
@@ -254,8 +256,12 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     @Override public boolean scrolled (int amount)
     {
         camera.zoom += amount * mouseWheelScale;
-                if(camera.zoom < MINZOOM){ camera.zoom = MINZOOM; }
-        if(camera.zoom > MAXZOOM){ camera.zoom = MAXZOOM; }
+        if (camera.zoom < MINZOOM) {
+            camera.zoom = MINZOOM;
+        }
+        if (camera.zoom > MAXZOOM) {
+            camera.zoom = MAXZOOM;
+        }
         return true;
     }
 
@@ -276,6 +282,9 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             System.out.println("Load");
             WorldM.load();
         }
+
+        // place actors
+
         if (keycode == Input.Keys.NUM_1){
             Vector3 tp = new Vector3();
             // get mouse courser position
@@ -285,18 +294,26 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         }
         if (keycode == Input.Keys.NUM_2){
             Vector3 tp = new Vector3();
+
             // get mouse courser position
             camera.unproject(tp.set(input.getX(), input.getY(), 0));
             IVector2 pos = FMath.getTile(tp);
-            WorldM.addActor(new Conveyor(0, null, pos), pos);
+            System.out.println("r:"+buildRichtung);
+            WorldM.addActor(new Conveyor(buildRichtung+1, null, pos), pos);
+            build = false;
         }
         if (keycode == Input.Keys.NUM_3){
             Vector3 tp = new Vector3();
+
             // get mouse courser position
             camera.unproject(tp.set(input.getX(), input.getY(), 0));
             IVector2 pos = FMath.getTile(tp);
-            WorldM.addActor(new Clutch(pos), pos);
+            Clutch clutch = new Clutch(pos);
+            clutch.setRichtung(buildRichtung+1);
+            WorldM.addActor(clutch, pos);
+            build = false;
         }
+
 
         return false;
     }

@@ -19,7 +19,6 @@ import com.mygdx.game.Actor.Oven;
 import com.mygdx.game.Actor.Resource;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Enemy.Enemy;
-import com.mygdx.game.Enemy.PathFinding.PathFinding;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Player.PlayerController;
@@ -35,7 +34,6 @@ import java.util.Random;
 /**
  * Created by Tobias on round about 20.08.2017.
  */
-
 
 public class WorldM extends ApplicationAdapter {
 
@@ -95,14 +93,16 @@ public class WorldM extends ApplicationAdapter {
 
 		Gdx.input.setInputProcessor(playerController);
 
-		Conveyor f = new Conveyor(1, new ItemMaster(), new IVector2(1,3));
+		Clutch clutch = new Clutch(new IVector2(2,3));
+		clutch.setRichtung(4);
+		addActor(clutch, new IVector2(2,3));
+		Conveyor f = new Conveyor(2, new ItemMaster(), new IVector2(1,3));
 		tiles[1][1].setRes(0);
 		Miner m = new Miner(new IVector2(1,1));
 		addActor(m, new IVector2(1,1));
 
 		addActor(f, new IVector2(1,3));
 
-		new PathFinding();
 		enemies.add(new Enemy());
 		//enemies.get(0).findPath(new IVector2());
 		saveData = new SaveData();
@@ -226,9 +226,7 @@ public class WorldM extends ApplicationAdapter {
 				batch.setColor(color);
 				batch.draw(TexturesClass.getTextureGround(1), x - 0.5f, y - 0.5f, 1f, 1f);
 
-
 				// reset alpha
-
 				color.a = 1;
 				batch.setColor(color);
 				//draw Resources

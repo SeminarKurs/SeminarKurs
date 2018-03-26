@@ -4,6 +4,8 @@ package com.mygdx.game.Actor;
  * Created by Neutral on 28.12.2017.
  */
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Tools.IVector2;
@@ -15,8 +17,6 @@ import com.mygdx.game.WorldM;
 
 public class Clutch extends StorageActor {
     private static final float SCHRITT_WEITE = (float) 0.5;
-
-
 
     private int richtung;
     private ItemMaster item;
@@ -33,7 +33,6 @@ public class Clutch extends StorageActor {
             progress -= 0.5f;
             transfer();
         }
-
     }
 
     public void transfer (){
@@ -61,6 +60,25 @@ public class Clutch extends StorageActor {
         }
     }
 
+    @Override
+    public void draw(Batch batch, int x, int y, Array<FLayer> fLayers) {
+        DrawH.drawActorRot(batch, x,y, richtung, image());
+        if(item != null)
+            switch (richtung) {
+                case 1: // links
+                    fLayers.add(new FLayer(x - progress,y, item.getImage()));
+                    break;
+                case 2: // rechts
+                    fLayers.add(new FLayer(x + progress,y, item.getImage()));
+                    break;
+                case 3: // oben
+                    fLayers.add(new FLayer(x,y + progress, item.getImage()));
+                    break;
+                case 4: // unten
+                    fLayers.add(new FLayer(x ,y - progress, item.getImage()));
+                    break;
+            }
+    }
 
     public void addItem (ItemMaster item, Oven oven){
         oven.addItem(item);

@@ -9,3 +9,13 @@
 
 SeminarkursProject/core/build/classes/main/com/mygdx/game/Item/ItemToolMaster.class
 *.class
+*.lock
+*.lock
+*.bin
+*.lock
+*.bin
+*.jar
+*.properties
+*.xml
+*.properties
+*.iml
