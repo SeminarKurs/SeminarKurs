@@ -18,17 +18,22 @@ public class DrawH {
         }
     }
     //rot: 1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
-    public static void drawActorRot(Batch batch, int x, int y, int rot, int imageNum)
+    public static void drawActorRot(Batch batch, int x, int y, Direction rot, int imageNum)
     {
         if(TexturesClass.getTextureActor(imageNum) != null){
-            if(rot < 3)
-                batch.draw(TexturesClass.getTextureActor(imageNum), x - 0.5f, y - 0.5f, 0,0, 1,1, 1,1, 0, 0,0, 32,32,rot == 1,false);
-            else
-            {
-                if(rot == 3)
+            switch (rot) {
+                case left:
+                    batch.draw(TexturesClass.getTextureActor(imageNum), x - 0.5f, y - 0.5f, 0, 0, 1, 1, 1, 1, 0, 0, 0, 32, 32, true, false);
+                    break;
+                case up:
                     batch.draw(TexturesClass.getTextureActor(imageNum), x + 0.5f, y - 0.5f, 0,0, 1,1, 1,1, 90, 0,0, 32,32,false,false);
-                if(rot == 4)
+                    break;
+                case down:
                     batch.draw(TexturesClass.getTextureActor(imageNum), x + 0.5f, y - 0.5f, 0, 1, 1,1, 1,1, 270, 0,0, 32,32,false,false);
+                    break;
+                case right:
+                    batch.draw(TexturesClass.getTextureActor(imageNum), x - 0.5f, y - 0.5f, 0, 0, 1, 1, 1, 1, 0, 0, 0, 32, 32, false, false);
+                    break;
             }
         }else{
             System.out.println("Error: invalid image num! actor");

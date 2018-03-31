@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Actor.Actor;
 import com.mygdx.game.Actor.Clutch;
 import com.mygdx.game.Actor.Conveyor;
+import com.mygdx.game.Actor.Direction;
 import com.mygdx.game.Actor.DrawH;
 import com.mygdx.game.Actor.FLayer;
 import com.mygdx.game.Actor.Miner;
@@ -94,9 +95,9 @@ public class WorldM extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(playerController);
 
 		Clutch clutch = new Clutch(new IVector2(2,3));
-		clutch.setRichtung(4);
+		clutch.setRichtung(Direction.down);
 		addActor(clutch, new IVector2(2,3));
-		Conveyor f = new Conveyor(2, new ItemMaster(), new IVector2(1,3));
+		Conveyor f = new Conveyor(Direction.right, new ItemMaster(), new IVector2(1,3));
 		tiles[1][1].setRes(0);
 		Miner m = new Miner(new IVector2(1,1));
 		addActor(m, new IVector2(1,1));
@@ -155,7 +156,7 @@ public class WorldM extends ApplicationAdapter {
 							addActor(new Clutch(new IVector2(x,y)), new IVector2(x,y));
 							break;
 						case CONVEYOR:
-							addActor(new Conveyor(1, new ItemMaster(), new IVector2(x,y)), new IVector2(x,y));
+							addActor(new Conveyor(Direction.right, new ItemMaster(), new IVector2(x,y)), new IVector2(x,y));
 							break;
 						case OVEN:
 							addActor(new Oven(), new IVector2(x,y));

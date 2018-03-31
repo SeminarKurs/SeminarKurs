@@ -18,7 +18,7 @@ import com.mygdx.game.WorldM;
 public class Clutch extends StorageActor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
-    private int richtung;
+    private Direction richtung;
     private ItemMaster item;
     private IVector2 pos;
     private float progress = -0.5f;
@@ -37,22 +37,22 @@ public class Clutch extends StorageActor {
 
     public void transfer (){
         switch (richtung) {
-            case 1:
+            case left:
                 if (WorldM.setItemActor(new IVector2(pos.x - 1, pos.y), item)) {
                     item = null;
                 }
                 break;
-            case 2:
+            case right:
                 if (WorldM.setItemActor(new IVector2(pos.x + 1, pos.y), item)) {
                     item = null;
                 }
                 break;
-            case 3:
+            case up:
                 if (WorldM.setItemActor(new IVector2(pos.x, pos.y + 1), item)) {
                     item = null;
                 }
                 break;
-            case 4:
+            case down:
                 if (WorldM.setItemActor(new IVector2(pos.x, pos.y - 1), item)) {
                     item = null;
                 }
@@ -65,16 +65,16 @@ public class Clutch extends StorageActor {
         DrawH.drawActorRot(batch, x,y, richtung, image());
         if(item != null)
             switch (richtung) {
-                case 1: // links
+                case left: // links
                     fLayers.add(new FLayer(x - progress,y, item.getImage()));
                     break;
-                case 2: // rechts
+                case right: // rechts
                     fLayers.add(new FLayer(x + progress,y, item.getImage()));
                     break;
-                case 3: // oben
+                case up: // oben
                     fLayers.add(new FLayer(x,y + progress, item.getImage()));
                     break;
-                case 4: // unten
+                case down: // unten
                     fLayers.add(new FLayer(x ,y - progress, item.getImage()));
                     break;
             }
@@ -99,7 +99,7 @@ public class Clutch extends StorageActor {
         this.item = item;
         return false;
     }
-    public void setRichtung (int richtung){this.richtung = richtung;}
+    public void setRichtung (Direction richtung){this.richtung = richtung;}
 
     @Override
     public ItemId getId() {

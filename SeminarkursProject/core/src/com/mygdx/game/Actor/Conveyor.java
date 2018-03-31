@@ -14,13 +14,13 @@ import com.mygdx.game.WorldM;
 public class Conveyor extends Actor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
-    private int richtung;
+    private Direction richtung;
     private ItemMaster item;
     private com.mygdx.game.Tools.IVector2 pos;
     private float progress = -0.5f;
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
-    public Conveyor(int richtung, ItemMaster item, com.mygdx.game.Tools.IVector2 pos) {
+    public Conveyor(Direction richtung, ItemMaster item, com.mygdx.game.Tools.IVector2 pos) {
         this.richtung = richtung;
         this.item = item;
         this.pos = pos;
@@ -33,22 +33,22 @@ public class Conveyor extends Actor {
 
     public void transfer (){
         switch (richtung) {
-            case 1:
+            case left:
                 if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x - 1, pos.y), item)) {
                     item = null;
                 }
                 break;
-            case 2:
+            case right:
                 if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x + 1, pos.y), item)) {
                     item = null;
                 }
                 break;
-            case 3:
+            case up:
                 if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x, pos.y + 1), item)) {
                     item = null;
                 }
                 break;
-            case 4:
+            case down:
                 if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x, pos.y - 1), item)) {
                     item = null;
                 }
@@ -73,16 +73,16 @@ public class Conveyor extends Actor {
         DrawH.drawActorRot(batch, x,y, richtung, image());
         if(item != null)
             switch (richtung) {
-                case 1: // links
+                case left: // links
                     fLayers.add(new FLayer(x - progress,y, item.getImage()));
                     break;
-                case 2: // rechts
+                case right: // rechts
                     fLayers.add(new FLayer(x + progress,y, item.getImage()));
                     break;
-                case 3: // oben
+                case up: // oben
                     fLayers.add(new FLayer(x,y + progress, item.getImage()));
                     break;
-                case 4: // unten
+                case down: // unten
                     fLayers.add(new FLayer(x ,y - progress, item.getImage()));
                     break;
             }
