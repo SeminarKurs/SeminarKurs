@@ -18,7 +18,7 @@ import com.mygdx.game.WorldM;
 public class Clutch extends StorageActor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
-    private Direction richtung;
+    private Direction richtung = Direction.left;
     private ItemMaster item;
     private IVector2 pos;
     private float progress = -0.5f;
@@ -62,6 +62,7 @@ public class Clutch extends StorageActor {
 
     @Override
     public void draw(Batch batch, int x, int y, Array<FLayer> fLayers) {
+
         DrawH.drawActorRot(batch, x,y, richtung, image());
         if(item != null)
             switch (richtung) {
@@ -97,6 +98,7 @@ public class Clutch extends StorageActor {
     @Override
     public boolean setItem(ItemMaster item) {
         this.item = item;
+        System.out.println("got the item boss");
         return false;
     }
     public void setRichtung (Direction richtung){this.richtung = richtung;}

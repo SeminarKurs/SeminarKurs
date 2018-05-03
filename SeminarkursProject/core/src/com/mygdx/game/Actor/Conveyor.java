@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
+import com.mygdx.game.Tools.IVector2;
 import com.mygdx.game.WorldM;
 
 /**
@@ -15,8 +16,12 @@ public class Conveyor extends Actor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
     private Direction richtung;
+    private IVector2 pos;
+
     private ItemMaster item;
-    private com.mygdx.game.Tools.IVector2 pos;
+    private IVector2 itemPos;
+
+
     private float progress = -0.5f;
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
@@ -24,6 +29,7 @@ public class Conveyor extends Actor {
         this.richtung = richtung;
         this.item = item;
         this.pos = pos;
+        itemPos = pos;
     }
 
     @Override
@@ -34,33 +40,41 @@ public class Conveyor extends Actor {
     public void transfer (){
         switch (richtung) {
             case left:
-                if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x - 1, pos.y), item)) {
+                itemPos.set(itemPos.x -1, itemPos.y);
+                if (WorldM.setItemActor(itemPos, item)) {
                     item = null;
                 }
                 break;
             case right:
-                if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x + 1, pos.y), item)) {
+                itemPos.set(itemPos.x +1, itemPos.y);
+                if (WorldM.setItemActor(itemPos, item)) {
                     item = null;
                 }
                 break;
             case up:
-                if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x, pos.y + 1), item)) {
+                itemPos.set(itemPos.x , itemPos.y +1);
+                if (WorldM.setItemActor(itemPos, item)) {
                     item = null;
                 }
                 break;
             case down:
-                if (WorldM.setItemActor(new com.mygdx.game.Tools.IVector2(pos.x, pos.y - 1), item)) {
+                itemPos.set(itemPos.x, itemPos.y -1);
+                if (WorldM.setItemActor(itemPos, item)) {
                     item = null;
                 }
                 break;
         }
+        WorldM.resetItemActor(itemPos);
     }
 
     public void update (float dt){
-        progress += dt /10 ;
-        if (progress >= 0.5f ) {
-            progress = 0.5f;
-            transfer();
+        if(item != null) {
+            progress += dt / 10;
+            if (progress >= 0.5f) {
+                this.moveItemToActor(item, pos);
+                transfer();
+                progress = 0f;
+            }
         }
 
     }
@@ -86,6 +100,13 @@ public class Conveyor extends Actor {
                     fLayers.add(new FLayer(x ,y - progress, item.getImage()));
                     break;
             }
+    }
+    public boolean setItem(ItemMaster item) {
+        this.item = item;
+        itemPos = pos;
+        progress = 0f;
+        System.out.println("got the item boss");
+        return false;
     }
 
     @Override

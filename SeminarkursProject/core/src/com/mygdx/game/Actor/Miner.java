@@ -39,6 +39,7 @@ public class Miner extends StorageActor {
                     // make shure there are still resources
                     if (t.resAmount() < (int) progress) {
                         item = ItemList.coal(t.resAmount());
+                        this.moveItemToActor(item, pos);
                         t.resSetAmount(0);
                         WorldM.updateResource(pos);
                     }else{
@@ -50,6 +51,8 @@ public class Miner extends StorageActor {
             }
         }
     }
+
+
 
     @Override
     public Collision coll() {

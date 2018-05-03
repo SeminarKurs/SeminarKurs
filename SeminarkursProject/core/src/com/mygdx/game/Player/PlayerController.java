@@ -232,10 +232,14 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         }
         if(button == Input.Buttons.RIGHT)
         {
+            System.out.println("123");
+            System.out.println("x: " + tp.x + "y: " + tp.y);
             IVector2 pos = FMath.getTile(tp);
+            System.out.println("x: " + pos.x + "y: " + pos.y);
             if(WorldM.validTile(pos)&& this.pos.dst(tp.x, tp.y) <= ACTINGRANGE)
             {
-                WorldM.addActor(new Miner(pos), pos);
+                Miner m = new Miner (pos);
+                WorldM.addActor(m, pos);
             }
             return true;
         }

@@ -69,6 +69,12 @@ public class Oven extends Actor{
     }
         public int image(){return 3;}
 
+    public boolean setItem(ItemMaster item) {
+        this.item = item;
+        System.out.println("got the item boss");
+        return false;
+    }
+
     public ItemId getId() {
         return ItemId.OVEN;
     }

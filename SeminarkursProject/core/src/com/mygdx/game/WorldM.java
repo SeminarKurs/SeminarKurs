@@ -94,9 +94,7 @@ public class WorldM extends ApplicationAdapter {
 
 		Gdx.input.setInputProcessor(playerController);
 
-		Clutch clutch = new Clutch(new IVector2(2,3));
-		clutch.setRichtung(Direction.down);
-		addActor(clutch, new IVector2(2,3));
+
 		Conveyor f = new Conveyor(Direction.right, new ItemMaster(), new IVector2(1,3));
 		tiles[1][1].setRes(0);
 		Miner m = new Miner(new IVector2(1,1));
@@ -282,11 +280,17 @@ public class WorldM extends ApplicationAdapter {
 		}
 		return null;
 	}
+	public static Actor getActor (IVector2 pos){
+		return tiles[pos.x][pos.y].actor;
+	}
 
 	static public boolean setItemActor (IVector2 pos, ItemMaster item){
 		if(!validTile(pos) || tiles [pos.x][pos.y].item != null) return false;
 		tiles [pos.x][pos.y].item = item;
 		return true;
+	}
+	static public void resetItemActor(IVector2 pos){
+		tiles[pos.x][pos.y].item = null;
 	}
 
 	static public void setCollision(IVector2 pos)
@@ -294,6 +298,7 @@ public class WorldM extends ApplicationAdapter {
 		tiles[pos.x][pos.y].collision = Collision.collides;
 		tiles[pos.x][pos.y].image = 10000;
 	}
+
 
 	// add a actor to tile
 	static private boolean addTileActor(Actor actor, IVector2 pos)
