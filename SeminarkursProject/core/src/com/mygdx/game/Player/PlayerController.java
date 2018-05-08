@@ -41,6 +41,8 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     public final static float PlSIZEHY = .4f;
     public final static int ACTINGRANGE = 2;
 
+    private static PlayerController playerStatic;
+
     private Texture playerTex;
     private Vector2 pos = new Vector2();
 
@@ -58,6 +60,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     public PlayerController(OrthographicCamera camera)
     {
+        playerStatic = this;
         this.camera = camera;
         playerTex = new Texture("Player.png");
         updCamPos();
@@ -219,7 +222,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
     @Override public boolean touchDown (int screenX, int screenY, int pointer, int button)
     {
-
         Vector3 tp = new Vector3();
         // get mouse courser position
         camera.unproject(tp.set(screenX, screenY, 0));
@@ -232,14 +234,10 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         }
         if(button == Input.Buttons.RIGHT)
         {
-            System.out.println("123");
-            System.out.println("x: " + tp.x + "y: " + tp.y);
             IVector2 pos = FMath.getTile(tp);
-            System.out.println("x: " + pos.x + "y: " + pos.y);
             if(WorldM.validTile(pos)&& this.pos.dst(tp.x, tp.y) <= ACTINGRANGE)
             {
-                Miner m = new Miner (pos);
-                WorldM.addActor(m, pos);
+                WorldM.addActor(new Miner(pos), pos);
             }
             return true;
         }
@@ -270,7 +268,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         camera.position.set(pos.x, pos.y, 0);
     }
     public Texture getPlayerTex() { return playerTex;}
-    public Vector2 getPosition() { return pos;}
+    public static Vector2 getPosition() { return playerStatic.pos;}
     public void setPosition (Vector2 pos){ this.pos =pos;}
     public float getMineSpeed() { return mineSpeed; }
 
@@ -342,6 +340,13 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
 
         return false;
     }
+
+    public static void kill()
+    {
+        playerStatic.pos = new Vector2();
+        playerStatic.updCamPos();
+    }
+
     @Override public boolean mouseMoved (int screenX, int screenY){ return true; }
     @Override public boolean touchDragged (int screenX, int screenY, int pointer){ return true; }
     @Override public void resize (int width, int height){}
