@@ -11,67 +11,66 @@ import com.mygdx.game.Tools.Collision;
 
 public class Oven extends Actor{
 
-        private ItemMaster returnedItem;
+    private ItemMaster returnedItem;
 
-        private float progress;
+    private float progress;
 
-        private ItemMaster item;
-        private ItemMaster coal;
+    private ItemMaster item;
+    private ItemMaster coal;
 
 
-        public Oven(){}
+    public Oven(){}
 
-        public void addItem(ItemMaster item){
+    public void addItem(ItemMaster item){
 
-            if (item.getId() == ItemId.COAL){
-                if (coal == null){
-                    coal = item;
-                }else{
-                    coal.addStackSize(item.getStackSize());
-                }
+        if (item.getId() == ItemId.COAL){
+            if (coal == null){
+                coal = item;
             }else{
-                if(this.item.getId() == item.getId()){
-                    this.item.addStackSize(item.getStackSize());
+                coal.addStackSize(item.getStackSize());
+            }
+        }else{
+            if(this.item.getId() == item.getId()){
+                this.item.addStackSize(item.getStackSize());
+            }
+        }
+    }
+
+    public void melt (){
+        if (item == null || coal == null){
+            return;
+        }else{
+            if (item.getStackSize() > 0 && coal.getStackSize() > 0) {
+                switch (item.getId()) {
+                    case ORE_IRON:
+                        returnedItem = ItemList.mat_iron(1);
+                        break;
+                    default:
+                        return;
                 }
+                coal.addStackSize(-1);
+                item.addStackSize(-1);
             }
         }
+    }
 
-        public void melt (){
-            if (item == null || coal == null){
-                return;
-            }else{
-                if (item.getStackSize() > 0 && coal.getStackSize() > 0) {
-                    switch (item.getId()) {
-                        case ORE_IRON:
-                            returnedItem = ItemList.mat_iron(1);
-                            break;
-                        default:
-                            return;
-                    }
-                    coal.addStackSize(-1);
-                    item.addStackSize(-1);
-                }
-            }
+    @Override
+    public void update (float dt){
+        progress += dt;
+        if (progress >= 100){
+            progress -= 100;
+            melt();
         }
+    }
 
-        @Override
-        public void update (float dt){
-            progress += dt;
-            if (progress >= 100){
-                progress -= 100;
-                melt();
-            }
-        }
-
-        @Override
-        public Collision coll() {
+    @Override
+    public Collision coll() {
         return Collision.collides;
     }
-        public int image(){return 3;}
+    public int image(){return 3;}
 
     public boolean setItem(ItemMaster item) {
         this.item = item;
-        System.out.println("got the item boss");
         return false;
     }
 

@@ -18,51 +18,89 @@ import com.mygdx.game.WorldM;
 public class Clutch extends StorageActor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
-    private Direction richtung = Direction.left;
+    private Direction richtung ;
     private ItemMaster item;
     private IVector2 pos;
+    private IVector2 itemPos;
     private float progress = -0.5f;
 
-    public Clutch (IVector2 pos){
+    public Clutch (IVector2 pos, Direction richtung){
+        this.richtung = richtung;
         this.pos = pos;
+        itemPos = pos;
     }
-
+    public boolean needUpdate() {
+        return true;
+    }
     public void update (float dt){
-        progress += dt /20 ;
-        if (progress >= 0.5f ) {
-            progress -= 0.5f;
-            transfer();
+        if (item != null) {
+            progress += dt / 5;
+            if (progress >= 0.5f) {
+                if (!transfer()) this.moveItemToActor(item, pos);
+                item = null;
+                progress = -0.5f;
+            }
         }
     }
 
-    public void transfer (){
+    public Actor checkForNearActor(IVector2 pos){
+
+        switch (richtung) {
+            case left: // links
+                return WorldM.getActor(new IVector2(pos.x-1, pos.y));
+            case right: // rechts
+                System.out.println("gott");
+                return WorldM.getActor(new IVector2(pos.x+1, pos.y));
+            case up: // oben
+                return WorldM.getActor(new IVector2(pos.x, pos.y+1));
+            case down: // unten
+                return WorldM.getActor(new IVector2(pos.x, pos.y-1));
+        }
+        return null;
+    }
+    public void moveItemToActor (ItemMaster item, IVector2 pos){
+        Actor a = checkForNearActor(pos);
+        if (a != null) a.setItem(item);
+    }
+
+    public boolean transfer (){
         switch (richtung) {
             case left:
-                if (WorldM.setItemActor(new IVector2(pos.x - 1, pos.y), item)) {
-                    item = null;
+                itemPos = new IVector2(pos.x - 1, pos.y);
+                if (checkForNearActor(pos) == null) {
+                    WorldM.setItemActor(itemPos, item);
+                    return true;
                 }
                 break;
             case right:
-                if (WorldM.setItemActor(new IVector2(pos.x + 1, pos.y), item)) {
-                    item = null;
+                itemPos = new IVector2(pos.x + 1, pos.y);
+                System.out.println("ricth");
+                if (checkForNearActor(pos) == null) {
+                    WorldM.setItemActor(itemPos, item);
+                    return true;
                 }
                 break;
             case up:
-                if (WorldM.setItemActor(new IVector2(pos.x, pos.y + 1), item)) {
-                    item = null;
+                itemPos = new IVector2(pos.x, pos.y + 1);
+                if (checkForNearActor(pos) == null) {
+                    WorldM.setItemActor(itemPos, item);
+                    return true;
                 }
                 break;
             case down:
-                if (WorldM.setItemActor(new IVector2(pos.x, pos.y - 1), item)) {
-                    item = null;
+                itemPos = new IVector2(pos.x, pos.y - 1);
+                if (checkForNearActor(pos) == null) {
+                    WorldM.setItemActor(itemPos, item);
+                    return true;
                 }
                 break;
         }
+        itemPos = pos;
+        return false;
     }
 
     @Override
     public void draw(Batch batch, int x, int y, Array<FLayer> fLayers) {
-
         DrawH.drawActorRot(batch, x,y, richtung, image());
         if(item != null)
             switch (richtung) {
@@ -98,10 +136,10 @@ public class Clutch extends StorageActor {
     @Override
     public boolean setItem(ItemMaster item) {
         this.item = item;
-        System.out.println("got the item boss");
         return false;
     }
-    public void setRichtung (Direction richtung){this.richtung = richtung;}
+    public void setRichtung (Direction richtung){this.richtung = richtung;
+        System.out.println(this.richtung);}
 
     @Override
     public ItemId getId() {

@@ -151,7 +151,7 @@ public class WorldM extends ApplicationAdapter {
 							addActor(m, new IVector2(x,y));
 							break;
 						case CLUTCH:
-							addActor(new Clutch(new IVector2(x,y)), new IVector2(x,y));
+							addActor(new Clutch(new IVector2(x,y), null), new IVector2(x,y));
 							break;
 						case CONVEYOR:
 							addActor(new Conveyor(Direction.right, new ItemMaster(), new IVector2(x,y)), new IVector2(x,y));

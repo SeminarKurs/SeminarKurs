@@ -21,11 +21,10 @@ public class Conveyor extends Actor {
     private ItemMaster item;
     private IVector2 itemPos;
 
-
     private float progress = -0.5f;
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
-    public Conveyor(Direction richtung, ItemMaster item, com.mygdx.game.Tools.IVector2 pos) {
+    public Conveyor(Direction richtung, ItemMaster item, IVector2 pos) {
         this.richtung = richtung;
         this.item = item;
         this.pos = pos;
@@ -37,48 +36,57 @@ public class Conveyor extends Actor {
         return true;
     }
 
-    public void transfer (){
+    public boolean transfer (){
         switch (richtung) {
             case left:
-                itemPos.set(itemPos.x -1, itemPos.y);
-                if (WorldM.setItemActor(itemPos, item)) {
-                    item = null;
+                itemPos = new IVector2(pos.x - 1, pos.y);
+                if (checkForNearActor(pos) == null) {
+                    WorldM.setItemActor(itemPos, item);
+                    return true;
                 }
                 break;
             case right:
-                itemPos.set(itemPos.x +1, itemPos.y);
-                if (WorldM.setItemActor(itemPos, item)) {
-                    item = null;
+                itemPos = new IVector2(pos.x + 1, pos.y);
+                if (checkForNearActor(pos) == null) {
+                    WorldM.setItemActor(itemPos, item);
+                    return true;
                 }
                 break;
             case up:
-                itemPos.set(itemPos.x , itemPos.y +1);
-                if (WorldM.setItemActor(itemPos, item)) {
-                    item = null;
+                itemPos = new IVector2(pos.x, pos.y + 1);
+                if (checkForNearActor(pos) == null) {
+                    WorldM.setItemActor(itemPos, item);
+                    return true;
                 }
                 break;
             case down:
-                itemPos.set(itemPos.x, itemPos.y -1);
-                if (WorldM.setItemActor(itemPos, item)) {
-                    item = null;
+                itemPos = new IVector2(pos.x, pos.y - 1);
+                if (checkForNearActor(pos) == null) {
+                    WorldM.setItemActor(itemPos, item);
+                    return true;
                 }
                 break;
         }
-        WorldM.resetItemActor(itemPos);
+        itemPos = pos;
+        return false;
     }
 
     public void update (float dt){
         if(item != null) {
             progress += dt / 10;
             if (progress >= 0.5f) {
-                this.moveItemToActor(item, pos);
-                transfer();
-                progress = 0f;
+                if (!transfer()) this.moveItemToActor(item, pos);
+                item = null;
+                progress = -0.5f;
             }
         }
 
     }
-    public ItemMaster getActor(){
+    public void moveItemToActor (ItemMaster item, IVector2 pos){
+        Actor a = checkForNearActor(pos);
+        if (a != null) a.setItem(item);
+    }
+    public ItemMaster getItem(){
         return item;
     }
 
@@ -101,13 +109,26 @@ public class Conveyor extends Actor {
                     break;
             }
     }
+    public Actor checkForNearActor(IVector2 pos){
+
+        switch (richtung) {
+            case left: // links
+                return WorldM.getActor(new IVector2(pos.x-1, pos.y));
+            case right: // rechts
+                return WorldM.getActor(new IVector2(pos.x+1, pos.y));
+            case up: // oben
+                return WorldM.getActor(new IVector2(pos.x, pos.y+1));
+            case down: // unten
+                return WorldM.getActor(new IVector2(pos.x, pos.y-1));
+        }
+        return null;
+    }
     public boolean setItem(ItemMaster item) {
         this.item = item;
-        itemPos = pos;
         progress = 0f;
-        System.out.println("got the item boss");
         return false;
     }
+    public void setItemPos (IVector2 pos){itemPos = pos;}
 
     @Override
     public com.mygdx.game.Tools.Collision coll() {
@@ -117,5 +138,9 @@ public class Conveyor extends Actor {
 
     public ItemId getId() {
         return ItemId.CONVEYOR;
+    }
+    public IVector2 getItemPos (){
+
+        return itemPos;
     }
 }

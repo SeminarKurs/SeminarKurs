@@ -333,7 +333,7 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             // get mouse courser position
             camera.unproject(tp.set(input.getX(), input.getY(), 0));
             IVector2 pos = FMath.getTile(tp);
-            Clutch clutch = new Clutch(pos);
+            Clutch clutch = new Clutch(pos, getDirection(new Vector2(tp.x, tp.y)));
             WorldM.addActor(clutch, pos);
         }
 

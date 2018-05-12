@@ -51,7 +51,14 @@ public class Miner extends StorageActor {
             }
         }
     }
+    public void moveItemToActor (ItemMaster item, IVector2 pos){
+        Actor a = checkForNearActor(pos);
+        if (a != null){
+            System.out.println("nervt");
 
+            a.setItem(item);
+        }
+    }
 
 
     @Override
