@@ -21,6 +21,8 @@ public class Conveyor extends Actor {
     private ItemMaster item;
     private IVector2 itemPos;
 
+    private Actor previousClutch;
+
     private float progress = -0.5f;
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
@@ -84,7 +86,7 @@ public class Conveyor extends Actor {
     }
     public void moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
-        if (a != null) a.setItem(item);
+        if (a != null && a.getId() == ItemId.CONVEYOR) a.setItem(item, null);
     }
     public ItemMaster getItem(){
         return item;
@@ -110,21 +112,72 @@ public class Conveyor extends Actor {
             }
     }
     public Actor checkForNearActor(IVector2 pos){
+        Actor sideActor1;
+        Actor sideActor2;
 
         switch (richtung) {
             case left: // links
-                return WorldM.getActor(new IVector2(pos.x-1, pos.y));
+                sideActor1 = WorldM.getActor(new IVector2(pos.x, pos.y-1));
+                sideActor2 = WorldM.getActor(new IVector2(pos.x, pos.y+1));
+                if (sideActor1 != null) {
+                    if (sideActor1.getId() == ItemId.CLUTCH) {
+                        if(previousClutch != sideActor1) return sideActor1;
+                    }
+                }
+                if(sideActor2 != null) {
+                    if (sideActor2.getId() == ItemId.CLUTCH) {
+                        if(previousClutch != sideActor2) return sideActor2;
+                    }
+                }
+                return WorldM.getActor(new IVector2(pos.x - 1, pos.y));
             case right: // rechts
+                sideActor1 = WorldM.getActor(new IVector2(pos.x, pos.y-1));
+                sideActor2 = WorldM.getActor(new IVector2(pos.x, pos.y+1));
+                if (sideActor1 != null) {
+                        if(sideActor1.getId() == ItemId.CLUTCH) {
+                            if (previousClutch != sideActor1) return sideActor1;
+                        }
+                    }
+                if(sideActor2 != null && previousClutch != sideActor2) {
+                    if (sideActor2.getId() == ItemId.CLUTCH) {
+                        if(previousClutch != sideActor2) return sideActor2;
+                    }
+                }
                 return WorldM.getActor(new IVector2(pos.x+1, pos.y));
             case up: // oben
+                sideActor1 = WorldM.getActor(new IVector2(pos.x-1, pos.y));
+                sideActor2 = WorldM.getActor(new IVector2(pos.x+1, pos.y));
+                if (sideActor1 != null) {
+                    if (sideActor1.getId() == ItemId.CLUTCH) {
+                        if(previousClutch != sideActor1) return sideActor1;
+                    }
+                }
+                if(sideActor2 != null) {
+                    if (sideActor2.getId() == ItemId.CLUTCH) {
+                        if(previousClutch != sideActor2) return sideActor2;
+                    }
+                }
                 return WorldM.getActor(new IVector2(pos.x, pos.y+1));
             case down: // unten
+                sideActor1 = WorldM.getActor(new IVector2(pos.x-1, pos.y));
+                sideActor2 = WorldM.getActor(new IVector2(pos.x+1, pos.y));
+                if (sideActor1 != null) {
+                    if (sideActor1.getId() == ItemId.CLUTCH) {
+                        if(previousClutch != sideActor1) return sideActor1;
+                    }
+                }
+                if(sideActor2 != null) {
+                    if (sideActor2.getId() == ItemId.CLUTCH) {
+                        if(previousClutch != sideActor2) return sideActor2;
+                    }
+                }
                 return WorldM.getActor(new IVector2(pos.x, pos.y-1));
         }
         return null;
     }
-    public boolean setItem(ItemMaster item) {
+    public boolean setItem(ItemMaster item, Actor actor) {
         this.item = item;
+        if (actor.getId() == ItemId.CLUTCH) previousClutch = actor;
         progress = 0f;
         return false;
     }

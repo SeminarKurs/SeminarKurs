@@ -51,12 +51,32 @@ public class Miner extends StorageActor {
             }
         }
     }
+
+    public Actor checkForNearActor(IVector2 pos){
+
+        if(WorldM.getActor(new IVector2(pos.x + 1, pos.y)) != null){
+            System.out.println("LEBEN 1");
+            return WorldM.getActor(new IVector2(pos.x + 1, pos.y));
+        }
+        if(WorldM.getActor(new IVector2(pos.x - 1, pos.y)) != null){
+            System.out.println("LEBEN 2");
+            return WorldM.getActor(new IVector2(pos.x - 1, pos.y));
+        }
+        if(WorldM.getActor(new IVector2(pos.x, pos.y + 1)) != null){
+            System.out.println("LEBEN 3");
+            return WorldM.getActor(new IVector2(pos.x, pos.y + 1));
+        }
+        if(WorldM.getActor(new IVector2(pos.x, pos.y - 1)) != null){
+            System.out.println("LEBEN 4");
+            return WorldM.getActor(new IVector2(pos.x, pos.y - 1));
+        }
+        return null;
+    }
+
     public void moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
         if (a != null){
-            System.out.println("nervt");
-
-            a.setItem(item);
+            if(a.getId() == ItemId.CLUTCH) a.setItem(item, null);
         }
     }
 

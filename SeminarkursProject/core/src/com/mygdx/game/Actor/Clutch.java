@@ -60,7 +60,7 @@ public class Clutch extends StorageActor {
     }
     public void moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
-        if (a != null) a.setItem(item);
+        if (a != null) a.setItem(item, this);
     }
 
     public boolean transfer (){
@@ -74,7 +74,6 @@ public class Clutch extends StorageActor {
                 break;
             case right:
                 itemPos = new IVector2(pos.x + 1, pos.y);
-                System.out.println("ricth");
                 if (checkForNearActor(pos) == null) {
                     WorldM.setItemActor(itemPos, item);
                     return true;
