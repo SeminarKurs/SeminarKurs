@@ -118,9 +118,6 @@ public class Clutch extends StorageActor {
             }
     }
 
-    public void addItem (ItemMaster item, Oven oven){
-        oven.addItem(item);
-    }
 
     @Override
     public ItemMaster getItem() {
@@ -134,9 +131,14 @@ public class Clutch extends StorageActor {
 
     @Override
     public boolean setItem(ItemMaster item) {
+        return false;
+    }
+    @Override
+    public boolean setItem(ItemMaster item, Actor actor) {
         this.item = item;
         return false;
     }
+
     public void setRichtung (Direction richtung){this.richtung = richtung;
         System.out.println(this.richtung);}
 

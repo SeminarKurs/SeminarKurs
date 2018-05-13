@@ -40,13 +40,13 @@ public class Miner extends StorageActor {
                     if (t.resAmount() < (int) progress) {
                         item = ItemList.coal(t.resAmount());
                         this.moveItemToActor(item, pos);
+                        progress -= (int)progress;
                         t.resSetAmount(0);
                         WorldM.updateResource(pos);
                     }else{
                         t.resSetAmount(t.resAmount() - (int) progress);
                         // decrease coal
                         item = ItemList.coal((int)progress);
-                        progress -= (int)progress;
                     }
                 }
             }
@@ -54,22 +54,26 @@ public class Miner extends StorageActor {
     }
 
     public Actor checkForNearActor(IVector2 pos){
+        if(pos.x != WorldM.WIDTH) {
+            if (WorldM.getActor(new IVector2(pos.x + 1, pos.y)) != null) {
+                if(WorldM.getActor(new IVector2(pos.x+1, pos.y)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x + 1, pos.y));
+            }
+        }
+        if(pos.x != 0) {
+            if (WorldM.getActor(new IVector2(pos.x - 1, pos.y)) != null) {
+                if(WorldM.getActor(new IVector2(pos.x-1, pos.y)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x - 1, pos.y));
+            }
+        }
+        if(pos.y != WorldM.HEIGHT) {
+            if (WorldM.getActor(new IVector2(pos.x, pos.y + 1)) != null) {
+                if(WorldM.getActor(new IVector2(pos.x, pos.y+1)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x, pos.y + 1));
+            }
+        }
+        if(pos.y != 0) {
+            if (WorldM.getActor(new IVector2(pos.x, pos.y - 1)) != null) {
+                if(WorldM.getActor(new IVector2(pos.x, pos.y-1)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x, pos.y - 1));
 
-        if(WorldM.getActor(new IVector2(pos.x + 1, pos.y)) != null){
-            System.out.println("LEBEN 1");
-            return WorldM.getActor(new IVector2(pos.x + 1, pos.y));
-        }
-        if(WorldM.getActor(new IVector2(pos.x - 1, pos.y)) != null){
-            System.out.println("LEBEN 2");
-            return WorldM.getActor(new IVector2(pos.x - 1, pos.y));
-        }
-        if(WorldM.getActor(new IVector2(pos.x, pos.y + 1)) != null){
-            System.out.println("LEBEN 3");
-            return WorldM.getActor(new IVector2(pos.x, pos.y + 1));
-        }
-        if(WorldM.getActor(new IVector2(pos.x, pos.y - 1)) != null){
-            System.out.println("LEBEN 4");
-            return WorldM.getActor(new IVector2(pos.x, pos.y - 1));
+            }
         }
         return null;
     }
