@@ -48,7 +48,7 @@ public class Enemy {
         if(path != null && path.size > 1 && Math.sqrt(xDif*xDif + yDif*yDif) < 10)
         {
             Vector2 moveVect = new Vector2(path.get(1).x - path.get(0).x, path.get(1).y - path.get(0).y);
-            //sssSystem.out.println("1x: "+ path.get(1).x + " 1y: " + path.get(1).y + " 0x: " + path.get(0).x + " 0y: " + path.get(0).y);
+
             IVector2 playerPosI = FMath.getTile(PlayerController.getPosition());
             IVector2 enemyPOsI = FMath.getTile(position.x + relPos.x, position.y + relPos.y);
             if(enemyPOsI.x == playerPosI.x && enemyPOsI.y == playerPosI.y)

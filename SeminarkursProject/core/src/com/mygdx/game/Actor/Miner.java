@@ -46,6 +46,7 @@ public class Miner extends StorageActor {
                         t.resSetAmount(t.resAmount() - (int) progress);
                         // decrease coal
                         item = ItemList.coal((int)progress);
+                        progress -= (int)progress;
                     }
                 }
             }
