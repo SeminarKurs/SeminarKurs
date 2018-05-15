@@ -102,7 +102,7 @@ public class WorldM extends ApplicationAdapter {
 
 		addActor(f, new IVector2(1,3));
 
-		enemies.add(new Enemy());
+		//enemies.add(new Enemy());
 		//enemies.get(0).findPath(new IVector2());
 		saveData = new SaveData();
 		invgui = new InventoryGUI(cam);

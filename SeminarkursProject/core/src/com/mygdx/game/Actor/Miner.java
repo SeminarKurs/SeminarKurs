@@ -47,33 +47,52 @@ public class Miner extends StorageActor {
                         t.resSetAmount(t.resAmount() - (int) progress);
                         // decrease coal
                         item = ItemList.coal((int)progress);
+
                     }
                 }
             }
+        }else{
+            moveItemToActor(item, pos);
         }
     }
 
+    public Actor findnearactor (IVector2 pos, Direction richtung){
+        Actor a;
+        if ((a = WorldM.getActor(pos)) != null) {
+            if(a.getId() == ItemId.CLUTCH && a.getDirection() == richtung) return a;
+        }
+        return null;
+    }
+
     public Actor checkForNearActor(IVector2 pos){
+        Actor a;
         if(pos.x != WorldM.WIDTH) {
-            if (WorldM.getActor(new IVector2(pos.x + 1, pos.y)) != null) {
-                if(WorldM.getActor(new IVector2(pos.x+1, pos.y)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x + 1, pos.y));
-            }
+            a = findnearactor(new IVector2(pos.x + 1, pos.y), Direction.right);
+            if (a != null) return a;
+           // if ((a = WorldM.getActor(new IVector2(pos.x + 1, pos.y))) != null) {
+           //     if(a.getId() == ItemId.CLUTCH && a.getDirection() == Direction.right) return WorldM.getActor(new IVector2(pos.x + 1, pos.y));
+           // }
         }
         if(pos.x != 0) {
-            if (WorldM.getActor(new IVector2(pos.x - 1, pos.y)) != null) {
-                if(WorldM.getActor(new IVector2(pos.x-1, pos.y)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x - 1, pos.y));
-            }
+            a = findnearactor(new IVector2(pos.x - 1, pos.y), Direction.left);
+            if (a != null) return a;
+            //if ((a = WorldM.getActor(new IVector2(pos.x - 1, pos.y))) != null) {
+            //    if(WorldM.getActor(new IVector2(pos.x-1, pos.y)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x - 1, pos.y));
+            //}
         }
         if(pos.y != WorldM.HEIGHT) {
-            if (WorldM.getActor(new IVector2(pos.x, pos.y + 1)) != null) {
-                if(WorldM.getActor(new IVector2(pos.x, pos.y+1)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x, pos.y + 1));
-            }
+            a = findnearactor(new IVector2(pos.x, pos.y + 1), Direction.up);
+            if (a != null) return a;
+            //if (WorldM.getActor(new IVector2(pos.x, pos.y + 1)) != null) {
+            //    if(WorldM.getActor(new IVector2(pos.x, pos.y+1)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x, pos.y + 1));
+            //}
         }
         if(pos.y != 0) {
-            if (WorldM.getActor(new IVector2(pos.x, pos.y - 1)) != null) {
-                if(WorldM.getActor(new IVector2(pos.x, pos.y-1)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x, pos.y - 1));
-
-            }
+            a = findnearactor(new IVector2(pos.x, pos.y - 1), Direction.down);
+            if (a != null) return a;
+            //if (WorldM.getActor(new IVector2(pos.x, pos.y - 1)) != null) {
+            //    if(WorldM.getActor(new IVector2(pos.x, pos.y-1)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x, pos.y - 1));
+            //}
         }
         return null;
     }

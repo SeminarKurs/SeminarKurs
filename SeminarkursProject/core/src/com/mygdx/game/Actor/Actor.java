@@ -19,7 +19,21 @@ public abstract class Actor {
     public void update(float dt) {}
 
 
+    public Direction invertDirection(Direction richtung){
+        switch (richtung){
+            case right:
+                return Direction.left;
+            case left:
+                return Direction.right;
+            case up:
+                return Direction.down;
+            case down:
+                return Direction.up;
+        }
+        return null;
+    }
 
+    public Direction getDirection(){return null;}
 
     // return collison
     public Collision coll(){return Collision.none;}

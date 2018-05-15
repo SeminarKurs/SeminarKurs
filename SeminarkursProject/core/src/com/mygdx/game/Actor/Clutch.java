@@ -22,7 +22,7 @@ public class Clutch extends StorageActor {
     private ItemMaster item;
     private IVector2 pos;
     private IVector2 itemPos;
-    private float progress = -0.5f;
+    private float progress = -1f;
 
     public Clutch (IVector2 pos, Direction richtung){
         this.richtung = richtung;
@@ -35,10 +35,10 @@ public class Clutch extends StorageActor {
     public void update (float dt){
         if (item != null) {
             progress += dt / 5;
-            if (progress >= 0.5f) {
+            if (progress >= 1.0f) {
                 if (!transfer()) this.moveItemToActor(item, pos);
                 item = null;
-                progress = -0.5f;
+                progress = -1.0f;
             }
         }
     }
@@ -49,7 +49,6 @@ public class Clutch extends StorageActor {
             case left: // links
                 return WorldM.getActor(new IVector2(pos.x-1, pos.y));
             case right: // rechts
-                System.out.println("gott");
                 return WorldM.getActor(new IVector2(pos.x+1, pos.y));
             case up: // oben
                 return WorldM.getActor(new IVector2(pos.x, pos.y+1));
@@ -140,7 +139,12 @@ public class Clutch extends StorageActor {
     }
 
     public void setRichtung (Direction richtung){this.richtung = richtung;
-        System.out.println(this.richtung);}
+        System.out.println(this.richtung);
+    }
+    @Override
+    public Direction getDirection (){
+        return this.richtung;
+    }
 
     @Override
     public ItemId getId() {
