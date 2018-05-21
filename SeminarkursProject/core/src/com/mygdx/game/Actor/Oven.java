@@ -19,8 +19,6 @@ public class Oven extends Actor{
     private ItemMaster coal;
 
 
-    public Oven(){}
-
     public void addItem(ItemMaster item){
 
         if (item.getId() == ItemId.COAL){

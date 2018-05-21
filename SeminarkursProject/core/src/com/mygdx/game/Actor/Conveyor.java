@@ -15,7 +15,7 @@ import com.mygdx.game.WorldM;
 public class Conveyor extends Actor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
-    private Direction richtung;
+    private Direction direction;
     private IVector2 pos;
 
     private ItemMaster item;
@@ -23,11 +23,11 @@ public class Conveyor extends Actor {
 
     private Actor previousClutch;
 
-    private float progress = -0.5f;
+    private float progress = 0f;
 
     //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
-    public Conveyor(Direction richtung, ItemMaster item, IVector2 pos) {
-        this.richtung = richtung;
+    public Conveyor(Direction direction, ItemMaster item, IVector2 pos) {
+        this.direction = direction;
         this.item = item;
         this.pos = pos;
         itemPos = pos;
@@ -39,7 +39,7 @@ public class Conveyor extends Actor {
     }
 
     public boolean transfer (){
-        switch (richtung) {
+        switch (direction) {
             case left:
                 itemPos = new IVector2(pos.x - 1, pos.y);
                 if (checkForNearActor(pos) == null) {
@@ -81,10 +81,10 @@ public class Conveyor extends Actor {
             if(a != null && a.getId() == ItemId.CLUTCH) {
                 moveItemToActor(item, pos);
                 item = null;
-            } else if (progress >= 1.0f) {
+            } else if (progress >= 1f) {
                     if (!transfer()) this.moveItemToActor(item, pos);
                     item = null;
-                    progress = -0.5f;
+                    progress = 0f;
                 }
         }
 
@@ -102,97 +102,74 @@ public class Conveyor extends Actor {
 
     @Override
     public void draw(Batch batch, int x, int y, Array<FLayer> fLayers) {
-        DrawH.drawActorRot(batch, x,y, richtung, image());
+        DrawH.drawActorRot(batch, x,y, direction, image());
         if(item != null)
-            switch (richtung) {
+            switch (direction) {
                 case left: // links
-                    fLayers.add(new FLayer(x - progress,y, item.getImage()));
+                    fLayers.add(new FLayer(x - this.progress,y, item.getImage()));
                     break;
                 case right: // rechts
-                    fLayers.add(new FLayer(x + progress,y, item.getImage()));
+                    fLayers.add(new FLayer(x + this.progress,y, item.getImage()));
                     break;
                 case up: // oben
-                    fLayers.add(new FLayer(x,y + progress, item.getImage()));
+                    fLayers.add(new FLayer(x,y + this.progress, item.getImage()));
                     break;
                 case down: // unten
-                    fLayers.add(new FLayer(x ,y - progress, item.getImage()));
+                    fLayers.add(new FLayer(x ,y - this.progress, item.getImage()));
                     break;
             }
     }
+
+    private boolean assistingMethodForCheckForNearActor(Actor sideActor, Direction direction){
+        if (sideActor != null) {
+            if (sideActor.getId() == ItemId.CLUTCH) {
+                if (previousClutch != sideActor && sideActor.getDirection() == direction) return true;
+            }
+        }
+        return false;
+    }
     public Actor checkForNearActor(IVector2 pos){
-        Actor sideActor1;
-        Actor sideActor2;
-        switch (richtung) {
+        Actor sideActor;
+        switch (direction) {
             case left: // links
                 if (pos.y != 0) {
-                    sideActor1 = WorldM.getActor(new IVector2(pos.x, pos.y - 1));
-                    if (sideActor1 != null) {
-                        if (sideActor1.getId() == ItemId.CLUTCH) {
-                            if (previousClutch != sideActor1 && sideActor1.getDirection() == Direction.down) return sideActor1;
-                        }
-                    }
+                    sideActor = WorldM.getActor(new IVector2(pos.x, pos.y - 1));
+                    if(assistingMethodForCheckForNearActor(sideActor, Direction.down)) return sideActor;
+
                 }
                 if (pos.y != WorldM.HEIGHT) {
-                    sideActor2 = WorldM.getActor(new IVector2(pos.x, pos.y + 1));
-                    if (sideActor2 != null) {
-                        if (sideActor2.getId() == ItemId.CLUTCH) {
-                            if (previousClutch != sideActor2 && sideActor2.getDirection() == Direction.up) return sideActor2;
-                        }
-                    }
+                    sideActor = WorldM.getActor(new IVector2(pos.x, pos.y + 1));
+                    if(assistingMethodForCheckForNearActor(sideActor, Direction.up))    return sideActor;
                 }
                 return WorldM.getActor(new IVector2(pos.x - 1, pos.y));
             case right: // rechts
                 if (pos.y != 0) {
-                    sideActor1 = WorldM.getActor(new IVector2(pos.x, pos.y - 1));
-                    if (sideActor1 != null) {
-                        if (sideActor1.getId() == ItemId.CLUTCH) {
-                            if (previousClutch != sideActor1 && sideActor1.getDirection() == Direction.down) return sideActor1;
-                        }
-                    }
+                    sideActor = WorldM.getActor(new IVector2(pos.x, pos.y - 1));
+                    if(assistingMethodForCheckForNearActor(sideActor, Direction.down)) return sideActor;
                 }
                 if (pos.y != WorldM.HEIGHT) {
-                    sideActor2 = WorldM.getActor(new IVector2(pos.x, pos.y + 1));
-                    if (sideActor2 != null) {
-                        if (sideActor2.getId() == ItemId.CLUTCH) {
-                            if (previousClutch != sideActor2 && sideActor2.getDirection() == Direction.up) return sideActor2;
-                        }
-                    }
+                    sideActor = WorldM.getActor(new IVector2(pos.x, pos.y + 1));
+                    if(assistingMethodForCheckForNearActor(sideActor, Direction.up))    return sideActor;
                 }
                 return WorldM.getActor(new IVector2(pos.x + 1, pos.y));
             case up: // oben
                 if (pos.x != 0) {
-                    sideActor1 = WorldM.getActor(new IVector2(pos.x - 1, pos.y));
-                    if (sideActor1 != null) {
-                        if (sideActor1.getId() == ItemId.CLUTCH) {
-                            if (previousClutch != sideActor1 && sideActor1.getDirection() == Direction.left) return sideActor1;
-                        }
-                    }
+                    sideActor = WorldM.getActor(new IVector2(pos.x-1, pos.y));
+                    if(assistingMethodForCheckForNearActor(sideActor, Direction.left))    return sideActor;
                 }
                 if (pos.x != WorldM.WIDTH) {
-                    sideActor2 = WorldM.getActor(new IVector2(pos.x + 1, pos.y));
-                    if (sideActor2 != null) {
-                        if (sideActor2.getId() == ItemId.CLUTCH) {
-                            if (previousClutch != sideActor2 && sideActor2.getDirection() == Direction.right) return sideActor2;
-                        }
-                    }
+                    sideActor = WorldM.getActor(new IVector2(pos.x+1, pos.y));
+                    if(assistingMethodForCheckForNearActor(sideActor, Direction.right))    return sideActor;
                 }
                 return WorldM.getActor(new IVector2(pos.x, pos.y + 1));
             case down: // unten
                 if (pos.x != 0) {
-                    sideActor1 = WorldM.getActor(new IVector2(pos.x - 1, pos.y));
-                    if (sideActor1 != null) {
-                        if (sideActor1.getId() == ItemId.CLUTCH) {
-                            if (previousClutch != sideActor1 && sideActor1.getDirection() == Direction.left) return sideActor1;
-                        }
-                    }
+                    sideActor = WorldM.getActor(new IVector2(pos.x-1, pos.y));
+                    if(assistingMethodForCheckForNearActor(sideActor, Direction.left))    return sideActor;
                 }
                 if(pos.x != WorldM.WIDTH) {
-                    sideActor2 = WorldM.getActor(new IVector2(pos.x + 1, pos.y));
-                    if (sideActor2 != null) {
-                        if (sideActor2.getId() == ItemId.CLUTCH) {
-                            if (previousClutch != sideActor2 && sideActor2.getDirection() == Direction.right) return sideActor2;
-                        }
-                    }
+                    sideActor = WorldM.getActor(new IVector2(pos.x+1, pos.y));
+                    if(assistingMethodForCheckForNearActor(sideActor, Direction.right))    return sideActor;
                 }
                 return WorldM.getActor(new IVector2(pos.x, pos.y-1));
         }

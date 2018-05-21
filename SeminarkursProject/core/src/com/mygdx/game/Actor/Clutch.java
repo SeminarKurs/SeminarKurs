@@ -18,14 +18,14 @@ import com.mygdx.game.WorldM;
 public class Clutch extends StorageActor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
-    private Direction richtung ;
+    private Direction direction;
     private ItemMaster item;
     private IVector2 pos;
     private IVector2 itemPos;
     private float progress = -1f;
 
-    public Clutch (IVector2 pos, Direction richtung){
-        this.richtung = richtung;
+    public Clutch (IVector2 pos, Direction direction){
+        this.direction = direction;
         this.pos = pos;
         itemPos = pos;
     }
@@ -45,7 +45,7 @@ public class Clutch extends StorageActor {
 
     public Actor checkForNearActor(IVector2 pos){
 
-        switch (richtung) {
+        switch (direction) {
             case left: // links
                 return WorldM.getActor(new IVector2(pos.x-1, pos.y));
             case right: // rechts
@@ -63,7 +63,7 @@ public class Clutch extends StorageActor {
     }
 
     public boolean transfer (){
-        switch (richtung) {
+        switch (direction) {
             case left:
                 itemPos = new IVector2(pos.x - 1, pos.y);
                 if (checkForNearActor(pos) == null) {
@@ -99,9 +99,9 @@ public class Clutch extends StorageActor {
 
     @Override
     public void draw(Batch batch, int x, int y, Array<FLayer> fLayers) {
-        DrawH.drawActorRot(batch, x,y, richtung, image());
+        DrawH.drawActorRot(batch, x,y, direction, image());
         if(item != null)
-            switch (richtung) {
+            switch (direction) {
                 case left: // links
                     fLayers.add(new FLayer(x - progress,y, item.getImage()));
                     break;
@@ -138,12 +138,12 @@ public class Clutch extends StorageActor {
         return false;
     }
 
-    public void setRichtung (Direction richtung){this.richtung = richtung;
-        System.out.println(this.richtung);
+    public void setDirection(Direction direction){this.direction = direction;
+        System.out.println(this.direction);
     }
     @Override
     public Direction getDirection (){
-        return this.richtung;
+        return this.direction;
     }
 
     @Override
