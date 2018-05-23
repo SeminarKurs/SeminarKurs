@@ -13,11 +13,10 @@ import com.mygdx.game.WorldM;
 
 public class Miner extends StorageActor {
 
-    int energy  = 100;
-    float progress;
-    float speed = 0.5f;
-    IVector2 pos;
-    ItemMaster item;
+    public float progress;
+    public float speed = 0.5f;
+    public IVector2 pos;
+    public ItemMaster item;
 
     public Miner(IVector2 pos)
     {
@@ -29,7 +28,7 @@ public class Miner extends StorageActor {
     @Override
     public void update(float dt){
 
-        if(energy > 0 && WorldM.hasResource(pos)) {
+        if(WorldM.hasResource(pos)) {
 
             Tile t = WorldM.getResource(pos);
             if (t.hasRes()) {
@@ -43,15 +42,14 @@ public class Miner extends StorageActor {
                             progress = 1f;
                             return;
                         }
-                        progress -= (int)progress;
                         t.resSetAmount(0);
                         WorldM.updateResource(pos);
                     }else{
                         t.resSetAmount(t.resAmount() - (int) progress);
                         // decrease coal
                         item = ItemList.coal((int)progress);
-
                     }
+                    progress -= (int)progress;
                 }
             }
         }else{

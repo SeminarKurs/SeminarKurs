@@ -57,7 +57,7 @@ public class Oven extends Actor{
         if(item != null) {
             progress += dt;
             if (progress >= 2) {
-                progress -= 2;
+                progress -= 2f;
                 melt();
                 busy = false;
             }
