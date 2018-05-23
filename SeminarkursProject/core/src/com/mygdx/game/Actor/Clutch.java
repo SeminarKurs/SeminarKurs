@@ -32,34 +32,53 @@ public class Clutch extends StorageActor {
     public boolean needUpdate() {
         return true;
     }
+
     public void update (float dt){
         if (item != null) {
             progress += dt / 5;
             if (progress >= 1.0f) {
-                if (!transfer()) this.moveItemToActor(item, pos);
+                if (!transfer()){
+                    if(!this.moveItemToActor(item, pos)){
+                        progress = 1f;
+                        return;
+                    }
+                }
                 item = null;
+                busy = false;
                 progress = -1.0f;
             }
         }
     }
 
     public Actor checkForNearActor(IVector2 pos){
+        Actor a;
 
         switch (direction) {
-            case left: // links
-                return WorldM.getActor(new IVector2(pos.x-1, pos.y));
-            case right: // rechts
-                return WorldM.getActor(new IVector2(pos.x+1, pos.y));
-            case up: // oben
-                return WorldM.getActor(new IVector2(pos.x, pos.y+1));
-            case down: // unten
-                return WorldM.getActor(new IVector2(pos.x, pos.y-1));
+            case left:
+                a = WorldM.getActor(new IVector2(pos.x-1, pos.y));
+                return a;
+            case right:
+                a = WorldM.getActor(new IVector2(pos.x+1, pos.y));
+                return a;
+            case up:
+                a = WorldM.getActor(new IVector2(pos.x, pos.y+1));
+                return a;
+            case down:
+                a = WorldM.getActor(new IVector2(pos.x, pos.y-1));
+                return a;
         }
         return null;
     }
-    public void moveItemToActor (ItemMaster item, IVector2 pos){
+    public boolean moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
-        if (a != null) a.setItem(item, this);
+        if(!a.busy){
+            a.setItem(item, this);
+            System.out.println("true");
+            return true;
+        }else {
+            System.out.println("false");
+            return false;
+        }
     }
 
     public boolean transfer (){
@@ -130,11 +149,14 @@ public class Clutch extends StorageActor {
 
     @Override
     public boolean setItem(ItemMaster item) {
+        this.item = item;
+        busy = true;
         return false;
     }
     @Override
     public boolean setItem(ItemMaster item, Actor actor) {
         this.item = item;
+        busy = true;
         return false;
     }
 

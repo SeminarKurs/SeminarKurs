@@ -39,7 +39,10 @@ public class Miner extends StorageActor {
                     // make shure there are still resources
                     if (t.resAmount() < (int) progress) {
                         item = ItemList.coal(t.resAmount());
-                        this.moveItemToActor(item, pos);
+                        if(!moveItemToActor(item, pos)){
+                            progress = 1f;
+                            return;
+                        }
                         progress -= (int)progress;
                         t.resSetAmount(0);
                         WorldM.updateResource(pos);
@@ -52,7 +55,7 @@ public class Miner extends StorageActor {
                 }
             }
         }else{
-            moveItemToActor(item, pos);
+            if(!moveItemToActor(item, pos)) return;
         }
     }
 
@@ -69,39 +72,31 @@ public class Miner extends StorageActor {
         if(pos.x != WorldM.WIDTH) {
             a = findnearactor(new IVector2(pos.x + 1, pos.y), Direction.right);
             if (a != null) return a;
-           // if ((a = WorldM.getActor(new IVector2(pos.x + 1, pos.y))) != null) {
-           //     if(a.getId() == ItemId.CLUTCH && a.getDirection() == Direction.right) return WorldM.getActor(new IVector2(pos.x + 1, pos.y));
-           // }
         }
         if(pos.x != 0) {
             a = findnearactor(new IVector2(pos.x - 1, pos.y), Direction.left);
             if (a != null) return a;
-            //if ((a = WorldM.getActor(new IVector2(pos.x - 1, pos.y))) != null) {
-            //    if(WorldM.getActor(new IVector2(pos.x-1, pos.y)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x - 1, pos.y));
-            //}
         }
         if(pos.y != WorldM.HEIGHT) {
             a = findnearactor(new IVector2(pos.x, pos.y + 1), Direction.up);
             if (a != null) return a;
-            //if (WorldM.getActor(new IVector2(pos.x, pos.y + 1)) != null) {
-            //    if(WorldM.getActor(new IVector2(pos.x, pos.y+1)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x, pos.y + 1));
-            //}
         }
         if(pos.y != 0) {
             a = findnearactor(new IVector2(pos.x, pos.y - 1), Direction.down);
             if (a != null) return a;
-            //if (WorldM.getActor(new IVector2(pos.x, pos.y - 1)) != null) {
-            //    if(WorldM.getActor(new IVector2(pos.x, pos.y-1)).getId() == ItemId.CLUTCH) return WorldM.getActor(new IVector2(pos.x, pos.y - 1));
-            //}
         }
         return null;
     }
 
-    public void moveItemToActor (ItemMaster item, IVector2 pos){
+    public boolean moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
         if (a != null){
-            if(a.getId() == ItemId.CLUTCH) a.setItem(item, null);
+            if(a.getId() == ItemId.CLUTCH && !a.busy){
+                a.setItem(item, null);
+                return true;
+            }else   return false;
         }
+        return false;
     }
 
 

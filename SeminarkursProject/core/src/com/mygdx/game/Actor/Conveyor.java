@@ -82,19 +82,26 @@ public class Conveyor extends Actor {
                 moveItemToActor(item, pos);
                 item = null;
             } else if (progress >= 1f) {
-                    if (!transfer()) this.moveItemToActor(item, pos);
+                    if (!transfer()) {
+                        if (!this.moveItemToActor(item, pos)){
+                            progress = 1f;
+                            return;
+                        }
+                    }
                     item = null;
+                    busy = false;
                     progress = 0f;
                 }
         }
 
     }
-    public void moveItemToActor (ItemMaster item, IVector2 pos){
+    public boolean moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
-        if (a != null){
-            if(a.getId() == ItemId.CONVEYOR) a.setItem(item, previousClutch);
-            if(a.getId() == ItemId.CLUTCH)a.setItem(item, this);
-        }
+        if(!a.busy) {
+            if (a.getId() == ItemId.CONVEYOR) a.setItem(item, previousClutch);
+            if (a.getId() == ItemId.CLUTCH) a.setItem(item, this);
+            return true;
+        }else   return false;
     }
     public ItemMaster getItem(){
         return item;
@@ -177,6 +184,7 @@ public class Conveyor extends Actor {
     }
     public boolean setItem(ItemMaster item, Actor actor) {
         this.item = item;
+        busy = true;
         if (actor.getId() == ItemId.CLUTCH) previousClutch = actor;
         progress = 0f;
         return false;

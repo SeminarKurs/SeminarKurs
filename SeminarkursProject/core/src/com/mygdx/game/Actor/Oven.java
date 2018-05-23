@@ -13,7 +13,7 @@ public class Oven extends Actor{
 
     private ItemMaster returnedItem;
 
-    private float progress;
+    private float progress = -2f;
 
     private ItemMaster item;
     private ItemMaster coal;
@@ -54,10 +54,13 @@ public class Oven extends Actor{
 
     @Override
     public void update (float dt){
-        progress += dt;
-        if (progress >= 100){
-            progress -= 100;
-            melt();
+        if(item != null) {
+            progress += dt;
+            if (progress >= 2) {
+                progress -= 2;
+                melt();
+                busy = false;
+            }
         }
     }
 
@@ -69,6 +72,7 @@ public class Oven extends Actor{
 
     public boolean setItem(ItemMaster item) {
         this.item = item;
+        busy = true;
         return false;
     }
 

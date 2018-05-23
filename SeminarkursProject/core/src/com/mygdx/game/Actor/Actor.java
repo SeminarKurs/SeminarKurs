@@ -13,6 +13,7 @@ import com.mygdx.game.WorldM;
  */
 
 public abstract class Actor {
+    public boolean busy = false;
 
     public Actor(){}
 
