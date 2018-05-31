@@ -3,63 +3,102 @@ package com.mygdx.game.Actor;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Tools.Collision;
+import com.mygdx.game.Tools.IVector2;
+import com.mygdx.game.WorldM;
 
-public class Generator extends StorageActor{
-    private ItemMaster[] brennstofftank;
-    private int battery;
+public class Generator extends ElectricActor{
+    private ItemMaster coal;
 
-    private int tankLevel = 0; // Max = 10
-
-    private float progress = -0.5f;
+    private float progress = 0;
 
 
-    public void fillUp (ItemMaster[] extBrennstofftank){
-        for (int i = 0; i < brennstofftank.length; i++){
-            if (tankLevel < 10){
-                brennstofftank [i + tankLevel] = extBrennstofftank[i];
-                tankLevel++;
-            }
+    public Generator (IVector2 pos){
+        this.pos = pos;
+        maxCapacity = 10;
+    }
+
+    @Override
+    public boolean setItem (ItemMaster item, Actor actor){
+        if(item.getId() == ItemId.COAL){
+            coal = item;
+            System.out.println("got");
+            busy = true;
+            return true;
         }
+        return false;
     }
 
     public void generate (){
-        if(tankLevel > 0) {
-            tankLevel--;
-            battery++;
+        if(capacity < maxCapacity){
+            capacity++;
+            coal.addStackSize(-1);
         }
     }
 
     public void update (float dt){
-        progress += dt/100;
-        if (progress >= 100){
-            progress -= 100;
-            generate();
+        if(coal != null) {
+            if(coal.getStackSize() > 0) {
+                progress += dt / 10;
+                if (progress >= 10) {
+                    progress = 0;
+                    generate();
+                    movePowerToElectricActor();
+                }
+            }else   busy = false;
         }
     }
 
-    public int getBattery (){return battery;}
-
-    public Collision coll(){return Collision.none;}
-
-    public int image(){return 0;}
-
+    private Actor assistingMethodForCheckForNearActor(IVector2 pos){
+        Actor actor;
+        if((actor = WorldM.getActor(pos)) != null) return actor;
+        return null;
+    }
     @Override
-    public ItemMaster getItem() {
+    public Actor checkForNearActor (){
+        Actor actor;
+        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x - 1, pos.y))).getId() == ItemId.POWERLINE) return actor;//links
+        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x + 1, pos.y))).getId() == ItemId.POWERLINE) return actor;//rechts
+        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y - 1))).getId() == ItemId.POWERLINE) return actor;//unten
+        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y + 1))).getId() == ItemId.POWERLINE)  return actor; //oben
+
         return null;
     }
 
     @Override
-    public ItemMaster takeItem() {
-        return null;
-    }
-
-    @Override
-    public boolean setItem(ItemMaster item) {
+    public boolean movePowerToElectricActor() {
+        ElectricActor electricActor = (ElectricActor) checkForNearActor();
+        if(electricActor != null) {
+            if (!electricActor.isBusy()) {
+                electricActor.addCapacity(1);
+                capacity--;
+                return true;
+            }
+        }
         return false;
     }
 
+    public Collision coll(){return Collision.none;}
+
+    public int image(){return 8;}
+
+    @Override
+    public ItemMaster getItem() {
+        return coal;
+    }
+
+    @Override
+    public boolean setItem(ItemMaster item){
+        if(item.getId() == ItemId.COAL){
+            coal = item;
+            busy = true;
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean needUpdate(){ return true;}
+
     public ItemId getId() {
-        System.out.println("Generator needs to be implemented");
-        return null;
+        return ItemId.GENERATOR;
     }
 }

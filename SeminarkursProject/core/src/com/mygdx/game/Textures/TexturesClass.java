@@ -39,14 +39,21 @@ public class TexturesClass {
         texturesActor.add(new Texture("Miner.png"));
         texturesActor.add(new Texture("Oven.png"));
         texturesActor.add(new Texture("Clutch.png"));
+        texturesActor.add(new Texture("ElectricOven.png"));
+        texturesActor.add(new Texture("Powerline.png"));
+        texturesActor.add(new Texture("SolarPanel.png"));
+        texturesActor.add(new Texture("Generator.png"));
         // resource textures
         texturesResource.add(new Texture("Coal.png"));
         texturesResource.add(new Texture("Tree.png"));
 
         // item textures
         texturesItem.add(new Texture("Coal.png"));
+        texturesItem.add(new Texture("Strom.png"));
 
+        // Enemy Textures
         texturesEnemy.add(new Texture("Enemy_1.png"));
+
 
     }
 

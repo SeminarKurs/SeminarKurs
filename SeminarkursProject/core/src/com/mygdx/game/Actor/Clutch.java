@@ -15,12 +15,11 @@ import com.mygdx.game.WorldM;
  * Created by Christopher Schleppe on 26.11.2017.
  */
 
-public class Clutch extends StorageActor {
+public class Clutch extends Actor {
     private static final float SCHRITT_WEITE = (float) 0.5;
 
     private Direction direction;
     private ItemMaster item;
-    private IVector2 pos;
     private IVector2 itemPos;
     private float progress = -1f;
 
@@ -33,6 +32,7 @@ public class Clutch extends StorageActor {
         return true;
     }
 
+    @Override
     public void update (float dt){
         if (item != null) {
             progress += dt / 5;
@@ -71,12 +71,10 @@ public class Clutch extends StorageActor {
     }
     public boolean moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
-        if(!a.busy){
+        if(!a.isBusy()){
             a.setItem(item, this);
-            System.out.println("true");
             return true;
         }else {
-            System.out.println("false");
             return false;
         }
     }
@@ -137,33 +135,18 @@ public class Clutch extends StorageActor {
     }
 
 
-    @Override
     public ItemMaster getItem() {
-        return null;
+        return item;
     }
 
-    @Override
-    public ItemMaster takeItem() {
-        return null;
-    }
-
-    @Override
-    public boolean setItem(ItemMaster item) {
-        this.item = item;
-        busy = true;
-        return false;
-    }
     @Override
     public boolean setItem(ItemMaster item, Actor actor) {
         this.item = item;
         busy = true;
         return false;
     }
+    public void setDirection(Direction direction){this.direction = direction;}
 
-    public void setDirection(Direction direction){this.direction = direction;
-        System.out.println(this.direction);
-    }
-    @Override
     public Direction getDirection (){
         return this.direction;
     }
@@ -173,6 +156,7 @@ public class Clutch extends StorageActor {
         return ItemId.CLUTCH;
     }
 
+    @Override
     public int image(){return 4;}
 
 }

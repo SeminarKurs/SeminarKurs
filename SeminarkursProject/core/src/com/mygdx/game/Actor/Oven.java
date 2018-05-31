@@ -18,8 +18,7 @@ public class Oven extends Actor{
     private ItemMaster item;
     private ItemMaster coal;
 
-
-    public void addItem(ItemMaster item){
+    public boolean setItem(ItemMaster item, Actor actor){
 
         if (item.getId() == ItemId.COAL){
             if (coal == null){
@@ -28,36 +27,36 @@ public class Oven extends Actor{
                 coal.addStackSize(item.getStackSize());
             }
         }else{
-            if(this.item.getId() == item.getId()){
-                this.item.addStackSize(item.getStackSize());
-            }
+            if(item!= null){
+                if(this.item.getId() == item.getId()){
+                    this.item.addStackSize(item.getStackSize());
+                }
+            }else   this.item = item;
+            busy = true;
         }
+        return false;
     }
 
     public void melt (){
-        if (item == null || coal == null){
-            return;
-        }else{
-            if (item.getStackSize() > 0 && coal.getStackSize() > 0) {
-                switch (item.getId()) {
-                    case ORE_IRON:
-                        returnedItem = ItemList.mat_iron(1);
-                        break;
-                    default:
-                        return;
-                }
-                coal.addStackSize(-1);
-                item.addStackSize(-1);
+        if (item.getStackSize() > 0 && coal.getStackSize() > 0) {
+            switch (item.getId()) {
+                case ORE_IRON:
+                    returnedItem = ItemList.mat_iron(1);
+                    break;
+                default:
+                    return;
             }
+            coal.addStackSize(-1);
+            item.addStackSize(-1);
         }
     }
 
     @Override
     public void update (float dt){
-        if(item != null) {
+        if(item != null && coal != null) {
             progress += dt;
             if (progress >= 2) {
-                progress -= 2f;
+                progress = -2f;
                 melt();
                 busy = false;
             }
@@ -70,11 +69,6 @@ public class Oven extends Actor{
     }
     public int image(){return 3;}
 
-    public boolean setItem(ItemMaster item) {
-        this.item = item;
-        busy = true;
-        return false;
-    }
 
     public ItemId getId() {
         return ItemId.OVEN;

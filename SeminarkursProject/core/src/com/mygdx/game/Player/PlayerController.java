@@ -10,8 +10,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Actor.Clutch;
 import com.mygdx.game.Actor.Conveyor;
 import com.mygdx.game.Actor.Direction;
+import com.mygdx.game.Actor.ElectricOven;
+import com.mygdx.game.Actor.Generator;
 import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Oven;
+import com.mygdx.game.Actor.Powerline;
+import com.mygdx.game.Actor.SolarPanel;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Inventory;
 import com.mygdx.game.Item.ItemMaster;
@@ -275,21 +279,16 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
     private Direction getDirection (Vector2 tp){
         IVector2 pos= FMath.getTile(tp);
         Vector2 relativToField = new Vector2(tp.x - pos.x, tp.y - pos.y);
-        System.out.println(relativToField.x +"   " + relativToField.y);
         if (relativToField.x > relativToField.y && relativToField.x + relativToField.y < 0){
-            System.out.println("unten");
             return Direction.down;
         }
         if (relativToField.x > relativToField.y && relativToField.x + relativToField.y > 0){
-            System.out.println("rechts");
             return Direction.right;
         }
         if (relativToField.x < relativToField.y && relativToField.x + relativToField.y < 0){
-            System.out.println("links");
             return Direction.left;
         }
         if (relativToField.x < relativToField.y && relativToField.x + relativToField.y > 0){
-            System.out.println("oben");
             return Direction.up;
         }
         return null;
@@ -310,34 +309,43 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
             Vector3 tp = new Vector3();
             // get mouse courser position
             camera.unproject(tp.set(input.getX(), input.getY(), 0));
-            System.out.println(tp.x + "  " + tp.y);
-            IVector2 pos = FMath.getTile(tp);
-            Oven o = new Oven ();
-            WorldM.addActor(o, pos);
-            IVector2 work = new IVector2((int) tp.x, (int) tp.y);
-            if (tp.x > work.x + 0.25f && tp.y < work.y + 0.25f && tp.y > work.y - 0.25f){
-
-            }
+            WorldM.addActor(new Oven(), FMath.getTile(tp));
         }
         if (keycode == Input.Keys.NUM_2){
             Vector3 tp = new Vector3();
-
-            // get mouse courser position
             camera.unproject(tp.set(input.getX(), input.getY(), 0));
             IVector2 pos = FMath.getTile(tp);
             WorldM.addActor(new Conveyor(getDirection(new Vector2(tp.x, tp.y)), null, pos),pos);
         }
         if (keycode == Input.Keys.NUM_3){
             Vector3 tp = new Vector3();
-
-            // get mouse courser position
             camera.unproject(tp.set(input.getX(), input.getY(), 0));
             IVector2 pos = FMath.getTile(tp);
-            Clutch clutch = new Clutch(pos, getDirection(new Vector2(tp.x, tp.y)));
-            WorldM.addActor(clutch, pos);
+            WorldM.addActor(new Clutch(pos, getDirection(new Vector2(tp.x, tp.y))), pos);
         }
-
-
+        if (keycode == Input.Keys.NUM_4){
+            Vector3 tp = new Vector3();
+            camera.unproject(tp.set(input.getX(), input.getY(), 0));
+            WorldM.addActor(new ElectricOven(), FMath.getTile(tp));
+        }
+        if (keycode == Input.Keys.NUM_5){
+            Vector3 tp = new Vector3();
+            camera.unproject(tp.set(input.getX(), input.getY(), 0));
+            IVector2 pos = FMath.getTile(tp);
+            WorldM.addActor(new Powerline(pos, getDirection(new Vector2(tp.x, tp.y))), pos);
+        }
+        if (keycode == Input.Keys.NUM_6){
+            Vector3 tp = new Vector3();
+            camera.unproject(tp.set(input.getX(), input.getY(), 0));
+            IVector2 pos = FMath.getTile(tp);
+            WorldM.addActor(new Generator(pos), pos);
+        }
+        if (keycode == Input.Keys.NUM_7){
+            Vector3 tp = new Vector3();
+            camera.unproject(tp.set(input.getX(), input.getY(), 0));
+            IVector2 pos = FMath.getTile(tp);
+            WorldM.addActor(new SolarPanel(pos), pos);
+        }
         return false;
     }
 

@@ -13,26 +13,13 @@ import com.mygdx.game.WorldM;
  */
 
 public abstract class Actor {
-    public boolean busy = false;
+
+    protected boolean busy = false;
+    public IVector2 pos;
 
     public Actor(){}
 
     public void update(float dt) {}
-
-
-    public Direction invertDirection(Direction richtung){
-        switch (richtung){
-            case right:
-                return Direction.left;
-            case left:
-                return Direction.right;
-            case up:
-                return Direction.down;
-            case down:
-                return Direction.up;
-        }
-        return null;
-    }
 
     public Direction getDirection(){return null;}
 
@@ -49,5 +36,8 @@ public abstract class Actor {
     public abstract ItemId getId();
 
     public Actor checkForNearActor (){return null;}
-    public boolean setItem(ItemMaster item, Actor actor) {return false;} // for previous Clutch in Conveyor
+    public boolean setItem(ItemMaster item, Actor actor) {return false;} // Actor-Parameter is for previous Clutch in Conveyor
+
+    public boolean isBusy() {return busy;}
+    public void setBusy(boolean busy) {this.busy = busy;}
 }

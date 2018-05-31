@@ -15,12 +15,10 @@ public class Miner extends StorageActor {
 
     public float progress;
     public float speed = 0.5f;
-    public IVector2 pos;
     public ItemMaster item;
 
     public Miner(IVector2 pos)
     {
-        //needUpdate = true;
         this.pos = pos;
         storage.setSize(2);
     }
@@ -49,7 +47,7 @@ public class Miner extends StorageActor {
                         // decrease coal
                         item = ItemList.coal((int)progress);
                     }
-                    progress -= (int)progress;
+                    //progress -= (int)progress;
                 }
             }
         }else{
@@ -89,7 +87,7 @@ public class Miner extends StorageActor {
     public boolean moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
         if (a != null){
-            if(a.getId() == ItemId.CLUTCH && !a.busy){
+            if(a.getId() == ItemId.CLUTCH && !a.isBusy()){
                 a.setItem(item, null);
                 return true;
             }else   return false;

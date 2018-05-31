@@ -18,5 +18,9 @@ public enum ItemId{
     CLUTCH,
     OVEN,
     MINER,
+    ELECTRICOVEN,
+    POWERLINE,
+    GENERATOR,
+    SOLARPANEL,
     AXE
 }

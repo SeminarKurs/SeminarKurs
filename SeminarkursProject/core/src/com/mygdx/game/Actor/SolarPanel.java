@@ -3,47 +3,39 @@ package com.mygdx.game.Actor;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Tools.Collision;
+import com.mygdx.game.Tools.IVector2;
 
 /**
  * Created by Christopher Schleppe on 04.01.2018.
  */
 
-public class SolarPanel extends StorageActor {
+public class SolarPanel extends ElectricActor {
 
-    private int battery; // max = 10
+    private float progress = 0;
 
-    private float progress = -0.5f;
-
+    public SolarPanel (IVector2 pos){
+        this.pos = pos;
+        maxCapacity = 10;
+    }
 
     public void update (float dt){
-        progress += dt/200;
-        if (progress <= 100f){
-            progress -= 100f;
-            if (battery <= 10) battery++;
+        progress += dt/10;
+        if (progress <= 20){
+            progress = 0;
+            if (capacity < 10) capacity++; // generate
         }
     }
 
     public Collision coll(){return Collision.collides;}
 
-    public int image(){return 0;}
+    public int image(){return 7;}
 
-    @Override
-    public ItemMaster getItem() {
-        return null;
-    }
 
-    @Override
-    public ItemMaster takeItem() {
-        return null;
-    }
-
-    @Override
-    public boolean setItem(ItemMaster item) {
-        return false;
-    }
 
     public ItemId getId() {
-        System.out.println("SolarPanale needs to be implemented");
-        return null;
+        return ItemId.SOLARPANEL;
     }
+
+    @Override
+    public boolean movePowerToElectricActor() {return false;}
 }

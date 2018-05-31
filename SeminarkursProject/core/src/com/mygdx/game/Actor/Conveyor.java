@@ -13,10 +13,8 @@ import com.mygdx.game.WorldM;
 // Wenn Position von item (3, 3) und laufband (4, 3) dann wird das Item auf (3.5, 3) verschoben
 
 public class Conveyor extends Actor {
-    private static final float SCHRITT_WEITE = (float) 0.5;
 
     private Direction direction;
-    private IVector2 pos;
 
     private ItemMaster item;
     private IVector2 itemPos;
@@ -97,7 +95,7 @@ public class Conveyor extends Actor {
     }
     public boolean moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
-        if(!a.busy) {
+        if(!a.isBusy()) {
             if (a.getId() == ItemId.CONVEYOR) a.setItem(item, previousClutch);
             if (a.getId() == ItemId.CLUTCH) a.setItem(item, this);
             return true;

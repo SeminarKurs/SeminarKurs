@@ -4,37 +4,27 @@ import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Tools.Collision;
+import com.mygdx.game.Tools.IVector2;
+import com.mygdx.game.WorldM;
 
 /**
  * Created by Christopher Schleppe on 04.01.2018.
  */
 
-public class ElectricOven extends StorageActor {
-    private float progress;
+public class ElectricOven extends ElectricActor {
+    private float progress = 0;
 
     private ItemMaster item;
     private ItemMaster returnedItem;
-    private int battery; // max = 10
 
-    public boolean addItem(ItemMaster item){
-        if(this.item.getId() == item.getId()){
-            this.item.addStackSize(item.getStackSize());
-            return true;
-        }
-        return false;
-    }
-    
-    public void addEnergy (int energy){
-        if (battery + energy <= 10){
-            battery += energy;
-        }
-    }
+
+
 
     public void melt (){
         if (item == null){
             return;
         }else{
-            if (item.getStackSize() > 0 && battery > 0) {
+            if (item.getStackSize() > 0 && capacity > 0) {
                 switch (item.getId()) {
                     case ORE_IRON:
                         if (returnedItem == null){
@@ -45,17 +35,19 @@ public class ElectricOven extends StorageActor {
                     default:
                         return;
                 }
-                battery--;
+                capacity--;
                 item.addStackSize(-1);
             }
         }
     }
     @Override
     public void update (float dt){
-        progress += dt;
-        if (progress >= 100){
-            progress -= 100;
-            melt();
+        if(item != null && capacity >= 0) {
+            progress += dt;
+            if (progress >= 100) {
+                progress -= 100;
+                melt();
+            }
         }
     }
 
@@ -63,8 +55,17 @@ public class ElectricOven extends StorageActor {
     public Collision coll() {
         return Collision.collides;
     }
-    public int image(){return 0;}
+    public int image(){return 5;}
 
+    @Override
+    public Actor checkForNearActor (){
+        Actor actor;
+        if((actor = WorldM.getActor(new IVector2(pos.x - 1, pos.y))).getId() == ItemId.POWERLINE)  return actor; // links
+        if((actor = WorldM.getActor(new IVector2(pos.x + 1, pos.y))).getId() == ItemId.POWERLINE)  return actor; // rechts
+        if((actor = WorldM.getActor(new IVector2(pos.x, pos.y - 1))).getId() == ItemId.POWERLINE)  return actor; // unten
+        if((actor = WorldM.getActor(new IVector2(pos.x, pos.y + 1))).getId() == ItemId.POWERLINE)  return actor; // oben
+        return null;
+    }
 
 
     public ItemMaster getItem() {
@@ -72,17 +73,26 @@ public class ElectricOven extends StorageActor {
     }
 
     @Override
-    public ItemMaster takeItem() {
-        return null;
-    }
-
-    @Override
     public boolean setItem(ItemMaster item) {
         return false;
     }
 
+    @Override
+    public boolean setItem(ItemMaster item, Actor actor) {
+        if(this.item != null) {
+            if (this.item.getId() == item.getId()) {
+                this.item.addStackSize(item.getStackSize());
+                return true;
+            }
+        }else{
+            this.item = item;
+            return true;
+        }
+        return false;
+    }
+
+
     public ItemId getId() {
-        System.out.println("ElectricOven needs to be implemented");
-        return null;
+        return ItemId.ELECTRICOVEN;
     }
 }
