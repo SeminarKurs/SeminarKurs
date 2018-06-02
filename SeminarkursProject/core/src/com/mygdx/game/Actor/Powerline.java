@@ -29,7 +29,9 @@ public class Powerline extends ElectricActor {
         if(capacity > 0) {
             progress += dt / 2;
             if (progress >= 0) {
-                movePowerToElectricActor();
+                if(movePowerToElectricActor()){
+                    progress = -1;
+                }else   progress = 0;
             }
         }
     }
@@ -60,6 +62,7 @@ public class Powerline extends ElectricActor {
         ElectricActor actor = (ElectricActor) checkForNearActor();
         if(actor != null){
             actor.addCapacity(1);
+            capacity--;
             return true;
         }
         return false;
