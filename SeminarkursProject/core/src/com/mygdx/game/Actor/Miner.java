@@ -45,7 +45,13 @@ public class Miner extends StorageActor {
                     }else{
                         t.resSetAmount(t.resAmount() - (int) progress);
                         // decrease coal
-                        item = ItemList.coal((int)progress);
+                        if(item == null){
+                            item = ItemList.coal((int)progress);
+                        }else{
+                            item.addStackSize((int) progress);
+                            System.out.println(item.getStackSize());
+                        }
+
                     }
                     //progress -= (int)progress;
                 }
@@ -89,6 +95,7 @@ public class Miner extends StorageActor {
         if (a != null){
             if(a.getId() == ItemId.CLUTCH && !a.isBusy()){
                 a.setItem(item, null);
+                System.out.println(item.getStackSize());
                 return true;
             }else   return false;
         }

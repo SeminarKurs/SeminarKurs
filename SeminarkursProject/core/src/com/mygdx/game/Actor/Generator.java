@@ -37,12 +37,14 @@ public class Generator extends ElectricActor{
 
     public void update (float dt){
         if(coal != null) {
+            //System.out.println(coal.getStackSize());
             if(coal.getStackSize() > 0) {
                 progress += dt / 10;
-                if (progress >= 10) {
-                    progress = 0;
+                if (progress >= 1) {
                     generate();
+                    System.out.println("fertig");
                     movePowerToElectricActor();
+                    progress = 0;
                 }
             }else   busy = false;
         }
