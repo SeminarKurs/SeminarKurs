@@ -54,10 +54,6 @@ public class SolarPanel extends ElectricActor {
         if(assistingMethodForCheckForNearActor((pos = new IVector2(this.pos.x +1, this.pos.y)))) return WorldM.getActor(pos);
         if(assistingMethodForCheckForNearActor((pos = new IVector2(this.pos.x, this.pos.y -1)))) return WorldM.getActor(pos);
         if(assistingMethodForCheckForNearActor((pos = new IVector2(this.pos.x, this.pos.y +1)))) return WorldM.getActor(pos);
-        //return assistingMethodForCheckForNearActor(new IVector2(pos.x - 1, pos.y);//links
-        /*if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x + 1, pos.y))).getId() == ItemId.POWERLINE) return actor;//rechts
-        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y - 1))).getId() == ItemId.POWERLINE) return actor;//unten
-        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y + 1))).getId() == ItemId.POWERLINE)  return actor; //oben*/
 
         return null;
     }

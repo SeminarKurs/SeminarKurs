@@ -8,7 +8,7 @@ import com.mygdx.game.Tools.IVector2;
 import com.mygdx.game.WorldM;
 
 /**
- * Created by Tobias on 24.11.2017.
+ * Created by Tobias on 24.11.2017.     Improved by Chris
  */
 
 public class Miner extends StorageActor {
@@ -35,17 +35,21 @@ public class Miner extends StorageActor {
                 if (progress >= 1) {
                     // make shure there are still resources
                     if (t.resAmount() < (int) progress) {
-                        item = ItemList.coal(t.resAmount());
                         if(!moveItemToActor(item, pos)){
                             progress = 1f;
                             return;
                         }
-                        t.resSetAmount(0);
                         WorldM.updateResource(pos);
                     }else{
                         t.resSetAmount(t.resAmount() - (int) progress);
                         // decrease coal
-                        item = ItemList.coal((int)progress);
+                        if(t.getResource().getId() == ItemId.COAL){
+                            if(item == null){
+                                item = ItemList.coal((int) progress);
+                            }else{
+                                item.addStackSize((int) progress);
+                            }
+                        }
 
                     }
                     //progress -= (int)progress;
@@ -56,7 +60,7 @@ public class Miner extends StorageActor {
         }
     }
 
-    public Actor findnearactor (IVector2 pos, Direction richtung){
+    public Actor assistingMethodForCheckForNearActor(IVector2 pos, Direction richtung){
         Actor a;
         if ((a = WorldM.getActor(pos)) != null) {
             if(a.getId() == ItemId.CLUTCH && a.getDirection() == richtung) return a;
@@ -67,19 +71,19 @@ public class Miner extends StorageActor {
     public Actor checkForNearActor(IVector2 pos){
         Actor a;
         if(pos.x != WorldM.WIDTH) {
-            a = findnearactor(new IVector2(pos.x + 1, pos.y), Direction.right);
+            a = assistingMethodForCheckForNearActor(new IVector2(pos.x + 1, pos.y), Direction.right);
             if (a != null) return a;
         }
         if(pos.x != 0) {
-            a = findnearactor(new IVector2(pos.x - 1, pos.y), Direction.left);
+            a = assistingMethodForCheckForNearActor(new IVector2(pos.x - 1, pos.y), Direction.left);
             if (a != null) return a;
         }
         if(pos.y != WorldM.HEIGHT) {
-            a = findnearactor(new IVector2(pos.x, pos.y + 1), Direction.up);
+            a = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y + 1), Direction.up);
             if (a != null) return a;
         }
         if(pos.y != 0) {
-            a = findnearactor(new IVector2(pos.x, pos.y - 1), Direction.down);
+            a = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y - 1), Direction.down);
             if (a != null) return a;
         }
         return null;

@@ -37,7 +37,7 @@ public abstract class Actor {
 
     public Actor checkForNearActor (){return null;}
     public boolean setItem(ItemMaster item, Actor actor) {return false;} // Actor-Parameter is for previous Clutch in Conveyor
-
+    public void setProgress(int progress){}
     public boolean isBusy() {return busy;}
     public void setBusy(boolean busy) {this.busy = busy;}
 }

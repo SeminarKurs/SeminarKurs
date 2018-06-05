@@ -26,12 +26,15 @@ public class Powerline extends ElectricActor {
     }
 
     public void update (float dt){
+        boolean b;
         if(capacity > 0) {
             progress += dt / 2;
-            if (progress >= 0) {
+            if (progress >= 1) {
                 if(movePowerToElectricActor()){
                     progress = -1;
-                }else   progress = 0;
+                }else{
+                    progress = 1;
+                }
             }
         }
     }
@@ -62,6 +65,7 @@ public class Powerline extends ElectricActor {
         ElectricActor actor = (ElectricActor) checkForNearActor();
         if(actor != null){
             actor.addCapacity(1);
+            if(actor.getId() == ItemId.POWERLINE)  actor.setProgress(0);
             capacity--;
             return true;
         }
@@ -93,11 +97,13 @@ public class Powerline extends ElectricActor {
     @Override
     public Collision coll() {return Collision.none;}
     public int image(){return 6;}
-
+    @Override
+    public void setProgress(int progress){this.progress = progress;}
     @Override
     public boolean needUpdate(){ return true;}
     public ItemId getId() {
         return ItemId.POWERLINE;
     }
-
+    @Override
+    public Direction getDirection(){return direction;}
 }

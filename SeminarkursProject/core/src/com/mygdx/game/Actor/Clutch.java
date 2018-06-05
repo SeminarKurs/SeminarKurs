@@ -71,7 +71,7 @@ public class Clutch extends Actor {
     }
     public boolean moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
-        if(!a.isBusy()){
+        if(!a.isBusy() && (a.getId() == ItemId.CONVEYOR || a.getId() == ItemId.OVEN || a.getId() == ItemId.GENERATOR)){
             a.setItem(item, this);
             return true;
         }else {

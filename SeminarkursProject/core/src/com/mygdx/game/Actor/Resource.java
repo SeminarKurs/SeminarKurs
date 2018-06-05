@@ -1,6 +1,7 @@
 package com.mygdx.game.Actor;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
 
@@ -25,6 +26,15 @@ public class Resource implements Serializable{
     }
     public int hardness(){return 1;}
     public int getType() { return type; }
+    public ItemId getId(){
+        switch (type) {
+            case 0:
+                return ItemId.COAL;
+            case 1:
+                return ItemId.MAT_WOOD;
+        }
+        return null;
+    }
     public ItemMaster getItem(int size)
     {
         switch (type)
