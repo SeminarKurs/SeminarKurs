@@ -60,7 +60,7 @@ public class Miner extends StorageActor {
         }
     }
 
-    public Actor assistingMethodForCheckForNearActor(IVector2 pos, Direction richtung){
+    public Actor checkForRightActor(IVector2 pos, Direction richtung){
         Actor a;
         if ((a = WorldM.getActor(pos)) != null) {
             if(a.getId() == ItemId.CLUTCH && a.getDirection() == richtung) return a;
@@ -71,19 +71,19 @@ public class Miner extends StorageActor {
     public Actor checkForNearActor(IVector2 pos){
         Actor a;
         if(pos.x != WorldM.WIDTH) {
-            a = assistingMethodForCheckForNearActor(new IVector2(pos.x + 1, pos.y), Direction.right);
+            a = checkForRightActor(new IVector2(pos.x + 1, pos.y), Direction.right);
             if (a != null) return a;
         }
         if(pos.x != 0) {
-            a = assistingMethodForCheckForNearActor(new IVector2(pos.x - 1, pos.y), Direction.left);
+            a = checkForRightActor(new IVector2(pos.x - 1, pos.y), Direction.left);
             if (a != null) return a;
         }
         if(pos.y != WorldM.HEIGHT) {
-            a = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y + 1), Direction.up);
+            a = checkForRightActor(new IVector2(pos.x, pos.y + 1), Direction.up);
             if (a != null) return a;
         }
         if(pos.y != 0) {
-            a = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y - 1), Direction.down);
+            a = checkForRightActor(new IVector2(pos.x, pos.y - 1), Direction.down);
             if (a != null) return a;
         }
         return null;
@@ -92,9 +92,8 @@ public class Miner extends StorageActor {
     public boolean moveItemToActor (ItemMaster item, IVector2 pos){
         Actor a = checkForNearActor(pos);
         if (a != null){
-            if(a.getId() == ItemId.CLUTCH && !a.isBusy()){
+            if(!a.isBusy()){
                 a.setItem(item, null);
-                System.out.println(item.getStackSize());
                 return true;
             }else   return false;
         }
