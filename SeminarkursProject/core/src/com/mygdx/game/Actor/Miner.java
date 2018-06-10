@@ -34,7 +34,7 @@ public class Miner extends Actor {
                 if (progress >= 1) {
                     // make shure there are still resources
                     if (t.resAmount() < (int) progress) {
-                        if(!moveItemToActor(item, pos)){
+                        if(!moveItemToActor()){
                             progress = 1f;
                             return;
                         }
@@ -87,7 +87,7 @@ public class Miner extends Actor {
         return null;
     }
 
-    public boolean moveItemToActor (ItemMaster item, IVector2 pos){
+    public boolean moveItemToActor (){
         Actor a = checkForNearActor();
         if (a != null){
             if(!a.isBusy()){
