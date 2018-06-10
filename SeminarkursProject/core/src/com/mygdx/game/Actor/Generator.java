@@ -38,28 +38,48 @@ public class Generator extends ElectricActor{
         if(coal != null) {
             if(coal.getStackSize() > 0) {
                 progress += dt / 10;
+            }else   busy = false;
                 if (progress >= 1) {
                     generate();
-                    movePowerToElectricActor();
+                    if(!movePowerToElectricActor()){
+                        progress = 1;
+                        return;
+                    }
                     progress = 0;
                 }
-            }else   busy = false;
         }
     }
 
-    private Actor assistingMethodForCheckForNearActor(IVector2 pos){
-        Actor actor;
-        if((actor = WorldM.getActor(pos)) != null) return actor;
+
+    private Actor checkForRightActor(IVector2 pos, Direction richtung){
+        Actor a;
+        if ((a = WorldM.getActor(pos)) != null) {
+            System.out.println("existing");
+            if(a.getId() == ItemId.POWERLINE && a.getDirection() == richtung) return a;
+            System.out.println("powerline is found ");
+        }
         return null;
     }
-    @Override
-    public Actor checkForNearActor (){
-        Actor actor;
-        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x - 1, pos.y))).getId() == ItemId.POWERLINE) return actor;//links
-        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x + 1, pos.y))).getId() == ItemId.POWERLINE) return actor;//rechts
-        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y - 1))).getId() == ItemId.POWERLINE) return actor;//unten
-        if((actor = assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y + 1))).getId() == ItemId.POWERLINE)  return actor; //oben
 
+    @Override
+    public Actor checkForNearActor(){
+        Actor a;
+        if(pos.x != WorldM.WIDTH) {
+            a = checkForRightActor(new IVector2(pos.x + 1, pos.y), Direction.right);
+            if (a != null) return a;
+        }
+        if(pos.x != 0) {
+            a = checkForRightActor(new IVector2(pos.x - 1, pos.y), Direction.left);
+            if (a != null) return a;
+        }
+        if(pos.y != WorldM.HEIGHT) {
+            a = checkForRightActor(new IVector2(pos.x, pos.y + 1), Direction.up);
+            if (a != null) return a;
+        }
+        if(pos.y != 0) {
+            a = checkForRightActor(new IVector2(pos.x, pos.y - 1), Direction.down);
+            if (a != null) return a;
+        }
         return null;
     }
 
@@ -67,7 +87,9 @@ public class Generator extends ElectricActor{
     public boolean movePowerToElectricActor() {
         ElectricActor electricActor = (ElectricActor) checkForNearActor();
         if(electricActor != null) {
+            System.out.println("is");
             if (!electricActor.isBusy()) {
+                System.out.println("free");
                 electricActor.addCapacity(1);
                 capacity--;
                 return true;

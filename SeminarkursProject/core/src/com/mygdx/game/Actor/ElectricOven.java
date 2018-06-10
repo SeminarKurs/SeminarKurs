@@ -57,16 +57,6 @@ public class ElectricOven extends ElectricActor {
     }
     public int image(){return 5;}
 
-    @Override
-    public Actor checkForNearActor (){
-        Actor actor;
-        if((actor = WorldM.getActor(new IVector2(pos.x - 1, pos.y))).getId() == ItemId.POWERLINE)  return actor; // links
-        if((actor = WorldM.getActor(new IVector2(pos.x + 1, pos.y))).getId() == ItemId.POWERLINE)  return actor; // rechts
-        if((actor = WorldM.getActor(new IVector2(pos.x, pos.y - 1))).getId() == ItemId.POWERLINE)  return actor; // unten
-        if((actor = WorldM.getActor(new IVector2(pos.x, pos.y + 1))).getId() == ItemId.POWERLINE)  return actor; // oben
-        return null;
-    }
-
 
     public ItemMaster getItem() {
         return item;

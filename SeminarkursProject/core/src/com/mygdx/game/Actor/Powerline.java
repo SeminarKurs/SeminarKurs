@@ -26,8 +26,8 @@ public class Powerline extends ElectricActor {
     }
 
     public void update (float dt){
-        boolean b;
         if(capacity > 0) {
+            busy = true;
             progress += dt / 2;
             if (progress >= 1) {
                 if(movePowerToElectricActor()){
@@ -36,7 +36,7 @@ public class Powerline extends ElectricActor {
                     progress = 1;
                 }
             }
-        }
+        }else   busy = false;
     }
 
     @Override
@@ -64,18 +64,19 @@ public class Powerline extends ElectricActor {
     public boolean movePowerToElectricActor(){
         ElectricActor actor = (ElectricActor) checkForNearActor();
         if(actor != null){
-            actor.addCapacity(1);
-            if(actor.getId() == ItemId.POWERLINE)  actor.setProgress(0);
-            capacity--;
-            return true;
+            if(!actor.isBusy()) {
+                actor.addCapacity(1);
+                if (actor.getId() == ItemId.POWERLINE) actor.setProgress(0);
+                capacity--;
+                return true;
+            }
         }
         return false;
     }
     private Actor assistingMethodForCheckForNearActor(IVector2 pos){
         Actor actor = WorldM.getActor(pos);
         if(actor != null) {
-            if (actor.getId() == ItemId.ELECTRICOVEN || actor.getId() == ItemId.POWERLINE)
-                return actor;
+            if (actor.getId() == ItemId.ELECTRICOVEN || actor.getId() == ItemId.POWERLINE) return actor;
         }
         return null;
     }
@@ -104,6 +105,7 @@ public class Powerline extends ElectricActor {
     public ItemId getId() {
         return ItemId.POWERLINE;
     }
+
     @Override
     public Direction getDirection(){return direction;}
 }

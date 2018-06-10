@@ -56,19 +56,18 @@ public class Miner extends StorageActor {
                 }
             }
         }else{
-            if(!moveItemToActor(item, pos)) return;
         }
     }
 
-    public Actor checkForRightActor(IVector2 pos, Direction richtung){
+    private Actor checkForRightActor(IVector2 pos, Direction richtung){
         Actor a;
         if ((a = WorldM.getActor(pos)) != null) {
             if(a.getId() == ItemId.CLUTCH && a.getDirection() == richtung) return a;
         }
         return null;
     }
-
-    public Actor checkForNearActor(IVector2 pos){
+    @Override
+    public Actor checkForNearActor(){
         Actor a;
         if(pos.x != WorldM.WIDTH) {
             a = checkForRightActor(new IVector2(pos.x + 1, pos.y), Direction.right);
@@ -90,7 +89,7 @@ public class Miner extends StorageActor {
     }
 
     public boolean moveItemToActor (ItemMaster item, IVector2 pos){
-        Actor a = checkForNearActor(pos);
+        Actor a = checkForNearActor();
         if (a != null){
             if(!a.isBusy()){
                 a.setItem(item, null);
