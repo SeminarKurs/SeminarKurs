@@ -54,9 +54,7 @@ public class Generator extends ElectricActor{
     private Actor checkForRightActor(IVector2 pos, Direction richtung){
         Actor a;
         if ((a = WorldM.getActor(pos)) != null) {
-            System.out.println("existing");
             if(a.getId() == ItemId.POWERLINE && a.getDirection() == richtung) return a;
-            System.out.println("powerline is found ");
         }
         return null;
     }
@@ -87,9 +85,7 @@ public class Generator extends ElectricActor{
     public boolean movePowerToElectricActor() {
         ElectricActor electricActor = (ElectricActor) checkForNearActor();
         if(electricActor != null) {
-            System.out.println("is");
             if (!electricActor.isBusy()) {
-                System.out.println("free");
                 electricActor.addCapacity(1);
                 capacity--;
                 return true;

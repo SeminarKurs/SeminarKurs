@@ -14,13 +14,19 @@ import com.mygdx.game.Actor.Clutch;
 import com.mygdx.game.Actor.Conveyor;
 import com.mygdx.game.Actor.Direction;
 import com.mygdx.game.Actor.DrawH;
+import com.mygdx.game.Actor.ElectricActor;
+import com.mygdx.game.Actor.ElectricOven;
 import com.mygdx.game.Actor.FLayer;
+import com.mygdx.game.Actor.Generator;
 import com.mygdx.game.Actor.Miner;
 import com.mygdx.game.Actor.Oven;
+import com.mygdx.game.Actor.Powerline;
 import com.mygdx.game.Actor.Resource;
+import com.mygdx.game.Actor.SolarPanel;
 import com.mygdx.game.Actor.Tile;
 import com.mygdx.game.Enemy.Enemy;
 import com.mygdx.game.Item.ItemId;
+import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Saving.ResourceManager;
@@ -138,27 +144,62 @@ public class WorldM extends ApplicationAdapter {
 		saveData = (SaveData) ResourceManager.load("firstSave");
 		playerController.setPosition(new Vector2(saveData.playerX, saveData.playerY));
 
-		ItemId[][] actorId = saveData.actorId;
-		float [][]images = saveData.images;
+        float [][]images = saveData.images;
+
+        ItemId[][] actorId = saveData.actorId;
+		Direction[][] actorDirection = saveData.actorDirection;
+        ItemId[][] actorItemId = saveData.actorItemId;
+        int[][] actorItemStackSize = saveData.actorItemStackSize;
+        int[][] actorCapacity = saveData.actorCapacity;
+
 		Resource resource[][] = saveData.resources;
 		for (int y = 0; y < tiles[0].length; y++) {
 			for (int x = 0; x < tiles.length; x++) {
 
 				if(actorId[x][y] != null) {
+                    IVector2 pos = new IVector2(x,y);
 					switch(actorId[x][y]) {
 						case MINER:
-							Miner m = new Miner(new IVector2(x,y));
+							Miner m = new Miner(pos);
+                            if(actorItemId[x][y] == ItemId.COAL) m.setItem(ItemList.coal(actorItemStackSize[x][y]));
 							addActor(m, new IVector2(x,y));
 							break;
-						case CLUTCH:
-							addActor(new Clutch(new IVector2(x,y), null), new IVector2(x,y));
+                        case CLUTCH:
+                            Clutch c = new Clutch(pos, actorDirection[x][y]);
+                            if(actorItemId[x][y] == ItemId.COAL) c.setItem(ItemList.coal(actorItemStackSize[x][y]), null);
+							addActor(c, pos);
 							break;
-						case CONVEYOR:
-							addActor(new Conveyor(Direction.right, new ItemMaster(), new IVector2(x,y)), new IVector2(x,y));
+                        case CONVEYOR:
+                            Conveyor con = new Conveyor(actorDirection[x][y], null, pos);
+                            if(actorItemId[x][y] == ItemId.COAL) con.setItem(ItemList.coal(actorItemStackSize[x][y]), null);
+							addActor(con, new IVector2(x,y));
 							break;
 						case OVEN:
-							addActor(new Oven(), new IVector2(x,y));
+						    Oven o = new Oven();
+                            if(actorItemId[x][y] == ItemId.COAL) o.setItem(ItemList.coal(actorItemStackSize[x][y]), null);
+							addActor(o, pos);
 							break;
+                        case ELECTRICOVEN:
+                            ElectricActor ov = new ElectricOven();
+                            ov.addCapacity(actorCapacity[x][y]);
+							addActor(ov, pos);
+                            break;
+                        case POWERLINE:
+                            Powerline p = new Powerline(pos, actorDirection[x][y]);
+                            p.addCapacity(actorCapacity[x][y]);
+                            addActor(p, pos);
+                            break;
+                        case GENERATOR:
+                            Generator g = new Generator(pos);
+                            g.addCapacity(actorCapacity[x][y]);
+                            if(actorItemId[x][y] == ItemId.COAL) g.setItem(ItemList.coal(actorItemStackSize[x][y]), null);
+							addActor(g, pos);
+                            break;
+                        case SOLARPANEL:
+                            SolarPanel sp = new SolarPanel(pos);
+                            sp.addCapacity(actorCapacity[x][y]);
+							addActor(sp, pos);
+                            break;
 					}
 				}
 				if (resource[x][y] != null){

@@ -11,16 +11,15 @@ import com.mygdx.game.WorldM;
  * Created by Tobias on 24.11.2017.     Improved by Chris
  */
 
-public class Miner extends StorageActor {
+public class Miner extends Actor {
 
-    public float progress;
+    public float progress = 0;
     public float speed = 0.5f;
     public ItemMaster item;
 
     public Miner(IVector2 pos)
     {
         this.pos = pos;
-        storage.setSize(2);
     }
 
     @Override
@@ -115,33 +114,22 @@ public class Miner extends StorageActor {
         return 2;
     }
 
-    @Override
-    public ItemMaster getItem() {
-        return storage.get(2);
-    }
-
-    @Override
-    public ItemMaster takeItem() {
-        storage.set(2, null);
-        return storage.get(2);
-    }
-
-    @Override
     public boolean setItem(ItemMaster item) {
-        if(storage.get(1) == null)
-        {
-            storage.set(1, item);
+        if(this.item == null) {
+            this.item = item;
             return true;
         }
-        else
-        {
-            if (storage.get(1).getId() == item.getId())
-            {
-                storage.get(1).addStackSize(item.getStackSize());
+        else {
+            if (this.item.getId() == item.getId()) {
+                item.addStackSize(item.getStackSize());
                 return true;
             }
             return false;
         }
+    }
+    @Override
+    public ItemMaster getItem() {
+        return item;
     }
     public ItemId getId() {
         return ItemId.MINER;

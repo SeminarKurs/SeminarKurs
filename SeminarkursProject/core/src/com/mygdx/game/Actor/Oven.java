@@ -68,7 +68,10 @@ public class Oven extends Actor{
         return Collision.collides;
     }
     public int image(){return 3;}
-
+    @Override
+    public ItemMaster getItem() {
+        return item;
+    }
 
     public ItemId getId() {
         return ItemId.OVEN;

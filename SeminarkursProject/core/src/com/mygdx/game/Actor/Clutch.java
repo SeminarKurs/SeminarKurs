@@ -134,11 +134,10 @@ public class Clutch extends Actor {
             }
     }
 
-
+    @Override
     public ItemMaster getItem() {
         return item;
     }
-
     @Override
     public boolean setItem(ItemMaster item, Actor actor) {
         this.item = item;

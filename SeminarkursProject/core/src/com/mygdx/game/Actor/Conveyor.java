@@ -202,4 +202,6 @@ public class Conveyor extends Actor {
 
         return itemPos;
     }
+    @Override
+    public Direction getDirection(){return direction;}
 }
