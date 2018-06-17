@@ -16,6 +16,7 @@ public class ItemList {
     public static ItemWeaponMaster rifle(){return new ItemWeaponMaster("Rifle_Desc", 0, 50, 3, ItemId.RIFLE);}
 
     public static ItemBuildingMaster conveyor(){return new ItemBuildingMaster("Pipe_Desc", 0, 1, ItemId.CONVEYOR);}
+    public static ItemBuildingMaster furnace(){return new ItemBuildingMaster("Furnace_Desc", 0, 1, ItemId.FURNACE);}
 
     public static ItemToolMaster axe_t1(){return new ItemToolMaster("Iron_Axe_Desc", 0, 150, 0.75f, ItemId.AXE);}
 
