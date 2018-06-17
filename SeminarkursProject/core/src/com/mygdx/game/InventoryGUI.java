@@ -40,7 +40,7 @@ public class InventoryGUI extends Actor implements Disposable{
     private final int furnaceCostWood = 10;
     private final int furnaceCostCoal = 10;
     private final int intFurnace = 0;
-    private final String stringFurnace = new String("Furance");
+    private final String stringFurnace = new String("Oven");
     private Label craftingFurnace = new Label(stringFurnace, ls);
 
     private final int intPowerLine = 1;
@@ -74,7 +74,7 @@ public class InventoryGUI extends Actor implements Disposable{
         craftingTable.row();
         craftingMode = 0;
         craftingPowerline.setText(stringPowerLine);
-        craftingFurnace.setText("-> craft Furnace");
+        craftingFurnace.setText("-> craft Oven");
         //RECIPES FOR CRAFTING, UPDATE MANUALLY.
         craftingTable.add(craftingFurnace);
         craftingTable.add(new Label(furnaceCostCoal + " coal", ls));
@@ -179,7 +179,7 @@ public class InventoryGUI extends Actor implements Disposable{
                 craftingMode--;
                 if(craftingMode == intFurnace){
                     craftingPowerline.setText(stringPowerLine);
-                    craftingFurnace.setText("-> craft Furnace");
+                    craftingFurnace.setText("-> craft Oven");
                 }
             }
             if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
@@ -192,7 +192,7 @@ public class InventoryGUI extends Actor implements Disposable{
                             Inventory.playerInventory.removeItem(ItemId.COAL, 10);
                             Inventory.playerInventory.removeItem(ItemId.MAT_WOOD,10);
                             //add items
-                            Inventory.playerInventory.addItem(ItemList.furnace(), 1);
+                            Inventory.playerInventory.addItem(ItemList.oven(), 1);
                         }
                         break;
                 }
