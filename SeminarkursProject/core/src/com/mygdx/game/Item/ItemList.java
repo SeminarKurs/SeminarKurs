@@ -11,7 +11,7 @@ public class ItemList {
 
     public static ItemMaster coal(int stackSize){return new ItemMaster("Coal_Desc", 0, stackSize, 100, ItemId.COAL);}
 
-    public static ItemMaster ore_iron(int stackSize){return new ItemMaster("Iron_Ore_Desc", 0, stackSize, 100, ItemId.ORE_IRON);}
+    public static ItemMaster ore_iron(int stackSize){return new ItemMaster("Iron_Ore_Desc", 3, stackSize, 100, ItemId.ORE_IRON);}
 
     public static ItemWeaponMaster rifle(){return new ItemWeaponMaster("Rifle_Desc", 0, 50, 3, ItemId.RIFLE);}
 

@@ -50,6 +50,7 @@ public class TexturesClass {
         // item textures
         texturesItem.add(new Texture("Coal.png"));
         texturesItem.add(new Texture("Strom.png"));
+        texturesItem.add(new Texture("IronOre.png"));
 
         // Enemy Textures
         texturesEnemy.add(new Texture("Enemy_1.png"));

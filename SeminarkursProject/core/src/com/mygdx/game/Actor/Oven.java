@@ -5,6 +5,8 @@ import com.mygdx.game.Item.ItemList;
 import com.mygdx.game.Item.ItemMaster;
 import com.mygdx.game.Tools.Collision;
 
+import static com.mygdx.game.Item.ItemId.MAT_IRON;
+
 /**
  * Created by Christopher Schleppe on 01.11.2017.
  */
@@ -39,12 +41,16 @@ public class Oven extends Actor{
 
     public void melt (){
         if (item.getStackSize() > 0 && coal.getStackSize() > 0) {
-            switch (item.getId()) {
-                case ORE_IRON:
-                    returnedItem = ItemList.mat_iron(1);
-                    break;
-                default:
-                    return;
+            if(returnedItem == null) {
+                switch (item.getId()) {
+                    case ORE_IRON:
+                        returnedItem = ItemList.mat_iron(1);
+                        break;
+                    default:
+                        return;
+                }
+            }else{
+                returnedItem.addStackSize(1);
             }
             coal.addStackSize(-1);
             item.addStackSize(-1);
@@ -71,6 +77,17 @@ public class Oven extends Actor{
     @Override
     public ItemMaster getItem() {
         return item;
+    }
+
+    public ItemMaster takeItem(int amount){
+        switch (returnedItem.getId()){
+            case MAT_IRON:
+                if(returnedItem.getStackSize() >= amount) return ItemList.mat_iron(amount);
+                break;
+            default:
+                break;
+        }
+        return null;
     }
 
     public ItemId getId() {
