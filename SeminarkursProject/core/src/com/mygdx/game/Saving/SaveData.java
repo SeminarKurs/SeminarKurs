@@ -15,9 +15,7 @@ import java.io.Serializable;
 public class SaveData implements Serializable {
     //Player
     public float playerX, playerY;
-    // Items
-    public int[][] itemMasterStackSize;
-    public ItemId[][] itemMasterId;
+    // Tile
     public float[][] images;
     // actoren
     public ItemId[][] actorId;
@@ -34,7 +32,7 @@ public class SaveData implements Serializable {
         playerY =  pc.getPosition().y;
     }
 
-    public void setTile (Tile[][] tiles){
+    public void setTiles(Tile[][] tiles){
 
         if (tiles.length == 0){
             System.out.println("saveData setTiles \\ no tiles");
@@ -44,16 +42,17 @@ public class SaveData implements Serializable {
 
         actorId = new ItemId[tiles.length][tiles[0].length];
         actorDirection = new Direction[tiles.length][tiles[0].length];
+        actorCapacity = new int[tiles.length][tiles[0].length];
         actorItemId = new ItemId[tiles.length][tiles[0].length];
         actorItemStackSize = new int[tiles.length][tiles[0].length];
-        actorCapacity = new int[tiles.length][tiles[0].length];
 
         resources = new Resource[tiles.length][tiles[0].length];
+
         for (int y = 0; y < tiles[0].length; y++) {
             for (int x = 0; x < tiles.length; x++) {
                 if (tiles[x][y].actor != null) {
-                    actorCapacity[x][y] = tiles[x][y].actor.getCapacity();
                     actorId[x][y] = tiles[x][y].actor.getId();
+                    actorCapacity[x][y] = tiles[x][y].actor.getCapacity();
                     actorDirection[x][y] = tiles[x][y].actor.getDirection();
                     if(tiles[x][y].actor.getItem() != null){
                         actorItemId[x][y] = tiles[x][y].actor.getItem().getId();

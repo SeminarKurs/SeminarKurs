@@ -12,18 +12,19 @@ import com.mygdx.game.WorldM;
 
         public class SolarPanel extends ElectricActor {
 
-            private float progress = 0;
 
             public SolarPanel (IVector2 pos){
                 this.pos = pos;
                 maxCapacity = 10;
+                speed = 0.1f;
+                progress = 0;
             }
 
             public void update (float dt){
-                progress += dt/10;
+                progress += dt * speed;
                 movePowerToElectricActor();
                 if (progress >= 2){
-                    if (capacity < 10)  capacity++; // generate
+                    if (capacity < maxCapacity)  capacity++; // generate
                     progress = 0;
         }
     }

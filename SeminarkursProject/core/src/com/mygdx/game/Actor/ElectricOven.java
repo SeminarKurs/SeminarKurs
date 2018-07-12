@@ -12,32 +12,28 @@ import com.mygdx.game.WorldM;
  */
 
 public class ElectricOven extends ElectricActor {
-    private float progress = 0;
 
     private ItemMaster item;
     private ItemMaster returnedItem;
 
-
+    public ElectricOven(){
+        maxCapacity = 10;
+        progress = 0;
+    }
 
 
     public void melt (){
-        if (item == null){
-            return;
-        }else{
-            if (item.getStackSize() > 0 && capacity > 0) {
-                switch (item.getId()) {
-                    case ORE_IRON:
-                        if (returnedItem == null){
-                            returnedItem = ItemList.mat_iron(1);
-                        }
-                        returnedItem.addStackSize(1);
-                        break;
-                    default:
-                        return;
-                }
-                capacity--;
-                item.addStackSize(-1);
+        if (item.getStackSize() > 0 && capacity > 0) {
+            switch (item.getId()) {
+                case ORE_IRON:
+                    if (returnedItem == null)   returnedItem = ItemList.mat_iron(1);
+                    returnedItem.addStackSize(1);
+                    break;
+                default:
+                    return;
             }
+            capacity--;
+            item.addStackSize(-1);
         }
     }
     @Override

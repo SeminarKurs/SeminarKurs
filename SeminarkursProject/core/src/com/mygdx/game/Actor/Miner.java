@@ -13,13 +13,12 @@ import com.mygdx.game.WorldM;
 
 public class Miner extends Actor {
 
-    public float progress = 0;
-    public float speed = 0.5f;
-    public ItemMaster item;
+    private ItemMaster item;
 
-    public Miner(IVector2 pos)
-    {
+    public Miner(IVector2 pos) {
+        speed = 0.5f;
         this.pos = pos;
+        progress = 0;
     }
 
     @Override

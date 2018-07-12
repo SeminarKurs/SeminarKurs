@@ -9,19 +9,19 @@ import com.mygdx.game.WorldM;
 public class Generator extends ElectricActor{
     private ItemMaster coal;
 
-    private float progress = 0;
 
 
     public Generator (IVector2 pos){
         this.pos = pos;
         maxCapacity = 10;
+        speed = 0.2f;
+        progress = 0;
     }
 
     @Override
     public boolean setItem (ItemMaster item, Actor actor){
         if(item.getId() == ItemId.COAL){
             coal = item;
-            busy = true;
             return true;
         }
         return false;
@@ -37,8 +37,7 @@ public class Generator extends ElectricActor{
     public void update (float dt){
         if(coal != null) {
             if(coal.getStackSize() > 0) {
-                progress += dt / 10;
-            }else   busy = false;
+                progress += dt * speed;
                 if (progress >= 1) {
                     generate();
                     if(!movePowerToElectricActor()){
@@ -47,6 +46,7 @@ public class Generator extends ElectricActor{
                     }
                     progress = 0;
                 }
+            }
         }
     }
 
@@ -107,7 +107,6 @@ public class Generator extends ElectricActor{
     public boolean setItem(ItemMaster item){
         if(item.getId() == ItemId.COAL){
             coal = item;
-            busy = true;
             return true;
         }
         return false;

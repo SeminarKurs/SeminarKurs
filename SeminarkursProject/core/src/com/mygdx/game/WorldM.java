@@ -134,7 +134,7 @@ public class WorldM extends ApplicationAdapter {
 			}
 	}
 	// Chris
-	static public void load() {
+	public static void load() {
 		for (int y = 0; y < tiles[0].length; y++) {
 			for (int x = 0; x < tiles.length; x++) {
 				tiles[x][y].actor = null;
@@ -212,10 +212,9 @@ public class WorldM extends ApplicationAdapter {
 		}
 	}
     // Chris
-	static public void save() {
+	public static void save() {
 		saveData.setPlayer(playerController);
-		saveData.setTile(tiles);
-
+		saveData.setTiles(tiles);
 		ResourceManager.save(saveData, "firstSave" );
 	}
 
@@ -292,6 +291,7 @@ public class WorldM extends ApplicationAdapter {
 		}
 		for(int i = 0; i < enemies.size; i++)
 			batch.draw(TexturesClass.getTextureEnemy(enemies.get(i).getImage()), enemies.get(i).getPosition().x - Enemy.ENEMYSIZEHX ,enemies.get(i).getPosition().y - Enemy.ENEMYSIZEHY, Enemy.ENEMYSIZEHX*2, Enemy.ENEMYSIZEHY*2);
+
 		batch.draw(playerController.getPlayerTex(), playerController.getPosition().x - com.mygdx.game.Player.PlayerController.PlSIZEHX, playerController.getPosition().y- com.mygdx.game.Player.PlayerController.PlSIZEHY, com.mygdx.game.Player.PlayerController.PlSIZEHX*2, com.mygdx.game.Player.PlayerController.PlSIZEHY*2);
 		batch.end();
 

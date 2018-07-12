@@ -16,17 +16,17 @@ import com.mygdx.game.WorldM;
  */
 
 public class Clutch extends Actor {
-    private static final float SCHRITT_WEITE = (float) 0.5;
 
     private Direction direction;
     private ItemMaster item;
     private IVector2 itemPos;
-    private float progress = -1f;
 
     public Clutch (IVector2 pos, Direction direction){
         this.direction = direction;
         this.pos = pos;
         itemPos = pos;
+        speed = 0.2f;
+        progress = -1f;
     }
     public boolean needUpdate() {
         return true;
@@ -35,7 +35,7 @@ public class Clutch extends Actor {
     @Override
     public void update (float dt){
         if (item != null) {
-            progress += dt / 5;
+            progress += dt * speed;
             if (progress >= 1.0f) {
                 if (!transfer()){
                     if(!this.moveItemToActor(item, pos)){

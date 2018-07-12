@@ -15,6 +15,8 @@ import com.mygdx.game.WorldM;
 public abstract class Actor {
 
     protected boolean busy = false;
+    protected float speed;
+    protected float progress;
     public IVector2 pos;
 
     public Actor(){}

@@ -14,7 +14,8 @@ import java.nio.file.Paths;
 public class ResourceManager {
 
     public static void save (Serializable data, String filename){
-        try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(filename)))){
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(filename)));
             oos.writeObject(data);
         } catch (IOException e) {
             e.printStackTrace();
@@ -22,7 +23,8 @@ public class ResourceManager {
     }
 
     public static Object load (String filename){
-        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Paths.get(filename)))){
+        try {
+            ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Paths.get(filename)));
             return ois.readObject();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

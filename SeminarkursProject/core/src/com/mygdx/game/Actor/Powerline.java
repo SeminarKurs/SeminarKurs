@@ -3,12 +3,9 @@ package com.mygdx.game.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Item.ItemId;
-import com.mygdx.game.Textures.TexturesClass;
 import com.mygdx.game.Tools.Collision;
 import com.mygdx.game.Tools.IVector2;
 import com.mygdx.game.WorldM;
-
-import java.awt.Image;
 
 /**
  * Created by Christopher Schleppe on 05.01.2018.
@@ -17,18 +14,19 @@ import java.awt.Image;
 public class Powerline extends ElectricActor {
 
     private Direction direction;
-    private float progress = -1;
 
     public Powerline(IVector2 pos, Direction direction) {
         this.pos = pos;
         this.direction = direction;
         maxCapacity = 1;
+        speed = 0.5f;
+        progress = -1;
     }
 
     public void update (float dt){
         if(capacity > 0) {
             busy = true;
-            progress += dt / 2;
+            progress += dt * speed;
             if (progress >= 1) {
                 if(movePowerToElectricActor()){
                     progress = -1;
@@ -73,7 +71,7 @@ public class Powerline extends ElectricActor {
         }
         return false;
     }
-    private Actor assistingMethodForCheckForNearActor(IVector2 pos){
+    private Actor checkForRightActor(IVector2 pos){
         Actor actor = WorldM.getActor(pos);
         if(actor != null) {
             if (actor.getId() == ItemId.ELECTRICOVEN || actor.getId() == ItemId.POWERLINE) return actor;
@@ -84,13 +82,13 @@ public class Powerline extends ElectricActor {
     public Actor checkForNearActor(){
         switch (direction){
             case left:
-                return assistingMethodForCheckForNearActor(new IVector2(pos.x -  1, pos.y));
+                return checkForRightActor(new IVector2(pos.x -  1, pos.y));
             case right:
-                return assistingMethodForCheckForNearActor(new IVector2(pos.x + 1, pos.y));
+                return checkForRightActor(new IVector2(pos.x + 1, pos.y));
             case up:
-                return assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y + 1));
+                return checkForRightActor(new IVector2(pos.x, pos.y + 1));
             case down:
-                return assistingMethodForCheckForNearActor(new IVector2(pos.x, pos.y - 1));
+                return checkForRightActor(new IVector2(pos.x, pos.y - 1));
         }
         return null;
     }

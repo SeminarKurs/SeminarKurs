@@ -12,13 +12,15 @@ import static com.mygdx.game.Item.ItemId.MAT_IRON;
  */
 
 public class Oven extends Actor{
-
+    // speed is 1 no need in Oven
     private ItemMaster returnedItem;
-
-    private float progress = -2f;
 
     private ItemMaster item;
     private ItemMaster coal;
+
+    public Oven (){
+        progress = 0;
+    }
 
     public boolean setItem(ItemMaster item, Actor actor){
 
@@ -44,7 +46,10 @@ public class Oven extends Actor{
             if(returnedItem == null) {
                 switch (item.getId()) {
                     case ORE_IRON:
-                        returnedItem = ItemList.mat_iron(1);
+                        if (returnedItem == null){
+                            returnedItem = ItemList.mat_iron(1);
+                        }
+                        returnedItem.addStackSize(1);
                         break;
                     default:
                         return;
@@ -62,9 +67,8 @@ public class Oven extends Actor{
         if(item != null && coal != null) {
             progress += dt;
             if (progress >= 2) {
-                progress = -2f;
+                progress = 0;
                 melt();
-                busy = false;
             }
         }
     }

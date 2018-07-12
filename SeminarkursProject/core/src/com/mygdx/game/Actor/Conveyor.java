@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Item.ItemId;
 import com.mygdx.game.Item.ItemMaster;
+import com.mygdx.game.Tools.Collision;
 import com.mygdx.game.Tools.IVector2;
 import com.mygdx.game.WorldM;
 
@@ -21,14 +22,14 @@ public class Conveyor extends Actor {
 
     private Actor previousClutch;
 
-    private float progress = 0f;
 
-    //1 = Links; 2 = Rechts; 3 = Oben; 4 = Unten
     public Conveyor(Direction direction, ItemMaster item, IVector2 pos) {
         this.direction = direction;
         this.item = item;
         this.pos = pos;
         itemPos = pos;
+        speed = 0.1f;
+        progress = 0f;
     }
 
     @Override
@@ -40,28 +41,28 @@ public class Conveyor extends Actor {
         switch (direction) {
             case left:
                 itemPos = new IVector2(pos.x - 1, pos.y);
-                if (checkForNearActor(pos) == null) {
+                if (checkForNearActor() == null) {
                     WorldM.setItemActor(itemPos, item);
                     return true;
                 }
                 break;
             case right:
                 itemPos = new IVector2(pos.x + 1, pos.y);
-                if (checkForNearActor(pos) == null) {
+                if (checkForNearActor() == null) {
                     WorldM.setItemActor(itemPos, item);
                     return true;
                 }
                 break;
             case up:
                 itemPos = new IVector2(pos.x, pos.y + 1);
-                if (checkForNearActor(pos) == null) {
+                if (checkForNearActor() == null) {
                     WorldM.setItemActor(itemPos, item);
                     return true;
                 }
                 break;
             case down:
                 itemPos = new IVector2(pos.x, pos.y - 1);
-                if (checkForNearActor(pos) == null) {
+                if (checkForNearActor() == null) {
                     WorldM.setItemActor(itemPos, item);
                     return true;
                 }
@@ -74,14 +75,14 @@ public class Conveyor extends Actor {
 
     public void update (float dt){
         if(item != null) {
-            progress += dt / 10;
-            Actor a = checkForNearActor(pos);
+            progress += dt * speed;
+            Actor a = checkForNearActor();
             if(a != null && a.getId() == ItemId.CLUTCH) {
-                moveItemToActor(item, pos);
+                moveItemToActor();
                 item = null;
             } else if (progress >= 1f) {
                     if (!transfer()) {
-                        if (!this.moveItemToActor(item, pos)){
+                        if (!this.moveItemToActor()){
                             progress = 1f;
                             return;
                         }
@@ -93,8 +94,8 @@ public class Conveyor extends Actor {
         }
 
     }
-    public boolean moveItemToActor (ItemMaster item, IVector2 pos){
-        Actor a = checkForNearActor(pos);
+    public boolean moveItemToActor (){
+        Actor a = checkForNearActor();
         if(!a.isBusy()) {
             if (a.getId() == ItemId.CONVEYOR) a.setItem(item, previousClutch);
             if (a.getId() == ItemId.CLUTCH) a.setItem(item, this);
@@ -110,22 +111,22 @@ public class Conveyor extends Actor {
         DrawH.drawActorRot(batch, x,y, direction, image());
         if(item != null)
             switch (direction) {
-                case left: // links
+                case left:
                     fLayers.add(new FLayer(x - this.progress,y, item.getImage()));
                     break;
-                case right: // rechts
+                case right:
                     fLayers.add(new FLayer(x + this.progress,y, item.getImage()));
                     break;
-                case up: // oben
+                case up:
                     fLayers.add(new FLayer(x,y + this.progress, item.getImage()));
                     break;
-                case down: // unten
+                case down:
                     fLayers.add(new FLayer(x ,y - this.progress, item.getImage()));
                     break;
             }
     }
 
-    private boolean checkForRightActor(Actor sideActor, Direction direction){
+    private boolean checkForRightActor(Actor sideActor, Direction direction){ // this is to shrink the size of checkForNearActor()
         if (sideActor != null) {
             if (sideActor.getId() == ItemId.CLUTCH) {
                 if (previousClutch != sideActor && sideActor.getDirection() == direction) return true;
@@ -133,10 +134,10 @@ public class Conveyor extends Actor {
         }
         return false;
     }
-    public Actor checkForNearActor(IVector2 pos){
+    public Actor checkForNearActor(){
         Actor sideActor;
         switch (direction) {
-            case left: // links
+            case left:
                 if (pos.y != 0) {
                     sideActor = WorldM.getActor(new IVector2(pos.x, pos.y - 1));
                     if(checkForRightActor(sideActor, Direction.down)) return sideActor;
@@ -147,7 +148,7 @@ public class Conveyor extends Actor {
                     if(checkForRightActor(sideActor, Direction.up))    return sideActor;
                 }
                 return WorldM.getActor(new IVector2(pos.x - 1, pos.y));
-            case right: // rechts
+            case right:
                 if (pos.y != 0) {
                     sideActor = WorldM.getActor(new IVector2(pos.x, pos.y - 1));
                     if(checkForRightActor(sideActor, Direction.down)) return sideActor;
@@ -157,7 +158,7 @@ public class Conveyor extends Actor {
                     if(checkForRightActor(sideActor, Direction.up))    return sideActor;
                 }
                 return WorldM.getActor(new IVector2(pos.x + 1, pos.y));
-            case up: // oben
+            case up:
                 if (pos.x != 0) {
                     sideActor = WorldM.getActor(new IVector2(pos.x-1, pos.y));
                     if(checkForRightActor(sideActor, Direction.left))    return sideActor;
@@ -167,7 +168,7 @@ public class Conveyor extends Actor {
                     if(checkForRightActor(sideActor, Direction.right))    return sideActor;
                 }
                 return WorldM.getActor(new IVector2(pos.x, pos.y + 1));
-            case down: // unten
+            case down:
                 if (pos.x != 0) {
                     sideActor = WorldM.getActor(new IVector2(pos.x-1, pos.y));
                     if(checkForRightActor(sideActor, Direction.left))    return sideActor;
@@ -190,9 +191,7 @@ public class Conveyor extends Actor {
     public void setItemPos (IVector2 pos){itemPos = pos;}
 
     @Override
-    public com.mygdx.game.Tools.Collision coll() {
-        return com.mygdx.game.Tools.Collision.none;
-    }
+    public Collision coll() {return Collision.none;}
     public int image(){return 1;}
 
     public ItemId getId() {
