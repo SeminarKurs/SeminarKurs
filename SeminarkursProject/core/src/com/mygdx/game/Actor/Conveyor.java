@@ -37,36 +37,27 @@ public class Conveyor extends Actor {
         return true;
     }
 
+    private boolean checksetItem(){
+        if (checkForNearActor() == null) {
+            WorldM.setItemActor(itemPos, item);
+            return true;
+        }
+        return false;
+    }
     public boolean transfer (){
         switch (direction) {
             case left:
                 itemPos = new IVector2(pos.x - 1, pos.y);
-                if (checkForNearActor() == null) {
-                    WorldM.setItemActor(itemPos, item);
-                    return true;
-                }
-                break;
+                return checksetItem();
             case right:
                 itemPos = new IVector2(pos.x + 1, pos.y);
-                if (checkForNearActor() == null) {
-                    WorldM.setItemActor(itemPos, item);
-                    return true;
-                }
-                break;
+                return checksetItem();
             case up:
                 itemPos = new IVector2(pos.x, pos.y + 1);
-                if (checkForNearActor() == null) {
-                    WorldM.setItemActor(itemPos, item);
-                    return true;
-                }
-                break;
+                return checksetItem();
             case down:
                 itemPos = new IVector2(pos.x, pos.y - 1);
-                if (checkForNearActor() == null) {
-                    WorldM.setItemActor(itemPos, item);
-                    return true;
-                }
-                break;
+                return checksetItem();
         }
         itemPos = pos;
         return false;

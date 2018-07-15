@@ -192,11 +192,6 @@ public class PlayerController extends ApplicationAdapter implements InputProcess
         boolean isCollision = true;
         float tileHSize = 0.5f;
 
-        if(Math.abs(tileLO.x - posLO.x) < plSizeHX)
-        {
-            if(!x){movement.set(movement.y, movement.x);}// reset the movment that it wont get returned bad
-            return false;
-        }
 
         float distanceX = tileLO.x - posLO.x + ((tileLO.x - posLO.x) >= 0 ? -(tileHSize + plSizeHX) : (tileHSize + plSizeHX));
 
